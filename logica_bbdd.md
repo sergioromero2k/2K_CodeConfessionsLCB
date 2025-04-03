@@ -1,8 +1,7 @@
 ## Lógica base de datos
 ---
 
-8. [] **PASO 8: Modelo ER**
-9. [] **PASO 9: Modelo Relacional**
+
 10. [] **PASO 10: Tipo de datos de los Atributos**
 11. [] **PASO 11: Identificar los Atributos que pueden ser únicos**
 12. [] **PASO 12: Identificar las reglas de negocio(Operaciones CRUD) del sistema**
@@ -15,18 +14,19 @@
 7. [x] **PASO 7: Entidades Cátalogo ✅**
 
     -   **usuarios**        **ED** 🆗
-        - email             ***PK***
         - nombre
         - apellido
-        - edad
+        - fecha_nacimiento
+        - genero    
+        - email             ***PK***
         - password
-        - genero
-        - nickname
-        - universidad_id    ***PK***
+        - universidad_id    ***FK***
     
     -   **universidades**   **EC** ✅
-        - universidad_id    
+        - universidad_id    ***PK***
         - universidad
+        - ciudad
+        - pais
 
     -   **publicaciones**   **ED** 🆗
         - publicacion_id    ***PK***
@@ -37,4 +37,19 @@
         - notificacion_id   ***PK***
         - publicacion_id    ***FK***
 
-5. [] **PASO 5: Tipo de Relación**
+5. [x] **PASO 5: Tipo de Relación** 
+        - Un usuario(1) pertenece a (1)universidad.
+        - Una universidad(1) pertenece (N) usuarios.
+
+        - Un usuario(1) puede hacer (1) o (M) publicaciones.
+        - Una publicación(1) pertenece a (1) usuario.
+
+        - Un usuario(1) puede recibir (N) notificación.
+        - Una notificación(1) pertenece a (1) usuario.
+
+        - Una publicación(1) puede generar (1) o (N) notificaciones.
+        - Una notificación(1) está asociada a (1) publicación.
+
+8. [] **PASO 8: Modelo ER**
+9. [] **PASO 9: Modelo Relacional**
+
