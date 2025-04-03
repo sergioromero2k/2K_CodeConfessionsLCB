@@ -1,7 +1,5 @@
 ## Lógica base de datos
 ---
-
-
 10. [] **PASO 10: Tipo de datos de los Atributos**
 11. [] **PASO 11: Identificar los Atributos que pueden ser únicos**
 12. [] **PASO 12: Identificar las reglas de negocio(Operaciones CRUD) del sistema**
@@ -50,6 +48,6 @@
         - Una publicación(1) puede generar (1) o (N) notificaciones.
         - Una notificación(1) está asociada a (1) publicación.
 
-8. [] **PASO 8: Modelo ER**
+8. [x] **PASO 8: Modelo ER**
 9. [] **PASO 9: Modelo Relacional**
 
