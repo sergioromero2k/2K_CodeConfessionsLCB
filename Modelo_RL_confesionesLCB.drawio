@@ -216,7 +216,7 @@
           <mxGeometry x="90" y="570" width="97.5" height="65" as="geometry" />
         </mxCell>
         <mxCell id="2wgufAlCaVgTM0gnGczz-94" value="&lt;b&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;Modelo Entidad Relación (Conceptual)&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font size=&quot;3&quot; style=&quot;&quot;&gt;Confesiones LCB&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="430" y="160" width="550" height="30" as="geometry" />
+          <mxGeometry x="413" y="170" width="550" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RnStYdVVHujJZDt6CvKs-2" value="&lt;div&gt;tener&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;rotation=90;" vertex="1" parent="1">
           <mxGeometry x="297.5" y="200" width="85" height="65" as="geometry" />
