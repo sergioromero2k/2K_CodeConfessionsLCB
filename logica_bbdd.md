@@ -12,13 +12,17 @@
 7. [x] **PASO 7: Entidades Cátalogo ✅**
 
     -   **usuarios**        **ED** 🆗
+        - email             ***PK***
+        - password
         - nombre
         - apellido
         - fecha_nacimiento
-        - genero    
-        - email             ***PK***
-        - password
+        - genero_id         ***FK***    
         - universidad_id    ***FK***
+
+    -   **generos**         **EC** ✅
+        - genero_id         ***PK***
+        - genero
     
     -   **universidades**   **EC** ✅
         - universidad_id    ***PK***
@@ -44,6 +48,9 @@
 
         - Un usuario(1) puede recibir (N) notificación.
         - Una notificación(1) pertenece a (1) usuario.
+
+        - Un usuario(1) tiene (1) genero.
+        - Un genero(1) tiene (1) genero.
 
         - Una publicación(1) puede generar (1) o (N) notificaciones.
         - Una notificación(1) está asociada a (1) publicación.
