@@ -19,16 +19,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
     </article>
     <nav>informacion sobre LCB</nav>
-    <article>Formularios Nuevo Usuario
+    
+    <article style="border: 2px solid black;text-align:center">
+    <h1>Iniciar sesión</h1>
+        <p>¿Es tu primera vez?<a href="registrarse.php">Registrarse</a></p>
         <form action="index.php" method="post" enctype="application/x-www-form-urlencoded">
-
             <input type="email" name="email_user" id="email_user" placeholder="Correo Electrónico"><br>
             <input type="password" name="password_user" id="password_user" placeholder="Contreseña"><br>
+            <a href="olvidaste_password.php">¿Olvidó la contraseña?</a>
+            <hr>
             <input type="submit" value="Enviar">
-
         </form>
-
-
     </article>
     <footer>reglas blabla</footer>
     

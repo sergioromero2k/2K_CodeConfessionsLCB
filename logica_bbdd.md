@@ -12,32 +12,32 @@
 7. [x] **PASO 7: Entidades Cátalogo ✅**
 
     -   **usuarios**        **ED** 🆗
-        - email             ***PK***
-        - password
-        - nombre
-        - apellido
-        - fecha_nacimiento
-        - genero_id         ***FK***    
-        - universidad_id    ***FK***
+        - email             ***PK***        VARCHAR(255) 
+        - password                          VARCHAR(255)
+        - nombre                            VARCHAR(50)
+        - apellido                          VARCHAR(50)
+        - fecha_nacimiento                  DATE
+        - genero_id         ***FK***        INT
+        - universidad_id    ***FK***        
 
     -   **generos**         **EC** ✅
-        - genero_id         ***PK***
-        - genero
+        - genero_id         ***PK***        INT 
+        - genero                            VARCHAR(10)
     
     -   **universidades**   **EC** ✅
-        - universidad_id    ***PK***
-        - universidad
-        - ciudad
-        - pais
+        - universidad_id    ***PK***        INT
+        - universidad                       VARCHAR(255)
+        - ciudad                            VARCHAR(50)
+        - pais                              VARCHAR(50)
 
     -   **publicaciones**   **ED** 🆗
-        - publicacion_id    ***PK***
-        - publicacion
-        - email             ***FK***
+        - publicacion_id    ***PK***        INT
+        - publicacion                       TEXT
+        - email             ***FK***        VARCHAR(255) 
 
-    -   **notificacion**    **ED** 🆗
-        - notificacion_id   ***PK***
-        - publicacion_id    ***FK***
+    -   **notificaciones**    **ED** 🆗
+        - notificacion_id   ***PK***        INT
+        - publicacion_id    ***FK***        INT
 
 5. [x] **PASO 5: Tipo de Relación** 
         - Un usuario(1) pertenece a (1)universidad.
