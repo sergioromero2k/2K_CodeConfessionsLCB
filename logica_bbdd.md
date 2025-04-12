@@ -1,8 +1,5 @@
 ## Lógica base de datos
 ---
-10. [] **PASO 10: Tipo de datos de los Atributos**
-11. [] **PASO 11: Identificar los Atributos que pueden ser únicos**
-12. [] **PASO 12: Identificar las reglas de negocio(Operaciones CRUD) del sistema**
 
 1. [x] **PASO 1: Entidades**
 2. [x] **PASO 2: Atributos**
@@ -16,9 +13,9 @@
         - password                          VARCHAR(255)
         - nombre                            VARCHAR(50)
         - apellido                          VARCHAR(50)
-        - fecha_nacimiento                  DATE
-        - genero_id         ***FK***        INT
-        - universidad_id    ***FK***        
+        - fecha_nacimiento                  VARCHAR(50)
+        - genero_id         ***FK***        DATE
+        - universidad_id    ***FK***        INT
 
     -   **generos**         **EC** ✅
         - genero_id         ***PK***        INT 
@@ -56,5 +53,7 @@
         - Una notificación(1) está asociada a (1) publicación.
 
 8. [x] **PASO 8: Modelo ER**
-9. [] **PASO 9: Modelo Relacional**
-
+9. [x] **PASO 9: Modelo Relacional**
+10. [x] **PASO 10: Tipo de datos de los Atributos**
+11. [x] **PASO 11: Identificar los Atributos que pueden ser únicos**
+12. [] **PASO 12: Identificar las reglas de negocio(Operaciones CRUD) del sistema**
