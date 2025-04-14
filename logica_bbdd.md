@@ -10,11 +10,11 @@
 
     -   **usuarios**        **ED** 🆗
         - email             ***PK***        VARCHAR(255) 
-        - password                          VARCHAR(255)
+        - password                          VARCHAR(255) 
         - nombre                            VARCHAR(50)
         - apellido                          VARCHAR(50)
-        - fecha_nacimiento                  VARCHAR(50)
-        - genero_id         ***FK***        DATE
+        - fecha_nacimiento                  DATE
+        - genero_id         ***FK***        INT
         - universidad_id    ***FK***        INT
 
     -   **generos**         **EC** ✅
