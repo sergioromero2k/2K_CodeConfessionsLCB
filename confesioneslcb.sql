@@ -156,3 +156,4 @@ VALUES
         6
     );
 
+SELECT * FROM usuarios;

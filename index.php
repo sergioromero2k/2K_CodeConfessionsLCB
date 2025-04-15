@@ -1,6 +1,13 @@
 <?php
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    echo "Hola";
+    if(empty($_POST['Enviar'])){
+        echo 'Debes enviar los datos';
+    }else{
+        $correo_usuario=htmlspecialchars($_POST['email_usuario']);
+        $contra_usuario=htmlspecialchars($_POST['password_usuario']);
+        echo "Tu usuario es: $correo_usuario";
+        echo "Tu contraseña es: $contra_usuario";
+    }
 }else{
 ?>
 
@@ -24,11 +31,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     <h1>Iniciar sesión</h1>
         <p>¿Es tu primera vez?<a href="registrarse.php">Registrarse</a></p>
         <form action="index.php" method="post" enctype="application/x-www-form-urlencoded">
-            <input type="email" name="email_user" id="email_user" placeholder="Correo Electrónico"><br>
-            <input type="password" name="password_user" id="password_user" placeholder="Contreseña"><br>
+            <input type="email" name="email_usuario" id="email_usuario" placeholder="Correo Electrónico" required><br>
+            <input type="password" name="password_usuario" id="password_usuario" placeholder="Contreseña" required><br>
             <a href="olvidaste_password.php">¿Olvidó la contraseña?</a>
             <hr>
-            <input type="submit" value="Enviar">
+            <input type="submit" value="Iniciar Sesión" name="Enviar">
         </form>
     </article>
     <footer>reglas blabla</footer>
