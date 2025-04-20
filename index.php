@@ -11,6 +11,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             }
         }catch(mysqli_sql_exception $e){
             echo 'Mensaje de error: '. $e->getMessage();
+            exit();
         }
         // $correo_usuario=htmlspecialchars($_POST['email_usuario']);
         // $contra_usuario=htmlspecialchars($_POST['password_usuario']);

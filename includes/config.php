@@ -1,5 +1,7 @@
 <?php
 # Configuración global 
+mysqli_report(flags: MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);  # Configuramos los errores y las excepciones.
+
 $servidor = "localhost:3307";
 $usuario = "root";
 $password = "";
