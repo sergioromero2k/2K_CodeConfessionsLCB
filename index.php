@@ -3,10 +3,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     if(empty($_POST['Enviar'])){
         echo 'Debes enviar los datos';
     }else{
-        $correo_usuario=htmlspecialchars($_POST['email_usuario']);
-        $contra_usuario=htmlspecialchars($_POST['password_usuario']);
-        echo "Tu usuario es: $correo_usuario";
-        echo "Tu contraseña es: $contra_usuario";
+        require_once './includes/config.php';
+        try{
+            $consulta_bbdd = $conexion_bbdd->query("SELECT * FROM universidades");
+            while($fila = $consulta_bbdd -> fetch_assoc()){
+                echo 'Nombre: '.$fila["universidad"].'<br>';
+            }
+        }catch(mysqli_sql_exception $e){
+            echo 'Mensaje de error: '. $e->getMessage();
+        }
+        // $correo_usuario=htmlspecialchars($_POST['email_usuario']);
+        // $contra_usuario=htmlspecialchars($_POST['password_usuario']);
+        
     }
 }else{
 ?>
