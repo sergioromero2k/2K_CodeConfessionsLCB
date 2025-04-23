@@ -9,7 +9,8 @@
 7. [x] **PASO 7: Entidades Cátalogo ✅**
 
     -   **usuarios**        **ED** 🆗
-        - email             ***PK***        VARCHAR(255) 
+        - user_id           ***PK***        INT
+        - email                             VARCHAR(255) 
         - password                          VARCHAR(255) 
         - nombre                            VARCHAR(50)
         - apellido                          VARCHAR(50)
