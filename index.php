@@ -1,3 +1,10 @@
+<?php   
+    session_start();
+    if(isset($_SESSION['user_id'])) {
+        header(header: "Location:./home.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +26,7 @@
     <article style="border: 2px solid black;text-align:center">
         <h1>Iniciar sesión</h1>
         <p>¿Es tu primera vez?<a href="register.php">Registrarse</a></p>
-        <form action="./auth/login.php" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="./auth/validar.php" method="post" enctype="application/x-www-form-urlencoded">
             <input type="email" name="email_usuario" id="email_usuario" placeholder="Correo Electrónico" required><br>
             <input type="password" name="password_usuario" id="password_usuario" placeholder="Contreseña" required><br>
             <a href="olvidaste_password.php">¿Olvidó la contraseña?</a>
