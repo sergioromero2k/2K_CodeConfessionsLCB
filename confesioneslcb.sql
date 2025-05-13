@@ -1,5 +1,4 @@
 CREATE DATABASE confesioneslcb;
-
 DROP DATABASE confesioneslcb;
 
 USE confesioneslcb;
@@ -46,16 +45,78 @@ CREATE TABLE
         `user_id` INT NOT NULL,                           -- Del creador de la publicacion
         `contenido` TEXT,
         `fecha_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+        `actualizado_en` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         CONSTRAINT fk_publicaciones_usuarios FOREIGN KEY (user_id) REFERENCES usuarios (user_id) ON UPDATE CASCADE ON DELETE CASCADE
     );
 
-# Tabla de notif
-CREATE TABLE
-    `notificaciones` (
-        `notificacion_id` INT PRIMARY KEY,
-        `publicacion_id` INT NOT NULL,
-        CONSTRAINT fk_notificacion_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones (publicacion_id) ON UPDATE CASCADE ON DELETE CASCADE
+# Tabla de notificaciones
+CREATE TABLE `notificaciones` (
+    `notificacion_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `nombre` VARCHAR(255) NOT NULL,
+    `contenido` TEXT,
+    `estado` TINYINT DEFAULT 0,
+    `fecha_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `publicacion_id` INT,
+    `tipo_notificacion_id` INT NOT NULL,
+    CONSTRAINT fk_notificacion_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones(publicacion_id) ON UPDATE CASCADE ON DELETE CASCADE, -- Eliminar notificaciones al eliminar publicación
+    CONSTRAINT fk_notificacion_tipo FOREIGN KEY (tipo_notificacion_id) REFERENCES tipos_notificaciones (tipo_notificacion_id) ON UPDATE CASCADE ON DELETE RESTRICT -- No eliminar tipos de notificación si existen notificaciones
+);
+
+# Tabla tipos de notificaciones
+CREATE TABLE `tipos_notificaciones`(
+    `tipo_notificacion_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `nombre_tipo` VARCHAR(255),
+    `descripcion` VARCHAR(255) 
+);
+
+# Tabla de comentarios
+CREATE TABLE `comentarios` (
+    `comentario_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `publicacion_id` INT NOT NULL,
+    `user_id` INT NOT NULL,                            -- Del que crea el comentario, puede ser el autor o una persona X
+    `contenido` TEXT,
+    `fecha_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT comentario_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones(publicacion_id) ON UPDATE CASCADE ON DELETE CASCADE, -- Eliminar comentarios al eliminar publicación
+    CONSTRAINT comentario_user FOREIGN KEY (user_id) REFERENCES usuarios(user_id) ON UPDATE CASCADE ON DELETE CASCADE -- Eliminar comentarios al eliminar usuario
+);
+
+# Tabla de contraseñas reseteadas
+CREATE TABLE `password_resets` (
+    `password_res_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `email` VARCHAR(255) NOT NULL,
+    `token` VARCHAR(255) NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `used` TINYINT(1) DEFAULT 0
+);
+
+# Tabla de reportes
+CREATE TABLE `reportes` (
+    `reporte_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_reportador_id` INT NOT NULL, -- quien reporta
+    `user_reportado_id` INT NOT NULL, -- a quien están reportando
+    `publicacion_id` INT, -- sobre qué publicación es el reporte
+    `fecha_reporte` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `motivo_id` INT NOT NULL,
+    CONSTRAINT fk_reportador_user FOREIGN KEY (user_reportador_id) REFERENCES usuarios(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_reportado_user FOREIGN KEY (user_reportado_id) REFERENCES usuarios(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_reportar_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones(publicacion_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_reportar_motivo FOREIGN KEY (motivo_id) REFERENCES motivos(motivo_id) ON UPDATE CASCADE ON RESTRICT
+);
+
+# Tabla de motivos
+CREATE TABLE `motivos` (
+    `motivo_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `motivo` VARCHAR(255)
     );
+----------------------------------------------------------------------------------
+
+
+INSERT INTO
+    generos (`genero`)
+VALUES
+    ('Mujer'),
+    ('Hombre'),
+    ('Otro');
 
 INSERT INTO
     universidades (`universidad`, `ciudad`, `pais`)
@@ -137,33 +198,23 @@ VALUES
         'España'
     );
 
+INSERT INTO
+    tipos_notificaciones (`nombre_tipo`, `descripcion`)
+VALUES
+    ('Like', 'El usuario ha dado like a tu publicación'),
+    ('Dislike', 'El usuario no le ha gustado tu publicación'),
+    ('Comentario', 'El usuario ha comentado en tu publicación'),
+    ('Reporte', 'El usuario ha reportado tu publicación');
 
 INSERT INTO
-    generos (`genero`)
+    motivos (`motivo`)
 VALUES
-    ('Mujer'),
-    ('Hombre'),
+    ('Contenido ofensivo'),
+    ('Contenido sexual'),
+    ('Contenido violento'),
+    ('Contenido spam'),
+    ('Contenido falso'),
+    ('Contenido inapropiado'),
     ('Otro');
-
-INSERT INTO
-    usuarios (
-        `email`,
-        `password`,
-        `nombre`,
-        `apellido`,
-        `fecha_nacimiento`,
-        `genero_id`,
-        `universidad_id`
-    )
-VALUES
-    (
-        'sergioromero2k@gmail.com',
-        'pepe2321',
-        'Sergio Alejandro',
-        'Romero López',
-        '2000-11-10',
-        2,
-        6
-    );
 
 SELECT * FROM usuarios;
