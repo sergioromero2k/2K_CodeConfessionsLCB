@@ -4,6 +4,7 @@ DROP DATABASE confesioneslcb;
 
 USE confesioneslcb;
 
+# Tabla de usuarios
 CREATE TABLE
     `usuarios` (
         `user_id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -12,18 +13,24 @@ CREATE TABLE
         `nombre` VARCHAR(50) NOT NULL,
         `apellido` VARCHAR(50) NOT NULL,
         `fecha_nacimiento` DATE NOT NULL,
+        `verificado` TINYINT(1) DEFAULT 0,
+        `token_activacion` VARCHAR(255),
+        `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+        `actualizado_en` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAM   
         `genero_id` INT NOT NULL,
         `universidad_id` INT NOT NULL,
         CONSTRAINT fk_usuario_genero FOREIGN KEY (genero_id) REFERENCES generos (genero_id) ON UPDATE CASCADE ON DELETE RESTRICT,
         CONSTRAINT fk_usuario_universidad FOREIGN KEY (universidad_id) REFERENCES universidades (universidad_id) ON UPDATE CASCADE ON DELETE RESTRICT
     );
 
+# Tabla de géneros
 CREATE TABLE
     `generos` (
         `genero_id` INT PRIMARY KEY AUTO_INCREMENT,
         `genero` VARCHAR(10)
     );
 
+# Tabla de universidades
 CREATE TABLE
     `universidades` (
         `universidad_id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -32,14 +39,17 @@ CREATE TABLE
         `pais` VARCHAR(50)
     );
 
+# Tabla de publicaciones
 CREATE TABLE
     `publicaciones` (
-        `publicacion_id` INT PRIMARY KEY,
-        `publicacion` TEXT,
-        `user_id` INT NOT NULL,
+        `publicacion_id` INT AUTO_INCREMENT PRIMARY KEY,
+        `user_id` INT NOT NULL,                           -- Del creador de la publicacion
+        `contenido` TEXT,
+        `fecha_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT fk_publicaciones_usuarios FOREIGN KEY (user_id) REFERENCES usuarios (user_id) ON UPDATE CASCADE ON DELETE CASCADE
     );
 
+# Tabla de notif
 CREATE TABLE
     `notificaciones` (
         `notificacion_id` INT PRIMARY KEY,
