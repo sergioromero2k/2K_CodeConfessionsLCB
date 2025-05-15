@@ -1,5 +1,5 @@
 CREATE DATABASE confesioneslcb;
-DROP DATABASE confesioneslcb;
+-- DROP DATABASE confesioneslcb;
 
 USE confesioneslcb;
 
@@ -109,7 +109,7 @@ CREATE TABLE `motivos` (
     `motivo` VARCHAR(255)
     );
 ----------------------------------------------------------------------------------
-
+# Insertar datos de catalogo    
 
 INSERT INTO
     generos (`genero`)
@@ -216,5 +216,4 @@ VALUES
     ('Contenido falso'),
     ('Contenido inapropiado'),
     ('Otro');
-
-SELECT * FROM usuarios;
+----------------------------------------------------------------------------------
