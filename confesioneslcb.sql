@@ -24,7 +24,7 @@ CREATE TABLE
     `usuarios` (
         `user_id` INT PRIMARY KEY AUTO_INCREMENT,
         `email` VARCHAR(100) UNIQUE NOT NULL,
-        `password` VARCHAR(50) NOT NULL,
+        `password` VARCHAR(255) NOT NULL,
         `nombre` VARCHAR(50) NOT NULL,
         `apellido` VARCHAR(50) NOT NULL,
         `fecha_nacimiento` DATE NOT NULL,

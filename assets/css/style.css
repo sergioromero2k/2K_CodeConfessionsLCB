@@ -1,0 +1,71 @@
+/* nav */
+.flex-container-nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  height: 80%;
+  padding: 10px;
+  gap: 5px;
+  border-bottom: 2px solid #e8e8e8;
+  color: #606060;
+}
+
+.flex-container-nav-left {
+  display: flex;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 15px;
+  gap: 5px;
+}
+
+.flex-container-nav-right {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 15px;
+  gap: 5px;
+}
+.flex-container-border > div {
+  border: 3px solid #ffcc80;
+  border-radius: 5px;
+  padding: 8px;
+}
+/* Section usuario */
+.flex-container-section-user {
+  display: flex;
+  justify-content: center;
+  background-color: #bbdefb;
+  height: 100%;
+  padding: 15px;
+  gap: 5px;
+}
+
+.flex-container-section-user-forma {
+  background: #ffecb3;
+  border: 3px solid #ffcc80;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.flex-container-section-user-left {
+  display: flex;
+
+  justify-content: flex-start;
+  /* flex-flow: column; */
+  flex-direction: column;
+
+  background-color: #bbdefb;
+  height: 100%;
+  padding: 15px;
+  gap: 5px;
+}
+
+.flex-container-section-user-left {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: #bbdefb;
+  height: 100%;
+  padding: 15px;
+  gap: 5px;
+}
