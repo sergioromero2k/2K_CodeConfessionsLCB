@@ -3,25 +3,6 @@ CREATE DATABASE confesioneslcb;
 
 USE confesioneslcb;
 
-# Tabla de usuarios
-CREATE TABLE
-    `usuarios` (
-        `user_id` INT PRIMARY KEY AUTO_INCREMENT,
-        `email` VARCHAR(100) UNIQUE NOT NULL,
-        `password` VARCHAR(50) NOT NULL,
-        `nombre` VARCHAR(50) NOT NULL,
-        `apellido` VARCHAR(50) NOT NULL,
-        `fecha_nacimiento` DATE NOT NULL,
-        `verificado` TINYINT(1) DEFAULT 0,
-        `token_activacion` VARCHAR(255),
-        `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
-        `actualizado_en` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAM   
-        `genero_id` INT NOT NULL,
-        `universidad_id` INT NOT NULL,
-        CONSTRAINT fk_usuario_genero FOREIGN KEY (genero_id) REFERENCES generos (genero_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-        CONSTRAINT fk_usuario_universidad FOREIGN KEY (universidad_id) REFERENCES universidades (universidad_id) ON UPDATE CASCADE ON DELETE RESTRICT
-    );
-
 # Tabla de géneros
 CREATE TABLE
     `generos` (
@@ -38,6 +19,25 @@ CREATE TABLE
         `pais` VARCHAR(50)
     );
 
+# Tabla de usuarios
+CREATE TABLE
+    `usuarios` (
+        `user_id` INT PRIMARY KEY AUTO_INCREMENT,
+        `email` VARCHAR(100) UNIQUE NOT NULL,
+        `password` VARCHAR(50) NOT NULL,
+        `nombre` VARCHAR(50) NOT NULL,
+        `apellido` VARCHAR(50) NOT NULL,
+        `fecha_nacimiento` DATE NOT NULL,
+        `verificado` TINYINT(1) DEFAULT 0,
+        `token_activacion` VARCHAR(255),
+        `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+        `actualizado_en` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   
+        `genero_id` INT NOT NULL,
+        `universidad_id` INT NOT NULL,
+        CONSTRAINT fk_usuario_genero FOREIGN KEY (genero_id) REFERENCES generos (genero_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+        CONSTRAINT fk_usuario_universidad FOREIGN KEY (universidad_id) REFERENCES universidades (universidad_id) ON UPDATE CASCADE ON DELETE RESTRICT
+    );
+
 # Tabla de publicaciones
 CREATE TABLE
     `publicaciones` (
@@ -48,6 +48,13 @@ CREATE TABLE
         `actualizado_en` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         CONSTRAINT fk_publicaciones_usuarios FOREIGN KEY (user_id) REFERENCES usuarios (user_id) ON UPDATE CASCADE ON DELETE CASCADE
     );
+
+# Tabla tipos de notificaciones
+CREATE TABLE `tipos_notificaciones`(
+    `tipo_notificacion_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `nombre_tipo` VARCHAR(255),
+    `descripcion` VARCHAR(255) 
+);
 
 # Tabla de notificaciones
 CREATE TABLE `notificaciones` (
@@ -60,13 +67,6 @@ CREATE TABLE `notificaciones` (
     `tipo_notificacion_id` INT NOT NULL,
     CONSTRAINT fk_notificacion_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones(publicacion_id) ON UPDATE CASCADE ON DELETE CASCADE, -- Eliminar notificaciones al eliminar publicación
     CONSTRAINT fk_notificacion_tipo FOREIGN KEY (tipo_notificacion_id) REFERENCES tipos_notificaciones (tipo_notificacion_id) ON UPDATE CASCADE ON DELETE RESTRICT -- No eliminar tipos de notificación si existen notificaciones
-);
-
-# Tabla tipos de notificaciones
-CREATE TABLE `tipos_notificaciones`(
-    `tipo_notificacion_id` INT AUTO_INCREMENT PRIMARY KEY,
-    `nombre_tipo` VARCHAR(255),
-    `descripcion` VARCHAR(255) 
 );
 
 # Tabla de comentarios
@@ -89,6 +89,12 @@ CREATE TABLE `password_resets` (
     `used` TINYINT(1) DEFAULT 0
 );
 
+# Tabla de motivos
+CREATE TABLE `motivos` (
+    `motivo_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `motivo` VARCHAR(255)
+    );
+
 # Tabla de reportes
 CREATE TABLE `reportes` (
     `reporte_id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -100,14 +106,10 @@ CREATE TABLE `reportes` (
     CONSTRAINT fk_reportador_user FOREIGN KEY (user_reportador_id) REFERENCES usuarios(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT fk_reportado_user FOREIGN KEY (user_reportado_id) REFERENCES usuarios(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT fk_reportar_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones(publicacion_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_reportar_motivo FOREIGN KEY (motivo_id) REFERENCES motivos(motivo_id) ON UPDATE CASCADE ON RESTRICT
+    CONSTRAINT fk_reportar_motivo FOREIGN KEY (motivo_id) REFERENCES motivos(motivo_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-# Tabla de motivos
-CREATE TABLE `motivos` (
-    `motivo_id` INT AUTO_INCREMENT PRIMARY KEY,
-    `motivo` VARCHAR(255)
-    );
+
 ----------------------------------------------------------------------------------
 # Insertar datos de catalogo    
 

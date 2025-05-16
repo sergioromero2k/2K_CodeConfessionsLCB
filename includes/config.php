@@ -8,8 +8,9 @@ $password = "";
 $nombre_bbdd = "confesioneslcb";
 try {
     $conexion_bbdd = new mysqli(hostname: $servidor, username: $usuario, password: $password, database: $nombre_bbdd);
+    $conexion_bbdd->set_charset(charset: "utf8mb4");  # Configuramos la codificación de caracteres a utf8mb4
     if ($conexion_bbdd->connect_error) {
-        echo 'Conexión fallida: ' . $conexion_bbdd->connect_error;
+        echo 'Conexión fallida: ' . $conexion_bbdd->connect_error;  
     }
 } catch (Throwable $t) {
     echo 'Error grave: ' . $t->getMessage();

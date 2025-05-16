@@ -39,7 +39,6 @@
         - fecha_en                          DATETIME DEFAULT CURRENT_TIMESTAMP
         - actualizado_en                    DATETIME CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 
-
     -   **notificaciones**    **ED** 🆗
         - notificacion_id         ***PK***    INT
         - tipo_notificacion_id    ***FK***    INT
@@ -82,20 +81,39 @@
         - motivo                                VARCHAR(255)
 
 5. [x] **PASO 5: Tipo de Relación** 
-        - Un usuario(1) pertenece a (1)universidad.
-        - Una universidad(1) pertenece (N) usuarios.
-
-        - Un usuario(1) puede hacer (1) o (M) publicaciones.
-        - Una publicación(1) pertenece a (1) usuario.
-
-        - Un usuario(1) puede recibir (N) notificación.
-        - Una notificación(1) pertenece a (1) usuario.
 
         - Un usuario(1) tiene (1) genero.
         - Un genero(1) tiene (1) genero.
 
-        - Una publicación(1) puede generar (1) o (N) notificaciones.
+        - Un usuario(1) pertenece a (1)universidad.
+        - Una universidad(1) pertenece (N) usuarios.
+
+        - Un usuario(1) puede hacer (1) o (N) publicaciones.
+        - Una publicación(1) o (N) pertenece a (1) usuario.
+
+        - Un usuario(1) puede recibir (1) o (N) notificaciones.
+        - Una notificación(1) o (N) pertenece a (1) usuario.
+
+        - Un usuario(1) puede hacer (1) o (N) comentarios.
+        - Un comentario(1) o (N) pertenece a (1) usuario.
+
+        - Un usuario (1) puede resetear (1) o (N) su contraseña.
+        - Un contraseña (1) puedes ser reseteada solo por (1) usuario.
+
+        - Una publicación (1) puede generar (1) o (N) notificaciones.
         - Una notificación(1) está asociada a (1) publicación.
+	
+        - Una publicación (1) puede generar (1) o (N) comentarios.
+        - Una comentario(1) está asociada a (1) publicación.
+
+        - Una publicación (1) puede recibir (1) o (N) reportes.
+        - Una reporte(1) está asociada a (1) publicación.
+
+        - Un reporte (1) tiene un (1) motivo de reporte.
+        - Un motivo de reporte (1) corresponde (1) o (N) reportes.
+        
+        - Una notificación (1) puede tener (1) o (N) tipos de notificaciones.
+        - Un tipo de notificación (1) puede pertenecer a (1) o (N) notificaciones.
 
 8. [x] **PASO 8: Modelo ER**
 9. [x] **PASO 9: Modelo Relacional**

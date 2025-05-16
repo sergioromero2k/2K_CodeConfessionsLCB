@@ -1,9 +1,24 @@
 <?php
 require_once './includes/config.php';
-
+try {
+    # Prevenir inyecciones SQL
+    if (isset($_POST['registrarse'])) {
+        // # Configuración global
+        $contraseña = $conexion_bbdd->real_escape_string($_POST['contrase']);
+        $password_hash = password_hash($contraseña, PASSWORD_ARGON2ID);
+        $token_activacion = bin2hex(random_bytes(length: 32));
+        $insertar = $conexion_bbdd->prepare(query: "INSERT INTO usuarios (email, password, nombre, apellido, fecha_nacimiento, token_activacion,genero_id,universidad_id) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+        $insertar->bind_param("ssssssii", $_POST['email'], $password_hash, $_POST['nombres'], $_POST['apellidos'], $_POST['fecha_nacimiento'], $token_activacion, $_POST['genero'], $_POST['universidad']);
+        $insertar->execute();
+        $insertar->close();
+        echo "<script>alert('Debes verificar tu usuario. Te ha llegado un correo de activación a tu bandeja de entrada.');</script>";
+        header(header: "Location: index.php");
+        $conexion_bbdd->close();
+    }
+} catch (Throwable $t) {
+    echo 'Error grave: ' . $t->getMessage();
+}
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,16 +46,19 @@ require_once './includes/config.php';
             <label for="fecha_nacimiento">Fecha Nacimiento</label><br>
             <input type="date" name="fecha_nacimiento" id="fecha_nacimiento"><br>
             <label for="genero">Género</label><br>
-            <input type="radio" name="genero" class="genero" value="Mujer">Mujer
-            <input type="radio" name="genero" class="genero" value="Hombre">Hombre
-            <input type="radio" name="genero" class="genero" value="Otro">Otro
+            <?php
+            $tabla_generos = $conexion_bbdd->query("SELECT * FROM generos");
+            while($fila = $tabla_generos->fetch_assoc()) {
+                echo "<input type='radio' name='genero' class='genero' value='$fila[genero_id]'>$fila[genero]</input>";
+            }
+            ?>
             <br>
             <label for="universidad">Universidad o Instituto</label><br>
             <select name="universidad" id="universidad">
                 <?php
                 $tabla_universidades = $conexion_bbdd->query("SELECT * FROM universidades");
                 while ($fila = $tabla_universidades->fetch_assoc()) {
-                    echo "<option value='$fila[universidad]'>$fila[universidad]</option>";
+                    echo "<option value='$fila[universidad_id]'>$fila[universidad]</option>";
                 }
                 ?>
             </select><br>
