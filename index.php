@@ -33,9 +33,20 @@
             <hr>
             <input type="submit" value="Iniciar Sesión" name="Enviar">
             <?php
-            if (isset($_GET['errAuth'])) {
-                if ($_GET['errAuth'] == 1) {
-                    echo "<div class='alert alert-danger'>Credenciales invalidas</div>";
+            if(isset($_GET['errAuth'])){
+                switch($_GET['errAuth']){
+                    case 0:
+                        echo "<div class='alert alert-danger'>Contraseña incorrecta</div>";
+                        break;
+                    case 1:
+                        echo "<div class='alert alert-danger'>Usuario no verificado</div>";
+                        break;
+                    case 2:
+                        echo "<div class='alert alert-danger'>El correo electrónico que ingresaste no está conectado a una cuenta.</div>";
+                        break;  
+                    case 3: 
+                        echo "<div class='alert alert-danger'>Rellenar los campos solicitados</div>";
+                        break;
                 }
             }
             ?>
@@ -49,3 +60,4 @@
 </body>
 
 </html>
+<!--echo "<div class='alert alert-danger'>Rellenar los campos</div>";-->

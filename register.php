@@ -11,7 +11,6 @@ try {
         $insertar->bind_param("ssssssii", $_POST['email'], $password_hash, $_POST['nombres'], $_POST['apellidos'], $_POST['fecha_nacimiento'], $token_activacion, $_POST['genero'], $_POST['universidad']);
         $insertar->execute();
         $insertar->close();
-        echo "<script>alert('Debes verificar tu usuario. Te ha llegado un correo de activación a tu bandeja de entrada.');</script>";
         header(header: "Location: index.php");
         $conexion_bbdd->close();
     }
