@@ -1,3 +1,10 @@
+/* Body */
+body {
+  background-color: #e7ecf0;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 /* nav */
 .flex-container-nav {
   display: flex;
@@ -31,41 +38,66 @@
   padding: 8px;
 }
 /* Section usuario */
-.flex-container-section-user {
+
+section {
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 90%;
+}
+.flex-container-section {
   display: flex;
-  justify-content: center;
-  background-color: #bbdefb;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: stretch;
   height: 100%;
   padding: 15px;
+  margin: 10px;
   gap: 5px;
 }
 
-.flex-container-section-user-forma {
-  background: #ffecb3;
-  border: 3px solid #ffcc80;
-  border-radius: 5px;
+.flex-container-section > div {
+  background: white;
+  border: 3px solid #ffffff;
+  border-radius: 2px;
   padding: 8px;
 }
 
-.flex-container-section-user-left {
+.item {
+  align-self: flex-start;
+  padding: 10px;
+  margin: 10px;
+}
+.flex {
   display: flex;
-
-  justify-content: flex-start;
-  /* flex-flow: column; */
-  flex-direction: column;
-
-  background-color: #bbdefb;
   height: 100%;
-  padding: 15px;
+  padding: 5px;
   gap: 5px;
 }
-
-.flex-container-section-user-left {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  background-color: #bbdefb;
-  height: 100%;
-  padding: 15px;
-  gap: 5px;
+.flex > div {
+  align-self: center;
 }
+
+.flex-around {
+  justify-content: space-around;
+}
+/* Editar perfil */
+
+.flex-container-editar-perfil {
+
+    display: flex;
+    
+    justify-content: center;  
+    /* flex-flow: row nowrap; */ 
+    flex-direction: row; 
+    flex-wrap: nowrap; 
+    align-content: center;
+
+    background-color: #bbdefb;
+    height: 100%;
+    padding: 15px;
+    gap: 5px;
+    width: 100%;
+
+  }

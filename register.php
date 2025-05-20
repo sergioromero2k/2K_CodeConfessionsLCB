@@ -55,10 +55,7 @@ try {
             <label for="universidad">Universidad o Instituto</label><br>
             <select name="universidad" id="universidad">
                 <?php
-                $tabla_universidades = $conexion_bbdd->query("SELECT * FROM universidades");
-                while ($fila = $tabla_universidades->fetch_assoc()) {
-                    echo "<option value='$fila[universidad_id]'>$fila[universidad]</option>";
-                }
+                universidades();
                 ?>
             </select><br>
             <input type="email" name="email" id="email" placeholder="Correo Electrónico"><br>
