@@ -85,19 +85,18 @@ section {
 /* Editar perfil */
 
 .flex-container-editar-perfil {
+  display: flex;
 
-    display: flex;
-    
-    justify-content: center;  
-    /* flex-flow: row nowrap; */ 
-    flex-direction: row; 
-    flex-wrap: nowrap; 
-    align-content: center;
+  justify-content: center;
+  /* flex-flow: row nowrap; */
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
 
-    background-color: #bbdefb;
-    height: 100%;
-    padding: 15px;
-    gap: 5px;
-    width: 100%;
-
-  }
+  background-color: #bbdefb;
+  height: 100%;
+  padding: 15px;
+  gap: 5px;
+  width: 100%;
+}
+/* sobre nosotros */

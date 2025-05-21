@@ -2,27 +2,32 @@
 require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
 require_once './includes/config.php'; // Configuración de la base de datos  
 require_once './includes/functions.php'; // Funciones auxiliares
-if (isset($_POST['actualizar'])) {
+if (isset($_POST['Eliminar'])) {
     $password_usuario = password_usuario();
     # Prevenir inyecciones SQL
-    if (password_verify(password: $_POST['password_usuario'], hash: $password_usuario)) {
-        if ($_POST['password_nueva'] == $_POST['password_confirmar']) {
-            $password_nueva = password_hash($_POST['password_nueva'], PASSWORD_ARGON2I);
-            $consulta = $conexion_bbdd->prepare(query: "UPDATE usuarios SET password=? WHERE user_id=?");
-            $consulta->bind_param("si", $password_nueva, $_SESSION['user_id']);
-            $consulta->execute();
-            $consulta->close();
-            header(header: "Location:./home.php");
-            exit();
+    if ($_POST['password_usuario'] == $_POST['password_confirmar']) {
+        if (password_verify(password: $_POST['password_usuario'], hash: $password_usuario)) {
+            if (strtoupper($_POST['seguro']) == "SI") {
+                $consulta = $conexion_bbdd->prepare(query: "DELETE FROM usuarios WHERE user_id = ?");
+                $consulta->bind_param("i", $_SESSION['user_id']);
+                $consulta->execute();
+                $consulta->close();
+                header(header: "Location:./auth/logout.php");
+                exit();
+            } else {
+                header(header: "Location:./eliminar_cuenta.php?errPassw=0");
+                exit();
+            }
         } else {
-            header(header: "Location:./cambiar_password.php?errPassw=0");
+            header(header: "Location:./eliminar_cuenta.php?errPassw=1");
             exit();
         }
     } else {
-        header(header: "Location:./cambiar_password.php?errPassw=1");
+        header(header: "Location:./eliminar_cuenta.php?errPassw=2");
         exit();
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,27 +61,38 @@ if (isset($_POST['actualizar'])) {
                 <div><img src="./assets/images/profile-default.png" width="30%" alt="Foto de perfil"></div>
             </div>
             <div>
-                Ingresa tu nueva contraseña despues
+                ¿Eliminar tu cuenta?
+            </div>
+            <div>
+                <ul>
+                    <li>Una vez eliminada, no podrás recuperar nada de lo que había en tu cuenta.</li>
+                    <li>Asegúrate de haber descargado o respaldado cualquier contenido o información importante antes de eliminar tu cuenta.</li>
+                    <li>La eliminación de la cuenta es permanente y no se puede deshacer.</li>
+                </ul>
+
             </div>
             <div style="background-color: white;">
-                <form action="cambiar_password.php" method="POST">
-                    <label for="password_usuario">Antigua contraseña</label><br>
+                <form action="eliminar_cuenta.php" method="POST">
+                    <label for="password_usuario">Contraseña</label><br>
                     <input type="password" name="password_usuario" id="password_usuario" required><br>
-                    <label for="password_nueva">Nueva contraseña</label><br>
-                    <input type="password" name="password_nueva" id="password_nueva" required><br>
                     <label for="password_confirmar">Confirmar contraseña</label><br>
                     <input type="password" name="password_confirmar" id="password_confirmar" required><br><br>
-                    <div style="width: 350px;">Te recomendamos elegir una nueva contraseña con al menos 8 caracteres, que combine letras mayúsculas, minúsculas, números y símbolos para asegurar la protección de tu cuenta. Evita usar contraseñas comunes o fáciles de adivinar, como fechas de nacimiento o palabras relacionadas contigo.</div><br>
-                    <input type="submit" value="Cambiar contraseña" name="actualizar">
+                    <label for="seguro">¿Estás seguro?</label>
+                    <input type="radio" name="seguro" id="seguro_no" value="Si" required>Si</input>
+                    <input type="radio" name="seguro" id="seguro_si" value="No" required>No</input><br>
+                    <input type="submit" value="Eliminar cuenta" name="Eliminar">
                 </form>
                 <?php
                 if (isset($_GET['errPassw'])) {
                     switch ($_GET['errPassw']) {
                         case 0:
-                            echo "<div class='alert alert-danger' role='alert'>Las contraseñas nuevas no coinciden</div>";
+                            echo "<div class='alert alert-danger' role='alert'>No se elimina la cuenta, por que no estas seguro.</div>";
                             break;
                         case 1:
-                            echo "<div class='alert alert-danger' role='alert'>La contraseña antigua es incorrecta</div>";
+                            echo "<div class='alert alert-danger' role='alert'>La contraseña proporcionada, no es la contraseña de la cuenta.</div>";
+                            break;
+                        case 2:
+                            echo "<div class='alert alert-danger' role='alert'>Las contraseñas no coinciden.</div>";
                             break;
                     }
                 }

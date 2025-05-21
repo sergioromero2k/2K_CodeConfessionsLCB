@@ -1,5 +1,6 @@
 <?php
 require_once './includes/config.php';
+require_once './includes/functions.php'; // Funciones auxiliares
 try {
     # Prevenir inyecciones SQL
     if (isset($_POST['registrarse'])) {

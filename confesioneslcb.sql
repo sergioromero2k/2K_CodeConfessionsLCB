@@ -198,6 +198,11 @@ VALUES
         'Universidad Pontificia Comillas',
         'Madrid',
         'España'
+    ),
+        (
+        'Otro',
+        'Otro',
+        'España'
     );
 
 INSERT INTO

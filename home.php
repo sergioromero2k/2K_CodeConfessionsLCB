@@ -23,7 +23,7 @@ require_once './includes/functions.php'; // Funciones auxiliares
     ?>
     <button><a href="editar_perfil.php">Editar perfil</a></button><br>
     <button><a href="cambiar_password.php">Cambiar Contraseña</a></button><br>
-    <button>Eliminar Cuenta</button><br>
+    <button><a href="eliminar_cuenta.php">Eliminar Cuenta</a></button><br>
     <?php
     echo "<button><a href='./auth/logout.php'>Cerrar sesion</a></button><br>";
     ?>

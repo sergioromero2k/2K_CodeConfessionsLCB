@@ -73,7 +73,6 @@ if (isset($_POST['actualizar'])) {
                     <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php fecha_nacimiento_usuario(); ?>"><br>
                     <label for="universidad">Universidad o Instituto</label><br>
                     <select name="universidad" id="universidad">
-                        <option value="<?php echo universidad_usuario_id() ?>" selected><?php universidad_usuario() ?></option>
                         <?php
                         universidades();
                         ?>
@@ -91,7 +90,6 @@ if (isset($_POST['actualizar'])) {
                 ?>
             </div>
         </div>
-
 
     </section>
 
