@@ -16,7 +16,7 @@ function universidad_usuario_id(): mixed
 }
 function universidad_usuario(): void
 {
-    $universidad_id = universidad_usuario_id();
+    $universidad_id=universidad_usuario_id();
     global $conexion_bbdd;
     $resultado = $conexion_bbdd->query(query: "SELECT universidad FROM universidades WHERE universidad_id = $universidad_id");
     $resultado = $resultado->fetch_assoc();
@@ -25,15 +25,10 @@ function universidad_usuario(): void
 function universidades(): void
 {
     global $conexion_bbdd;
-    $universidad_usuario_id = universidad_usuario_id();
     $universidad = "SELECT * FROM universidades";
     $universidad = $conexion_bbdd->query(query: $universidad);
     while ($fila = $universidad->fetch_assoc()) {
-        $selected = "";
-        if ($fila['universidad_id'] == $universidad_usuario_id) {
-            $selected = "selected";
-        }
-        echo "<option value='$fila[universidad_id]' $selected >$fila[universidad]</option>";
+        echo "<option value='$fila[universidad_id]'>$fila[universidad]</option>";
     }
 }
 function generos(): void

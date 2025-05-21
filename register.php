@@ -56,6 +56,7 @@ try {
             <label for="universidad">Universidad o Instituto</label><br>
             <select name="universidad" id="universidad">
                 <?php
+                // Función para mostrar las universidades
                 universidades();
                 ?>
             </select><br>

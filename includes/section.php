@@ -2,14 +2,13 @@
 require_once './includes/config.php';
 require_once './includes/functions.php'; // Funciones auxiliares
 require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-if(isset($_POST['publicar_publicacion'])) {
-    $universidad_publi = $_POST['universidad_publi'];
-    $publicacion = $_POST['publicacion'];
-    $user_id = $_SESSION['user_id'];
-    $insertar = $conexion_bbdd->prepare(query: "INSERT INTO publicaciones (universidad_id, user_id, publicacion) VALUES (?, ?, ?)");
-    $insertar->bind_param("iis", $universidad_publi, $user_id, $publicacion);
+if (isset($_POST['publicar_publicacion'])) {
+    $insertar = $conexion_bbdd->prepare(query: "INSERT INTO publicaciones ( user_id,universidad_id, contenido) VALUES (?, ?, ?)");
+    $insertar->bind_param("iis", $_SESSION['user_id'], $_POST['universidad_a_publicar'], $_POST['contenido']);
     $insertar->execute();
     $insertar->close();
+    header(header: "Location: home.php");
+    exit();
 }
 ?>
 <section>
@@ -50,54 +49,20 @@ if(isset($_POST['publicar_publicacion'])) {
                 <div>
                     <h5>Mensaje</h5>
                     <form action="home.php" method="post">
-                        <select name="universidad_publi" id="universidad_publi">
+                        <select name="universidad_a_publicar" id="universidad_a_publicar">
                             <?php
                             universidades();
                             ?>
                         </select><br><br>
-                        <textarea name="publicacion" id="publicacion" placeholder="¿Sobre qué quiere hablar?" cols="30" rows="5" style="width: 100%;"></textarea><br><br>
+                        <textarea name="contenido" id="contenido" placeholder="¿Sobre qué quiere hablar?" cols="30" rows="5" style="width: 100%;"></textarea><br><br>
                         <input type="submit" value="Publicar" name="publicar_publicacion">
                     </form>
                 </div>
             </div>
         </div>
+        <?php
+        require_once './includes/article.php'; // Muestra las publicaciones
+        ?>
 
-        <!-- Timeline -->
-        <div style="width: 65%;height: 100%;">
-            <div style="padding: 10px;">
-                <p><strong>Timeline</strong></p>
-                <form action="home.php" method="post">
-                    <select name="universidad_timeline" id="universidad_timeline">
-                        <?php
-                        universidades();
-                        ?>
-                    </select>
-                </form>
-                <hr>
-
-                <!-- Publicación -->
-                <div class="flex" style="display: flex; background-color: green; padding: 10px; border-radius: 5px;">
-                    <div style="background-color: red; width: 15%; text-align: center;">
-                        <img src="./assets/images/profile-default.png" alt="Foto de perfil" style="width: 100%; border-radius: 50%;">
-                    </div>
-                    <div style="background-color: blue; width: 85%; padding-left: 10px; color: white;">
-                        <h3 style="margin: 0;"> <?php
-                                                nombre_usuario();
-                                                ?></h3>
-                        <p style="margin: 0;"><b> <?php
-                                                    universidad_usuario();
-                                                    ?></b></p>
-                        <p style="background-color: aqua; color: black; padding: 5px; border-radius: 4px;">Hola, ¿cómo están?</p>
-                        <div class="flex flex-around" style="display: flex; justify-content: space-around; margin-top: 10px;">
-                            <button><i class="fa-solid fa-thumbs-up"></i> Me gusta</button>
-                            <button><i class="fa-solid fa-thumbs-down"></i> No me gusta</button>
-                            <button><i class="fa-solid fa-comment"></i> Comentar</button>
-                            <button><i class="fa-solid fa-ban"></i> Reportar</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
 </section>

@@ -43,10 +43,12 @@ CREATE TABLE
     `publicaciones` (
         `publicacion_id` INT AUTO_INCREMENT PRIMARY KEY,
         `user_id` INT NOT NULL,                           -- Del creador de la publicacion
+        `universidad_id` INT NOT NULL,
         `contenido` TEXT,
         `fecha_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
         `actualizado_en` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         CONSTRAINT fk_publicaciones_usuarios FOREIGN KEY (user_id) REFERENCES usuarios (user_id) ON UPDATE CASCADE ON DELETE CASCADE
+        CONSTRAINT fk_publicaciones_universidades FOREIGN KEY (universidad_id) REFERENCES universidades (universidad_id) ON UPDATE CASCADE ON DELETE RESTRICT
     );
 
 # Tabla tipos de notificaciones
