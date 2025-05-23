@@ -8,9 +8,9 @@
             </div>
             <div class="flex-container-nav-right flex-container-border">
                 <div><i class="fa-solid fa-bell"></i> Notificaciones</div>
-                <div><i class="fa-solid fa-user"></i> <?php
-                nombre_usuario();
-                ?></div>
+                <div><a href="mi_perfil.php"><i class="fa-solid fa-user"></i> <?php
+                                                                        nombre_usuario();
+                                                                        ?></a></div>
             </div>
         </div>
     </nav>

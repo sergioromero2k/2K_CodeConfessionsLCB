@@ -16,7 +16,7 @@ function universidad_usuario_id(): mixed
 }
 function universidad_usuario(): void
 {
-    $universidad_id=universidad_usuario_id();
+    $universidad_id = universidad_usuario_id();
     global $conexion_bbdd;
     $resultado = $conexion_bbdd->query(query: "SELECT universidad FROM universidades WHERE universidad_id = $universidad_id");
     $resultado = $resultado->fetch_assoc();
@@ -56,4 +56,12 @@ function password_usuario(): mixed
     $password = $conexion_bbdd->query(query: $password);
     $password = $password->fetch_assoc();
     return $password['password'];
+}
+
+function mostrar_dato(string $dato, string $tabla, string $where, int $user_id): mixed
+{
+    global $conexion_bbdd;
+    $resultado = $conexion_bbdd->query(query: "SELECT $dato FROM $tabla WHERE $where =" . $user_id);
+    $resultado = $resultado->fetch_assoc();
+    return $resultado[$dato];
 }

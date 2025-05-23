@@ -2,7 +2,8 @@
 require_once './includes/config.php';
 require_once './includes/functions.php'; // Funciones auxiliares
 require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-if (isset($_POST['publicar_publicacion'])) {
+
+if (isset($_POST['publicar_publicacion']) and !empty($_POST['contenido'])) {
     $insertar = $conexion_bbdd->prepare(query: "INSERT INTO publicaciones ( user_id,universidad_id, contenido) VALUES (?, ?, ?)");
     $insertar->bind_param("iis", $_SESSION['user_id'], $_POST['universidad_a_publicar'], $_POST['contenido']);
     $insertar->execute();
@@ -54,7 +55,7 @@ if (isset($_POST['publicar_publicacion'])) {
                             universidades();
                             ?>
                         </select><br><br>
-                        <textarea name="contenido" id="contenido" placeholder="¿Sobre qué quiere hablar?" cols="30" rows="5" style="width: 100%;"></textarea><br><br>
+                        <textarea name="contenido" id="contenido" placeholder="¿Sobre qué quiere hablar?" cols="30" rows="5" style="width: 100%;" required></textarea><br><br>
                         <input type="submit" value="Publicar" name="publicar_publicacion">
                     </form>
                 </div>

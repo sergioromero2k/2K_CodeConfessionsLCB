@@ -23,22 +23,15 @@ require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
 
         while ($fila = $resultado->fetch_assoc()) {
             // Obtener el nombre del usuario
-            $resultado_usuario = $conexion_bbdd->query("SELECT nombre FROM usuarios WHERE user_id = " . $fila['user_id']);
-            $resultado_usuario = $resultado_usuario->fetch_assoc();
-            $resultado_usuario = $resultado_usuario['nombre'];
-
-            // Obtener el nombre de la universidad de la publicación
-            $resultado_universidad = $conexion_bbdd->query("SELECT universidad FROM universidades WHERE universidad_id = " . $fila['universidad_id']);
-            $resultado_universidad = $resultado_universidad->fetch_assoc();
-            $resultado_universidad = $resultado_universidad['universidad'];
-
+            $resultado_usuario = mostrar_dato(dato: 'nombre', tabla: 'usuarios', where: 'user_id', user_id: $fila['user_id']);
+            $resultado_universidad = mostrar_dato(dato: 'universidad', tabla: 'universidades', where: 'universidad_id', user_id: $fila['universidad_id']);
             echo "<div class='flex' style='display: flex; background-color: green; padding: 10px; border-radius: 5px;'>";
             echo "<div style='background-color: red; width: 15%; text-align: center;'>";
             echo "<img src='./assets/images/profile-default.png' alt='Foto de perfil' style='width: 100%; border-radius: 50%;'>";
             echo "</div>";
             echo "<div style='background-color: blue; width: 85%; padding-left: 10px; color: white;'>";
             echo "<h3 style='margin: 0;'>" . $resultado_usuario . "</h3><br>";
-            
+
             echo "<p style='margin: 0;'><b>" . $resultado_universidad . "</b></p>";
             echo "<p style='background-color: aqua; color: black; padding: 5px; border-radius: 4px;'>" . $fila['contenido'] . "</p>";
             echo "<div class='flex flex-around' style='display: flex; justify-content: space-around; margin-top: 10px;'>";
