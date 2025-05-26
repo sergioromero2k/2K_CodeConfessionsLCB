@@ -1,12 +1,14 @@
 - poner bootstrap, css y diseño.
-- notificaciones con ajaxy javascript.
-- poner en publicaciones scroll con ajax.
 - Acabar tfg (PDF).
 
-- ver publicaciones, me gsutas, no me gustas.
-- poner foto de perfil.
+- ver publicaciones, me gustas, no me gustas. pendiente 1 estoo hacerlo ***
+- poner foto de perfil. pendiente 1 **
+- condicion para poner contraseña. pendiente 1 **
+- ver contraseña olvidada y crear cuenta. CORREO ELECTRONICO pendiente **
+- comentar publicacion. pendiente 1 **
+- si es mi publicacion sube el like QUEDASTE AQUI
 
 - poner pagina de buscador, ajax, javascript.
-- ver contraseña olvidada y crear cuenta. CORREO ELECTRONICO
-- condicion para poner contraseña.
-- comentar publicacion.
+- notificaciones con ajaxy javascript.
+- poner en publicaciones scroll con ajax.
+

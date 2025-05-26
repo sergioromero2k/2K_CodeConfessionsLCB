@@ -65,3 +65,35 @@ function mostrar_dato(string $dato, string $tabla, string $where, int $user_id):
     $resultado = $resultado->fetch_assoc();
     return $resultado[$dato];
 }
+function mostrar_reaccion(int $publicacion_id, $tipo): int
+{
+    global $conexion_bbdd;
+    $resultado = $conexion_bbdd->query(query: "SELECT COUNT(*) as total FROM reacciones WHERE publicacion_id = $publicacion_id 
+    AND tipo = '$tipo'");
+    if (!$resultado) {
+        return 0; // Si no hay resultados, retornamos 0
+    }
+    $resultado = $resultado->fetch_assoc();
+    return (int)$resultado['total']; // Aseguramos que el resultado sea un entero
+}
+function total_reacciones_user(int $user_id, $tipo): int
+{
+    global $conexion_bbdd;
+    $resultado = $conexion_bbdd->query(query: "SELECT COUNT(*) as total FROM reacciones WHERE user_id = $user_id 
+    AND tipo = '$tipo'");
+    if (!$resultado) {
+        return 0; // Si no hay resultados, retornamos 0
+    }
+    $resultado = $resultado->fetch_assoc();
+    return (int)$resultado['total']; // Aseguramos que el resultado sea un entero
+}
+function total_publicaciones_user(int $user_id,): int
+{
+    global $conexion_bbdd;
+    $resultado = $conexion_bbdd->query(query: "SELECT COUNT(*) as total FROM publicaciones WHERE user_id = $user_id");    
+    if (!$resultado) {
+        return 0; # Si no hay resultados, retornamos 0
+    }
+    $resultado = $resultado->fetch_assoc();
+    return (int)$resultado['total']; # Aseguramos que el resultado sea un entero
+}

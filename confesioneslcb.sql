@@ -28,6 +28,7 @@ CREATE TABLE
         `nombre` VARCHAR(50) NOT NULL,
         `apellido` VARCHAR(50) NOT NULL,
         `fecha_nacimiento` DATE NOT NULL,
+        `profile_image` VARCHAR(255) DEFAULT NULL, -- Ruta de la imagen redimensionada (256x256)
         `verificado` TINYINT(1) DEFAULT 0,
         `token_activacion` VARCHAR(255),
         `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -50,6 +51,18 @@ CREATE TABLE
         CONSTRAINT fk_publicaciones_usuarios FOREIGN KEY (user_id) REFERENCES usuarios (user_id) ON UPDATE CASCADE ON DELETE CASCADE
         CONSTRAINT fk_publicaciones_universidades FOREIGN KEY (universidad_id) REFERENCES universidades (universidad_id) ON UPDATE CASCADE ON DELETE RESTRICT
     );
+
+# Tabla de reacciones (likes/dislikes)
+CREATE TABLE `reacciones` (
+    `reaccion_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,                          -- Usuario que da like/dislike
+    `publicacion_id` INT NOT NULL,                   -- Publicación que reacciona
+    `tipo` ENUM('like', 'dislike') NOT NULL,
+    `fecha_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_reaccion_usuario FOREIGN KEY (user_id) REFERENCES usuarios(user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_reaccion_publicacion FOREIGN KEY (publicacion_id) REFERENCES publicaciones(publicacion_id) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_reaccion (user_id, publicacion_id)  -- Un usuario solo puede reaccionar una vez por publicación
+);
 
 # Tabla tipos de notificaciones
 CREATE TABLE `tipos_notificaciones`(
