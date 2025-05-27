@@ -79,18 +79,21 @@ function mostrar_reaccion(int $publicacion_id, $tipo): int
 function total_reacciones_user(int $user_id, $tipo): int
 {
     global $conexion_bbdd;
-    $resultado = $conexion_bbdd->query(query: "SELECT COUNT(*) as total FROM reacciones WHERE user_id = $user_id 
-    AND tipo = '$tipo'");
-    if (!$resultado) {
-        return 0; // Si no hay resultados, retornamos 0
+    $cuenta_publicaciones = "SELECT publicacion_id as total FROM publicaciones WHERE user_id = $user_id";
+    $cuenta_publicaciones = $conexion_bbdd->query(query: $cuenta_publicaciones);
+    $reacciones = array();
+    while ($fila = $cuenta_publicaciones->fetch_assoc()) {
+        $publicacion_id = $fila['total'];
+        $resultado = $conexion_bbdd->query(query: "SELECT count(*) as total FROM reacciones WHERE tipo = '$tipo' AND publicacion_id=$publicacion_id");    
+        array_push($reacciones, $resultado->fetch_assoc()['total']);
     }
-    $resultado = $resultado->fetch_assoc();
-    return (int)$resultado['total']; // Aseguramos que el resultado sea un entero
+    $total_reacciones = array_sum($reacciones); // Suma todas las reacciones
+    return (int) $total_reacciones; // Aseguramos que el resultado sea un entero
 }
 function total_publicaciones_user(int $user_id,): int
 {
     global $conexion_bbdd;
-    $resultado = $conexion_bbdd->query(query: "SELECT COUNT(*) as total FROM publicaciones WHERE user_id = $user_id");    
+    $resultado = $conexion_bbdd->query(query: "SELECT COUNT(*) as total FROM publicaciones WHERE user_id = $user_id");
     if (!$resultado) {
         return 0; # Si no hay resultados, retornamos 0
     }

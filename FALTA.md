@@ -1,7 +1,6 @@
 - poner bootstrap, css y diseño.
 - Acabar tfg (PDF).
 
-- ver publicaciones, me gustas, no me gustas. pendiente 1 estoo hacerlo ***
 - poner foto de perfil. pendiente 1 **
 - condicion para poner contraseña. pendiente 1 **
 - ver contraseña olvidada y crear cuenta. CORREO ELECTRONICO pendiente **
@@ -12,3 +11,11 @@
 - notificaciones con ajaxy javascript.
 - poner en publicaciones scroll con ajax.
 
+
+
+
+
+--------
+LISTO
+--------
+- ver publicaciones, me gustas, no me gustas. 
