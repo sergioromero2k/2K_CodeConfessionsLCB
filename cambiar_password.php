@@ -6,17 +6,25 @@ if (isset($_POST['actualizar'])) {
     $password_usuario = password_usuario();
     # Prevenir inyecciones SQL
     if (password_verify(password: $_POST['password_usuario'], hash: $password_usuario)) {
-        if ($_POST['password_nueva'] == $_POST['password_confirmar']) {
-            $password_nueva = password_hash($_POST['password_nueva'], PASSWORD_ARGON2I);
-            $consulta = $conexion_bbdd->prepare(query: "UPDATE usuarios SET password=? WHERE user_id=?");
-            $consulta->bind_param("si", $password_nueva, $_SESSION['user_id']);
-            $consulta->execute();
-            $consulta->close();
-            header(header: "Location:./home.php");
+        $password_nueva = $_POST['password_nueva'];
+        $password_confirmar = $_POST['password_confirmar'];
+        $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/'; // Expresión regular para validar la contraseña
+        if (!preg_match(pattern: $pattern, subject: $password_nueva)) {
+            header(header: "Location:./cambiar_password.php?errPassw=2");
             exit();
         } else {
-            header(header: "Location:./cambiar_password.php?errPassw=0");
-            exit();
+            if ($_POST['password_nueva'] == $_POST['password_confirmar']) {
+                $password_nueva = password_hash($_POST['password_nueva'], PASSWORD_ARGON2I);
+                $consulta = $conexion_bbdd->prepare(query: "UPDATE usuarios SET password=? WHERE user_id=?");
+                $consulta->bind_param("si", $password_nueva, $_SESSION['user_id']);
+                $consulta->execute();
+                $consulta->close();
+                header(header: "Location:./home.php");
+                exit();
+            } else {
+                header(header: "Location:./cambiar_password.php?errPassw=0");
+                exit();
+            }
         }
     } else {
         header(header: "Location:./cambiar_password.php?errPassw=1");
@@ -78,6 +86,9 @@ if (isset($_POST['actualizar'])) {
                         case 1:
                             echo "<div class='alert alert-danger' role='alert'>La contraseña antigua es incorrecta</div>";
                             break;
+                        case 2:
+                            echo "<div class='alert alert-danger' role='alert'>La nueva contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.</div>";
+                            break;
                     }
                 }
                 ?>
@@ -86,8 +97,6 @@ if (isset($_POST['actualizar'])) {
 
 
     </section>
-
-
     <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

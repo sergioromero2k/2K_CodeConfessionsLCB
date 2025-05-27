@@ -4,19 +4,44 @@ require_once './includes/functions.php'; // Funciones auxiliares
 try {
     # Prevenir inyecciones SQL
     if (isset($_POST['registrarse'])) {
-        // # Configuración global
-        $contraseña = $conexion_bbdd->real_escape_string($_POST['contrase']);
-        $password_hash = password_hash($contraseña, PASSWORD_ARGON2ID);
-        $token_activacion = bin2hex(random_bytes(length: 32));
-        $insertar = $conexion_bbdd->prepare(query: "INSERT INTO usuarios (email, password, nombre, apellido, fecha_nacimiento, token_activacion,genero_id,universidad_id) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
-        $insertar->bind_param("ssssssii", $_POST['email'], $password_hash, $_POST['nombres'], $_POST['apellidos'], $_POST['fecha_nacimiento'], $token_activacion, $_POST['genero'], $_POST['universidad']);
-        $insertar->execute();
-        $insertar->close();
-        header(header: "Location: index.php");
-        $conexion_bbdd->close();
+        $contraseña = $_POST['contrase'];
+        $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/'; // Expresión regular para validar la contraseña
+        if (!preg_match(pattern: $pattern, subject: $contraseña)) {
+            header(header: "Location:register.php?errCrear=0");
+            exit();
+        } else {
+            # Configuración global
+            $contraseña = $conexion_bbdd->real_escape_string($_POST['contrase']);
+            $password_hash = password_hash($contraseña, PASSWORD_ARGON2ID);
+            $token_activacion = bin2hex(random_bytes(length: 32));
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                header(header: "Location:register.php?errCrear=4");
+                exit();
+            } else {
+                $insertar = $conexion_bbdd->prepare(query: "INSERT INTO usuarios (email, password, nombre, apellido, fecha_nacimiento, token_activacion,genero_id,universidad_id) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+                $insertar->bind_param("ssssssii", $_POST['email'], $password_hash, $_POST['nombres'], $_POST['apellidos'], $_POST['fecha_nacimiento'], $token_activacion, $_POST['genero'], $_POST['universidad']);
+                $insertar->execute();
+                $insertar->close();
+                header(header: "Location: index.php");
+                $conexion_bbdd->close();
+            }
+        }
     }
 } catch (Throwable $t) {
-    echo 'Error grave: ' . $t->getMessage();
+    // Manejo de errores
+    switch ($t->getCode()) {
+        case 1062: // Error de clave duplicada
+            header(header: "Location: register.php?errCrear=1");
+            exit();
+        case 1048: // Error de campo no nulo
+            header(header: "Location: register.php?errCrear=2");
+            exit();
+        default:
+            if ($t->getMessage()) {
+                header(header: "Location: register.php?errCrear=3");
+                exit();
+            }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -48,7 +73,7 @@ try {
             <label for="genero">Género</label><br>
             <?php
             $tabla_generos = $conexion_bbdd->query("SELECT * FROM generos");
-            while($fila = $tabla_generos->fetch_assoc()) {
+            while ($fila = $tabla_generos->fetch_assoc()) {
                 echo "<input type='radio' name='genero' class='genero' value='$fila[genero_id]'>$fila[genero]</input>";
             }
             ?>
@@ -61,10 +86,31 @@ try {
                 ?>
             </select><br>
             <input type="email" name="email" id="email" placeholder="Correo Electrónico"><br>
-            <input type="password" name="contrase" id="contrase" placeholder="Contraseña Nueva"><br>
+            <input type="password" name="contrase" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo." id="password_usuario" placeholder="Contreseña" id="contrase" placeholder="Contraseña Nueva"><br>
             <input type="submit" value="Registrarse" name="registrarse"><br>
             <a href="./index.php">¿Ya tienes una cuenta?</a>
         </form>
+        <?php
+        if (isset($_GET['errCrear'])) {
+            switch ($_GET['errCrear']) {
+                case 0:
+                    echo "<div class='alert alert-danger'>La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.</div>";
+                    break;
+                case 1:
+                    echo "<div class='alert alert-danger'>El correo electrónico ya está registrado.</div>";
+                    break;
+                case 2:
+                    echo "<div class='alert alert-danger'>Por favor, rellena todos los campos requeridos.</div>";
+                    break;
+                case 3:
+                    echo "<div class='alert alert-danger'>Error, inténtelo más tarde.</div>";
+                    break;
+                case 4:
+                    echo "<div class='alert alert-danger'>Formato de email inválido.</div>";
+                    break;
+            }
+        }
+        ?>
     </article>
     <footer>reglas blabla</footer>
 

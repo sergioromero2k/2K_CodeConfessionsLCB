@@ -47,6 +47,7 @@
                     case 3: 
                         echo "<div class='alert alert-danger'>Rellenar los campos solicitados</div>";
                         break;
+
                 }
             }
             ?>
