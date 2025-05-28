@@ -1,13 +1,14 @@
 - poner bootstrap, css y diseño.
 - Acabar tfg (PDF).
 
-- ver contraseña olvidada y crear cuenta. CORREO ELECTRONICO pendiente **
-- comentar publicacion. pendiente 1 **
-- restring publicacion
+- ver contraseña olvidada y crear cuenta. CORREO ELECTRONICO pendiente ** AHORA
+- comentar publicacion. pendiente 1 **  AHORA nose si has creado comentar, tambien diseño de comentar
+- restring y borrar publicacion  AHORA
 
 - poner pagina de buscador, ajax, javascript.
 - notificaciones con ajaxy javascript.
 - poner en publicaciones scroll con ajax.
+- condicion de tiempo de sesion.
 
 
 --------

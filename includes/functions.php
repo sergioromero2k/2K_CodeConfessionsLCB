@@ -145,3 +145,4 @@ function mostrar_foto_perfil(int $user_id, $imagen_defecto): string
     // Si no se encuentra la imagen del perfil o no existe, retornar la imagen por defecto
     return  $imagen_defecto; // Retorna la imagen por defecto si no se encuentra
 }
+

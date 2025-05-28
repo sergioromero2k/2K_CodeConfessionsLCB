@@ -1,9 +1,9 @@
-<?php   
-    session_start();
-    if(isset($_SESSION['user_id'])) {
-        header(header: "Location:./home.php");
-        exit();
-    }
+<?php
+session_start();
+if (isset($_SESSION['user_id'])) {
+    header(header: "Location:./home.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,8 +33,8 @@
             <hr>
             <input type="submit" value="Iniciar Sesión" name="Enviar">
             <?php
-            if(isset($_GET['errAuth'])){
-                switch($_GET['errAuth']){
+            if (isset($_GET['errAuth'])) {
+                switch ($_GET['errAuth']) {
                     case 0:
                         echo "<div class='alert alert-danger'>Contraseña incorrecta</div>";
                         break;
@@ -43,12 +43,28 @@
                         break;
                     case 2:
                         echo "<div class='alert alert-danger'>El correo electrónico que ingresaste no está conectado a una cuenta.</div>";
-                        break;  
-                    case 3: 
+                        break;
+                    case 3:
                         echo "<div class='alert alert-danger'>Rellenar los campos solicitados</div>";
                         break;
-
                 }
+            }
+            if (isset($_SESSION['activacion'])) {
+                switch ($_SESSION['activacion']) {
+                    case 0:
+                        echo "<div class='alert alert-success'>Cuenta activada correctamente, ya puedes iniciar sesión.</div>";
+                        break;
+                    case 1:
+                        echo "<div class='alert alert-danger'>Error al activar la cuenta, por favor intente de nuevo.</div>";
+                        break;
+                    case 2:
+                        echo "<div class='alert alert-danger'>La cuenta ya esta activada.</div>";
+                        break;
+                    case 3:
+                        echo "<div class='alert alert-danger'>Token inválido o no existe.</div>";
+                        break;
+                }
+                unset($_SESSION['activacion']); // Limpiar la variable de sesión después de mostrar el mensaje
             }
             ?>
         </form>

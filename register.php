@@ -1,6 +1,15 @@
 <?php
 require_once './includes/config.php';
 require_once './includes/functions.php'; // Funciones auxiliares
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+# Como no usa composer necesitamos importar las clases de PHPMailer manualmente
+require './PHPMailer/Exception.php';
+require './PHPMailer//PHPMailer.php';
+require './PHPMailer/SMTP.php';
+
 try {
     # Prevenir inyecciones SQL
     if (isset($_POST['registrarse'])) {
@@ -24,9 +33,43 @@ try {
                 $insertar->close();
                 header(header: "Location: index.php");
                 $conexion_bbdd->close();
+                $email_enviar = $_POST['email'];
+                $nombre_usuario = $_POST['nombres'];
+                // Codigo sacado de https://github.com/PHPMailer/PHPMailer
+                $mail = new PHPMailer(exceptions: true);
+                try {
+                    //Server settings
+                    $mail->SMTPDebug = 0;                                       //Enable verbose debug output
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'mr.sergioromero2k@gmail.com';                     //SMTP username
+                    $mail->Password   = 'cdttknsfsovenupu';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                    //Recipients
+                    $mail->setFrom('mr.sergioromero2k@gmail.com', 'Confesiones LCB');
+                    $mail->addAddress($email_enviar);                     //Add a recipient
+                    //Content
+                    $mail->isHTML(true);  // Establecer formato HTML
+
+                    $mail->Subject = 'Activa tu cuenta en Confensiones LCB';
+
+                    $mail->Body = '
+                                    <h2>¡Bienvenido ' . $nombre_usuario . '!</h2>
+                                    <p>Gracias por registrarte. Estas a un paso de ser parte de nosotros!!</p>
+                                    <p>Para activar tu cuenta, por favor haz clic en el siguiente enlace: <a href="http://localhost/CodeConfessionsLCB/activar_cuenta.php?token=' . $token_activacion . '">Activar cuenta</a></p>
+                                    <p>Si no fuiste tú quien creó esta cuenta, puedes ignorar este mensaje.</p>
+                                    <p>Salu2<br>El equipo de LCB</p>';
+                    $mail->send();
+                } catch (Exception $e) {
+                    echo "No se ha podido enviar el mensaje. Error del remitente: {$mail->ErrorInfo}";
+                }
             }
         }
     }
+    
 } catch (Throwable $t) {
     // Manejo de errores
     switch ($t->getCode()) {
