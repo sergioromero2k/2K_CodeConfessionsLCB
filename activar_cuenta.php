@@ -13,7 +13,6 @@ if (isset($token) && !empty($token)) {
         $consulta = $conexion_bbdd->prepare("UPDATE usuarios SET verificado=1, token_activacion=NULL WHERE token_activacion=?");
         $consulta->bind_param("s", $token);
         if ($consulta->execute()) {
-
             $_SESSION['activacion'] = 0; // Indica que la activación fue exitosa
         } else {
             $_SESSION['activacion'] = 1;
@@ -21,7 +20,7 @@ if (isset($token) && !empty($token)) {
         header(header: "Location: index.php");
         exit();
     } else {
-        $_SESSION['activacion'] = 2; // Indica que el token es inválido o no existe
+        $_SESSION['activacion'] = 2; // La cuenta ya esta activada
         header(header: "Location: index.php");
         exit();
     }

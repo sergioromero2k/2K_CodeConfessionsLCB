@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ebebeb;
+}
+.card-form {
+  width: 110%;
+  max-width: 600px;
+  margin: 0% 5%;
+  background-color: #f8f9fa;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.article-caja {
+  margin: 10% 0% 10% 0%;
+}
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+label {
+  font-weight: bold;
+  color: #929292;
+  font-style: italic;
+}
+input{
+    margin: 0.8rem 0.1rem;
+}
+
+.custom-select {
+    background-color: #f8f9fa; /* Color de fondo */
+    color: #495057; /* Color del texto */
+    padding: 10px; /* Espaciado interno */
+    transition: border-color 0.3s ease; /* Transición suave para el borde */
+    border-radius: 0.5rem
+}
+
+.custom-select:focus {
+    border-color: #007bff; /* Color del borde al enfocar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra al enfocar */
+}
+
+.form-control {
+    background-color: #f8f9fa; /* Color de fondo */
+    color: #495057; /* Color del texto */
+    padding: 10px; /* Espaciado interno */
+    transition: border-color 0.3s ease; /* Transición suave para el borde */
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Color del borde al enfocar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra al enfocar */
+}

@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #EBEBEB;
+}
+.card-form {
+  width: 50%;
+  max-width: 500px;
+  margin: 0% 5%;
+  background-color: #f8f9fa;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.article-caja {
+  margin: 10% 0% 10% 0%;
+}
+a{
+    text-decoration: none;
+    color: #000000;
+}
+label {
+    color: #929292;
+    font-style: italic;
+    margin: 0.5rem
+}
+input {
+    margin: 0.8rem 0.05rem;
+}

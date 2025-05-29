@@ -69,19 +69,22 @@ try {
             }
         }
     }
-    
 } catch (Throwable $t) {
+    session_start();
     // Manejo de errores
     switch ($t->getCode()) {
         case 1062: // Error de clave duplicada
-            header(header: "Location: register.php?errCrear=1");
+            $_SESSION['errCrear'] = 1; // Correo electrónico ya registrado
+            header(header: "Location: register.php?");
             exit();
         case 1048: // Error de campo no nulo
-            header(header: "Location: register.php?errCrear=2");
+            $_SESSION['errCrear'] = 2; // Campos requeridos no completados
+            header(header: "Location: register.php?");
             exit();
         default:
             if ($t->getMessage()) {
-                header(header: "Location: register.php?errCrear=3");
+                $_SESSION['errCrear'] = 3; // Error genérico
+                header(header: "Location: register.php?");
                 exit();
             }
     }
@@ -96,70 +99,88 @@ try {
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/register.css">
 </head>
 
 <body>
-    <header>Anuncio</header>
-    <article>
-
-    </article>
-    <nav>informacion sobre LCB</nav>
-
-    <article style="border: 2px solid black;text-align:center">
-        <h1>Crea una cuenta</h1>
-        <p>Es tu rápido y sencillo</p>
-        <form action="register.php" method="post" enctype="application/x-www-form-urlencoded">
-            <input type="text" name="nombres" id="nombres" placeholder="Nombres" required>
-            <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos"><br>
-            <label for="fecha_nacimiento">Fecha Nacimiento</label><br>
-            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento"><br>
-            <label for="genero">Género</label><br>
-            <?php
-            $tabla_generos = $conexion_bbdd->query("SELECT * FROM generos");
-            while ($fila = $tabla_generos->fetch_assoc()) {
-                echo "<input type='radio' name='genero' class='genero' value='$fila[genero_id]'>$fila[genero]</input>";
-            }
-            ?>
-            <br>
-            <label for="universidad">Universidad o Instituto</label><br>
-            <select name="universidad" id="universidad">
+    <article class="h-100 d-flex justify-content-center align-items-center article-caja">
+        <div>
+            <img src="./assets/images/fonts/logo_LCB.png" alt="logo_LCB" class="img-fluid">
+        </div>
+        <div class="card-form">
+            <form action="register.php" method="post" enctype="application/x-www-form-urlencoded">
+                <h1>Crea una cuenta</h1>
+                <p>Es rápido y sencillo</p>
+                <hr>
+                <div class="form-row" style="display: flex;justify-content: flex-start;">
+                    <div class="form-group col-md-6" style="margin: 0.2rem;">
+                        <input type="text" class="form-control" name="nombres" id="nombres" placeholder="Nombres" required>
+                    </div>
+                    <div class="form-group col-md-6" style="margin: 0.2rem;">
+                        <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos" required>
+                    </div>
+                </div>
+                <div class="form-group col-md-9" style="text-align: left;">
+                    <label for="fecha_nacimiento">Fecha Nacimiento</label><br>
+                    <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" required>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline" style="text-align: left;">
+                    <label for="genero">Género</label><br>
+                    <?php
+                    $tabla_generos = $conexion_bbdd->query("SELECT * FROM generos");
+                    while ($fila = $tabla_generos->fetch_assoc()) {
+                        echo "&nbsp&nbsp<input type='radio'  class='custom-control-input' name='genero' class='genero' value='$fila[genero_id]' required>$fila[genero]</input>&nbsp&nbsp";
+                    }
+                    ?>
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label for="universidad">Universidad o Instituto</label>
+                    <select name="universidad" id="universidad" class="custom-select custom-select-lg mb-3" required>
+                        <?php
+                        // Función para mostrar las universidades
+                        universidades();
+                        ?>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Correo Electrónico" required>
+                    </div>
+                    <div class="form-group col-md-9">
+                        <input type="password" class="form-control" name="contrase" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo." id="password_usuario" placeholder="Contraseña" id="contrase" placeholder="Contraseña Nueva" required>
+                    </div>
+                </div>
+                <input type="submit" value="Registrarse" name="registrarse" class="btn btn-success" name="Enviar">
+                <input type="reset" value="Limpiar" class="btn btn-secondary">
+                <hr>
+                <a href="./index.php">¿Ya tienes una cuenta?</a> <br>
                 <?php
-                // Función para mostrar las universidades
-                universidades();
+                if (isset($_SESSION['errCrear'])) {
+                    switch ($_SESSION['errCrear']) {
+                        case 0:
+                            echo "<br><div class='alert alert-danger'>La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.</div>";
+                            break;
+                        case 1:
+                            echo "<br><div class='alert alert-danger'>El correo electrónico ya está registrado.</div>";
+                            break;
+                        case 2:
+                            echo "<br><div class='alert alert-danger'>Por favor, rellena todos los campos requeridos.</div>";
+                            break;
+                        case 3:
+                            echo "<br><div class='alert alert-danger'>Error, inténtelo más tarde.</div>";
+                            break;
+                        case 4:
+                            echo "<br><div class='alert alert-danger'>Formato de email inválido.</div>";
+                            break;
+                    }
+                    unset($_SESSION['errCrear']); // Limpiar la variable de sesión después de mostrar el mensaje
+                }
                 ?>
-            </select><br>
-            <input type="email" name="email" id="email" placeholder="Correo Electrónico"><br>
-            <input type="password" name="contrase" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo." id="password_usuario" placeholder="Contreseña" id="contrase" placeholder="Contraseña Nueva"><br>
-            <input type="submit" value="Registrarse" name="registrarse"><br>
-            <a href="./index.php">¿Ya tienes una cuenta?</a>
-        </form>
-        <?php
-        if (isset($_GET['errCrear'])) {
-            switch ($_GET['errCrear']) {
-                case 0:
-                    echo "<div class='alert alert-danger'>La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.</div>";
-                    break;
-                case 1:
-                    echo "<div class='alert alert-danger'>El correo electrónico ya está registrado.</div>";
-                    break;
-                case 2:
-                    echo "<div class='alert alert-danger'>Por favor, rellena todos los campos requeridos.</div>";
-                    break;
-                case 3:
-                    echo "<div class='alert alert-danger'>Error, inténtelo más tarde.</div>";
-                    break;
-                case 4:
-                    echo "<div class='alert alert-danger'>Formato de email inválido.</div>";
-                    break;
-            }
-        }
-        ?>
+            </form>
+        </div>
     </article>
-    <footer>reglas blabla</footer>
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
