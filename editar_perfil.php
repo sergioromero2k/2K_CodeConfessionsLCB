@@ -32,84 +32,77 @@ if (isset($_POST['actualizar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/editar_perfil.css">
 </head>
 
 <body>
-    <nav>
-        <div class="flex-container-nav ">
-            <div class="flex-container-nav-right flex-container-border">
-                <div><a href="home.php">LOGO LCB</a></div>
-                <div><i class="fa-solid fa-user"></i>
-                    <?php
-                    nombre_usuario();
-                    ?>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <section class="flex-container-editar-perfil">
-        <div class="item">
-            <form action="editar_perfil.php" method="POST" enctype="multipart/form-data">
+    <?php
+    require_once './includes/nav.php'; // Incluye el encabezado
+    ?>
+    <section class="h-100 d-flex justify-content-center align-items-center">
+        <form action="editar_perfil.php" method="POST" enctype="multipart/form-data">
+            <div class="card-form">
                 <div>
-                    <h3>Perfil</h3>
-                    <p>Cambia tu foto de perfil y edita tu información personal.</p>
-                </div>
-
-                <div>
-                    <div><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], imagen_defecto: $ruta_defecto) ?>" width="30%" alt="Foto de perfil"></div>
                     <div>
-                        <input type="file" name="profile_pic">
-                        <p>JPG o PNG.</p>
-                        TU foto se recortará automaticamente.
+                        <h3>Perfil</h3>
+                        <p>Cambia tu foto de perfil y edita tu información personal.</p>
                     </div>
-                    <?php
-                    if (isset($_GET['errFrom'])) {
-                        if ($_GET['errFrom'] == 0) {
-                            echo "<div class='alert alert-danger'>Error al cargar la foto de perfil, no se actualiza perfil.</div>";
-                        }
-                    }
-                    ?>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                        <div><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], imagen_defecto: $ruta_defecto) ?>" class="profile-pic2 me-2" alt="Foto de perfil"></div>
+                        <div>
+                            <div class="upload-container">
+                                <label class="upload-button" for="profile_pic">Seleccionar imagen</label>
+                                <input type="file" class="form-control" id="profile_pic" name="profile_pic">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style="background-color: white;">
+                <?php
+                if (isset($_GET['errFrom'])) {
+                    if ($_GET['errFrom'] == 0) {
+                        echo "<div class='alert alert-danger'>Error al cargar la foto de perfil, no se actualiza perfil.</div>";
+                    }
+                }
+                ?>
+                <div class="form-group">
                     <label for="nombre">Nombres</label>
-                    <input type="text" id="nombre" name="nombre" value="<?php echo $_SESSION['nombre']; ?>"><br>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $_SESSION['nombre']; ?>">
+                </div>
+                <div class="form-group">
                     <label for="apellido">Apellidos</label>
-                    <input type="text" id="apellido" name="apellido" value="<?php echo $_SESSION['apellido']; ?>"><br>
-                    <label for="fecha_nacimiento">Fecha Nacimiento</label><br>
-                    <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php fecha_nacimiento_usuario(); ?>"><br>
-                    <label for="universidad">Universidad o Instituto</label><br>
-                    <select name="universidad" id="universidad">
+                    <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo $_SESSION['apellido']; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="fecha_nacimiento">Fecha Nacimiento</label>
+                    <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php fecha_nacimiento_usuario(); ?>">
+                </div>
+                <div class="form-group">
+                    <label for="universidad">Universidad o Instituto</label>
+                    <select name="universidad" id="universidad" class="custom-select custom-select-lg mb-3">
                         <option value="<?php echo universidad_usuario_id() ?>" selected><?php universidad_usuario() ?></option>
                         <?php
+                        // Función para mostrar las universidades
                         universidades();
                         ?>
-                    </select><br>
-                    <label for="password_usuario">Introduce tu contraseña</label><br>
-                    <input type="password" name="password_usuario" id="password_usuario" placeholder="Contreseña" required><br>
-                    <input type="submit" value="Actualizar perfil" name="actualizar">
-
-                    <?php
-                    if (isset($_GET['errPassw'])) {
-                        if ($_GET['errPassw'] == 0) {
-                            echo "<div class='alert alert-danger'>Contraseña incorrecta, no se actualiza perfil.</div>";
-                        }
-                    }
-                    ?>
+                    </select>
                 </div>
-            </form>
+                <div class="form-group">
+                    <label for="password_usuario">Introduce tu contraseña</label>
+                    <input type="password" class="form-control" name="password_usuario" id="password_usuario" placeholder="Contreseña" required>
+                </div>
+                <div style="text-align: center;">
+                    <input type="submit" class="btn btn-primary" value="Actualizar perfil" name="actualizar">
+                </div>
 
+            </div>
+
+        </form>
         </div>
-
-
     </section>
-
-
-    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6b5d7e1dcc.js" crossorigin="anonymous"></script>
 </body>
 

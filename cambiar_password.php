@@ -40,43 +40,37 @@ if (isset($_POST['actualizar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/cambiar_pass.css">
 </head>
 
 <body>
-    <nav>
-        <div class="flex-container-nav ">
-            <div class="flex-container-nav-right flex-container-border">
-                <div><a href="home.php">LOGO LCB</a></div>
-                <div><i class="fa-solid fa-user"></i>
-                    <?php
-                    nombre_usuario();
-                    ?>
+    <?php
+    require_once './includes/nav.php'; // Incluye el encabezado
+    ?>
+    <section class="h-100 d-flex justify-content-center align-items-center">
+        <form action="cambiar_password.php" method="POST">
+            <div style="text-align: center;">
+                <div tex><img src="./assets/images/fonts/logo_LCB_sinU.png" class="profile-pic2 me-2" alt="Foto de perfil"></div>
+                <p>Ingresa tu nueva contraseña despues</p>
+            </div>
+
+            <div class="card-form">
+                <div class="form-group">
+                    <label for="password_usuario">Antigua contraseña</label>
+                    <input type="password" class="form-control" name="password_usuario" id="password_usuario" required>
                 </div>
-            </div>
-        </div>
-    </nav>
-    <section class="flex-container-editar-perfil">
-        <div class="item">
-            <div>
-                <div><img src="./assets/images/profile-default.png" width="30%" alt="Foto de perfil"></div>
-            </div>
-            <div>
-                Ingresa tu nueva contraseña despues
-            </div>
-            <div style="background-color: white;">
-                <form action="cambiar_password.php" method="POST">
-                    <label for="password_usuario">Antigua contraseña</label><br>
-                    <input type="password" name="password_usuario" id="password_usuario" required><br>
-                    <label for="password_nueva">Nueva contraseña</label><br>
-                    <input type="password" name="password_nueva" id="password_nueva" required><br>
-                    <label for="password_confirmar">Confirmar contraseña</label><br>
-                    <input type="password" name="password_confirmar" id="password_confirmar" required><br><br>
-                    <div style="width: 350px;">Te recomendamos elegir una nueva contraseña con al menos 8 caracteres, que combine letras mayúsculas, minúsculas, números y símbolos para asegurar la protección de tu cuenta. Evita usar contraseñas comunes o fáciles de adivinar, como fechas de nacimiento o palabras relacionadas contigo.</div><br>
-                    <input type="submit" value="Cambiar contraseña" name="actualizar">
-                </form>
+                <div class="form-group">
+                    <label for="password_nueva">Nueva contraseña</label>
+                    <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo." name="password_nueva" id="password_nueva" required>
+                </div>
+                <div class="form-group">
+                    <label for="password_confirmar">Confirmar contraseña</label>
+                    <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" title="Debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo." name="password_confirmar" id="password_confirmar" required>
+                </div>
+                <div>Te recomendamos elegir una nueva contraseña con al menos 8 caracteres, que combine letras mayúsculas, minúsculas, números y símbolos para asegurar la protección de tu cuenta. Evita usar contraseñas comunes o fáciles de adivinar, como fechas de nacimiento o palabras relacionadas contigo.</div>
+                <br>
+                <div style="text-align: center;"><input type="submit" class="btn btn-primary" value="Cambiar contraseña" name="actualizar"></div>
                 <?php
                 if (isset($_GET['errPassw'])) {
                     switch ($_GET['errPassw']) {
@@ -93,13 +87,12 @@ if (isset($_POST['actualizar'])) {
                 }
                 ?>
             </div>
-        </div>
-
-
+            </div>
+        </form>
     </section>
-    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6b5d7e1dcc.js" crossorigin="anonymous"></script>
 </body>
 

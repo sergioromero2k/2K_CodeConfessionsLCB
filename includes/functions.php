@@ -3,7 +3,7 @@
 function nombre_usuario(): void
 {
     global $conexion_bbdd;
-    echo $_SESSION['nombre'];
+    echo $_SESSION['nombre'] . " " . $_SESSION['apellido'];
 }
 
 function universidad_usuario_id(): mixed

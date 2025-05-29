@@ -1,0 +1,14 @@
+.profile-pic {
+    width: 27px; /* Ajusta el tamaño deseado */
+    height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+}
+.logo-pic {
+    width: 90px; /* Ajusta el tamaño deseado */
+    height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+    border-radius: 20px; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+    background-color: #C33733;
+
+}

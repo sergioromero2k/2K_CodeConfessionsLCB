@@ -1,7 +1,7 @@
-- poner bootstrap, css y diseño. pendiente boostrap, menu amburguesa
+- poner bootstrap, css y diseño. (sobre osotros, eliminar cuenta, buscador, mi perfil, comentar publicacion)
 - Acabar tfg (PDF).
 
-- ver contraseña olvidada y crear cuenta. CORREO ELECTRONICO pendiente ** AHORA
+- ver contraseña olvidada y crear cuenta. CORREO ELECTRONICO pendiente ***
 - comentar publicacion. pendiente 1 **  AHORA nose si has creado comentar, tambien diseño de comentar
 - restring y borrar publicacion  AHORA
 
@@ -10,7 +10,6 @@
 - poner en publicaciones scroll con ajax. ** 
 
 - condicion de tiempo de sesion.
-
 --------
 LISTO
 --------
