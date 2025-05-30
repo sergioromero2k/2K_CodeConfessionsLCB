@@ -1,0 +1,37 @@
+
+.profile-pic {
+  width: 27px; /* Ajusta el tamaño deseado */
+  height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+}
+.logo-pic {
+  width: 90px; /* Ajusta el tamaño deseado */
+  height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 20px; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  background-color: #c33733;
+}
+.profile-pic2 {
+  width: 200px; /* Ajusta el tamaño deseado */
+  height: 200px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+}
+
+.card-form {
+  margin: 5% 5%;
+  background-color: #f8f9fa;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 400px;
+  max-width: 500px;
+}
+
+label {
+  color: #929292;
+  font-style: italic;
+  margin: 0.2rem;
+}

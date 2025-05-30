@@ -31,117 +31,100 @@ if (isset($_POST['publicacion_id'])) {
     exit();
 }
 ?>
-<section>
-    <div class="flex-container-section" style="display: flex; justify-content: space-between;">
+<section class="container-fluid mt-4" style="margin: 20px;">
+    <div class="row">
         <!-- Sidebar -->
-        <div style="width: 25%;">
+        <div class="col-md-4">
             <!-- Perfil -->
-            <div class="item" style="background-color: green; padding: 10px;">
-                <div class="flex" style="display: flex;">
-                    <div style="background-color: red; width: 25%; text-align: center;">
-                        <img src="./assets/images/profile-default.png" alt="Foto de perfil" style="width: 100%; border-radius: 50%;">
-                    </div>
-                    <div style="background-color: blue; width: 65%; padding-left: 10px;">
-                        <h4 style="margin: 0;">
-                            <?php
-                            nombre_usuario();
-                            ?>
-                        </h4>
-                        <p style="margin: 0;"><b>
-                                <?php
-                                universidad_usuario();
-                                ?>
-                            </b></p>
+            <div class="card">
+                <div class="d-flex align-items-center">
+                    <div><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], imagen_defecto: $ruta_defecto) ?>" class="profile-pic2 me-3"alt="Foto de perfil"></div>
+                    <div>
+                        <h5 class="mb-0"><?php nombre_usuario(); ?></h5>
+                        <small><b><?php universidad_usuario(); ?></b></small>
                     </div>
                 </div>
                 <hr>
-                <div class="flex flex-around" style="display: flex; justify-content: space-around;">
+                <div class="d-flex justify-content-around text-center">
                     <div>
                         <div>Publicaciones</div>
-                        <div><?php echo total_publicaciones_user(user_id: $_SESSION['user_id']); ?></div>
+                        <strong><?php echo total_publicaciones_user($_SESSION['user_id']); ?></strong>
                     </div>
                     <div>
                         <div>Me gustas</div>
-                        <div><?php echo total_reacciones_user(user_id: $_SESSION['user_id'], tipo: "like"); ?></div>
+                        <strong><?php echo total_reacciones_user($_SESSION['user_id'], "like"); ?></strong>
                     </div>
                     <div>
                         <div>No Me gustas</div>
-                        <div><?php echo total_reacciones_user(user_id: $_SESSION['user_id'], tipo: "dislike"); ?></div>
+                        <strong><?php echo total_reacciones_user($_SESSION['user_id'], "dislike"); ?></strong>
                     </div>
-
                 </div>
             </div>
-        </div>
 
-        <!-- Crear publicación -->
-        <div class="item" style="background-color: pink; padding: 10px; margin-top: 10px;">
-            <div><strong>Crear Publicación</strong></div>
-            <hr>
-            <div>
-                <h5>Mensaje</h5>
+            <!-- Crear Publicación -->
+            <div class="card mt-3">
+                <h5>Crear Publicación</h5>
                 <form action="home.php" method="post">
-                    <select name="universidad_a_publicar" id="universidad_a_publicar">
-                        <?php
-                        universidades();
-                        ?>
-                    </select><br><br>
-                    <textarea name="contenido" id="contenido" placeholder="¿Sobre qué quiere hablar?" cols="30" rows="5" style="width: 100%;" required></textarea><br><br>
-                    <input type="submit" value="Publicar" name="publicar_publicacion">
+                    <div class="mb-2">
+                        <label for="mensaje">Universidad o Instituto</label><br>
+                        <select name="universidad_a_publicar" id="mensaje" class="form-select" required>
+                            <?php universidades(); ?>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="contenido">Mensaje</label>
+                        <textarea name="contenido" id="contenido" class="form-control" rows="4" placeholder="¿Sobre qué quiere hablar?" required></textarea>
+                    </div>
+                    <div class="text-end" style="text-align: right;">
+                        <button type="reset" class="btn btn-secondary" >Limpiar</button>
+                        <button type="submit" name="publicar_publicacion" class="btn btn-primary">Publicar</button>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
-    <!-- Timeline -->
-    <div style="width: 65%;height: 100%;">
-        <div style="padding: 10px;">
-            <p><strong>Timeline</strong></p>
-            <form action="home.php" method="post">
-                <select name="universidad_timeline" id="universidad_timeline">
-                    <?php
-                    universidades();
-                    ?>
-                </select>
-            </form>
-            <hr>
 
-            <?php
-            // Muestra las publicaciones
-            $consulta = "SELECT * FROM publicaciones ORDER BY fecha_en DESC";
-            $resultado = $conexion_bbdd->query($consulta);
+        <!-- Timeline -->
+        <div class="col-md-8">
+            <div class="card">
+                <form action="home.php" method="post" class="mb-3">
+                    <label for="universidad_timeline">Filtrar por universidad</label>
+                    <select name="universidad_timeline" id="universidad_timeline" class="form-select">
+                        <?php universidades(); ?>
+                    </select>
+                </form>
 
-            while ($fila = $resultado->fetch_assoc()) {
-                // Obtener el nombre del usuario
-                $resultado_usuario = mostrar_dato(dato: 'nombre', tabla: 'usuarios', where: 'user_id', user_id: $fila['user_id']);
-                $resultado_universidad = mostrar_dato(dato: 'universidad', tabla: 'universidades', where: 'universidad_id', user_id: $fila['universidad_id']);
-                echo "<div class='flex' style='display: flex; background-color: green; padding: 10px; border-radius: 5px;'>";
-                echo "<div style='background-color: red; width: 15%; text-align: center;'>";
-                echo "<img src='./assets/images/profile-default.png' alt='Foto de perfil' style='width: 100%; border-radius: 50%;'>";
-                echo "</div>";
-                echo "<div style='background-color: blue; width: 85%; padding-left: 10px; color: white;'>";
-                echo "<h3 style='margin: 0;'>" . $resultado_usuario . "</h3><br>";
+                <?php
+                $consulta = "SELECT * FROM publicaciones ORDER BY fecha_en DESC";
+                $resultado = $conexion_bbdd->query($consulta);
 
-                echo "<p style='margin: 0;'><b>" . $resultado_universidad . "</b></p>";
-                echo "<p style='background-color: aqua; color: black; padding: 5px; border-radius: 4px;'>" . $fila['contenido'] . "</p>";
-                echo "<div class='flex flex-around' style='display: flex; justify-content: space-around; margin-top: 10px;'>";
+                while ($fila = $resultado->fetch_assoc()) {
+                    $nombre_usuario = mostrar_dato('nombre', 'usuarios', 'user_id', $fila['user_id']);
+                    $nombre_universidad = mostrar_dato('universidad', 'universidades', 'universidad_id', $fila['universidad_id']);
+                ?>
+                    <div class="timeline-post mb-3">
+                        <div class="d-flex align-items-start">
+                            <img src="./assets/images/profile-default.png" class="profile-pic me-3" alt="Foto perfil">
+                            <div>
+                                <h6 class="mb-0"><?php echo $nombre_usuario; ?></h6>
+                                <small class="text-muted"><b><?php echo $nombre_universidad; ?></b></small>
+                                <p class="mt-2"><?php echo $fila['contenido']; ?></p>
 
-                echo "<form action='home.php' method='post'>";
-                echo "<input type='hidden' name='publicacion_id' value='" . $fila['publicacion_id'] . "'>"; #  Obtener el ID de la publicación
-                echo "<button name='tipo' value='like'><i class='fa-solid fa-thumbs-up'></i> Me gusta</button>" . mostrar_reaccion(publicacion_id: $fila['publicacion_id'], tipo: "like");
-                echo "<button name='tipo' value='dislike'><i class='fa-solid fa-thumbs-down'></i> No me gusta</button>" . mostrar_reaccion(publicacion_id: $fila['publicacion_id'], tipo: "dislike");
-                echo "<button name='tipo' value='comentario'><i class='fa-solid fa-comment'></i> Comentar</button>";
-                echo "<button name='tipo' value='reportar'><i class='fa-solid fa-ban'></i> Reportar</button>";
-                echo "</form>";
-
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-            }
-            ?>
-            <!-- Publicación -->
-
-
+                                <form action="home.php" method="post" class="reaction-buttons d-flex">
+                                    <input type="hidden" name="publicacion_id" value="<?php echo $fila['publicacion_id']; ?>">
+                                    <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
+                                        👍 <?php echo mostrar_reaccion($fila['publicacion_id'], "like"); ?>
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
+                                        👎 <?php echo mostrar_reaccion($fila['publicacion_id'], "dislike"); ?>
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" name="tipo" value="comentario">💬 Comentar</button>
+                                    <button class="btn btn-outline-warning btn-sm" name="tipo" value="reportar">🚫 Reportar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
         </div>
-    </div>
-
     </div>
 </section>

@@ -15,15 +15,21 @@ if (isset($_POST['Eliminar'])) {
                 header(header: "Location:./auth/logout.php");
                 exit();
             } else {
-                header(header: "Location:./eliminar_cuenta.php?errPassw=0");
+                session_start();
+                $_SESSION['errPassw'] = 0; // No está seguro de eliminar la cuenta
+                header(header: "Location:./eliminar_cuenta.php");
                 exit();
             }
         } else {
-            header(header: "Location:./eliminar_cuenta.php?errPassw=1");
+            session_start();
+            $_SESSION['errPassw'] = 1; // Contraseña incorrecta
+            header(header: "Location:./eliminar_cuenta.php");
             exit();
         }
     } else {
-        header(header: "Location:./eliminar_cuenta.php?errPassw=2");
+        session_start();
+        $_SESSION['errPassw'] = 2; // Las contraseñas no coinciden
+        header(header: "Location:./eliminar_cuenta.php");
         exit();
     }
 }
@@ -37,54 +43,51 @@ if (isset($_POST['Eliminar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/eliminar_cuenta.css">
 </head>
 
 <body>
-    <nav>
-        <div class="flex-container-nav ">
-            <div class="flex-container-nav-right flex-container-border">
-                <div><a href="home.php">LOGO LCB</a></div>
-                <div><i class="fa-solid fa-user"></i>
-                    <?php
-                    nombre_usuario();
-                    ?>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <section class="flex-container-editar-perfil">
-        <div class="item">
-            <div>
-                <div><img src="./assets/images/profile-default.png" width="30%" alt="Foto de perfil"></div>
-            </div>
-            <div>
-                ¿Eliminar tu cuenta?
-            </div>
-            <div>
-                <ul>
-                    <li>Una vez eliminada, no podrás recuperar nada de lo que había en tu cuenta.</li>
-                    <li>Asegúrate de haber descargado o respaldado cualquier contenido o información importante antes de eliminar tu cuenta.</li>
-                    <li>La eliminación de la cuenta es permanente y no se puede deshacer.</li>
-                </ul>
+    <?php
+    require_once './includes/nav.php'; // Incluye el encabezado
+    ?>
 
+    <section class="h-100 d-flex justify-content-center align-items-center">
+        <form action="eliminar_cuenta.php" method="POST">
+            <div style="text-align: center;">
+                <div tex><img src="./assets/images/fonts/logo_LCB_sinU.png" class="profile-pic2 me-2" alt="Foto de perfil"></div>
+                <h3>¿Eliminar tu cuenta?</h3>
             </div>
-            <div style="background-color: white;">
-                <form action="eliminar_cuenta.php" method="POST">
-                    <label for="password_usuario">Contraseña</label><br>
-                    <input type="password" name="password_usuario" id="password_usuario" required><br>
-                    <label for="password_confirmar">Confirmar contraseña</label><br>
-                    <input type="password" name="password_confirmar" id="password_confirmar" required><br><br>
-                    <label for="seguro">¿Estás seguro?</label>
-                    <input type="radio" name="seguro" id="seguro_no" value="Si" required>Si</input>
-                    <input type="radio" name="seguro" id="seguro_si" value="No" required>No</input><br>
-                    <input type="submit" value="Eliminar cuenta" name="Eliminar">
-                </form>
+
+            <div class="card-form">
+                <div>
+                    <ul>
+                        <li>Una vez eliminada, <b>no podrás recuperar nada</b> de lo que había en tu cuenta.</li>
+                        <li>Asegúrate de haber descargado o respaldado cualquier contenido o información importante antes de eliminar tu cuenta.</li>
+                        <li>La eliminación de la cuenta es <b>permanente</b> y no se puede deshacer.</li>
+                    </ul>
+
+                </div>
+                <div style="background-color: white;">
+                    <div class="form-group">
+                        <label for="password_usuario">Contraseña</label>
+                        <input type="password" class="form-control" name="password_usuario" id="password_usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmar">Confirmar contraseña</label>
+                        <input type="password" class="form-control" name="password_confirmar" id="password_confirmar" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="seguro">¿Estás seguro?</label>
+                        <input type="radio" name="seguro" id="seguro_no" value="Si" required>Si</input>
+                        &nbsp;<input type="radio" name="seguro" id="seguro_si" value="No" required>No</input>
+                    </div>
+                    <div style="text-align: center;"><input type="submit" class="alert alert-danger" value="Eliminar cuenta" name="Eliminar"></div>
+
+                </div>
                 <?php
-                if (isset($_GET['errPassw'])) {
-                    switch ($_GET['errPassw']) {
+                if (isset($_SESSION['errPassw'])) {
+                    switch ($_SESSION['errPassw']) {
                         case 0:
                             echo "<div class='alert alert-danger' role='alert'>No se elimina la cuenta, por que no estas seguro.</div>";
                             break;
@@ -95,18 +98,17 @@ if (isset($_POST['Eliminar'])) {
                             echo "<div class='alert alert-danger' role='alert'>Las contraseñas no coinciden.</div>";
                             break;
                     }
+                    unset($_SESSION['errPassw']); // Limpiar la variable de sesión después de mostrar el mensaje
                 }
                 ?>
             </div>
-        </div>
 
+        </form>
 
     </section>
-
-
-    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6b5d7e1dcc.js" crossorigin="anonymous"></script>
 </body>
 

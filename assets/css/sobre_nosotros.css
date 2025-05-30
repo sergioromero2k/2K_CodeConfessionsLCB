@@ -1,0 +1,90 @@
+.profile-pic {
+  width: 27px; /* Ajusta el tamaño deseado */
+  height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+}
+.logo-pic {
+  width: 90px; /* Ajusta el tamaño deseado */
+  height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 20px; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  background-color: #c33733;
+}
+/* SECTION DE ADMIN ------------------------------------------------------------------------- */
+.section-admin {
+  background-color: #ffffff;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.container-admin {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contenido-admin img {
+  border-radius: 5px;
+}
+
+.texto-plus {
+  padding: 20px;
+}
+
+.texto-admin1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #030e71;
+}
+
+.texto-admin2 {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6; /* Espaciado entre líneas */
+  text-align: justify; /* Justificar texto */
+  max-width: 800px; /* Ancho máximo del texto */
+  margin: 0 auto; /* Centrar el texto */
+}
+
+.section-empresa {
+  background-color: #ececec;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.container-empresa {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex; /* Usar flexbox para alinear en línea */
+  justify-content: space-around; /* Espacio entre los cuadros */
+}
+
+.texto-plus {
+  flex: 1; /* Permitir que cada columna tome el mismo espacio */
+  margin: 10px; /* Margen entre columnas */
+}
+
+.cuadro {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para el cuadro */
+}
+
+.texto-empresa1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #030e71;
+}
+
+.texto-empresa2 {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6; /* Espaciado entre líneas */
+  text-align: justify; /* Justificar texto */
+  max-width: 800px; /* Ancho máximo del texto */
+  margin: 0 auto; /* Centrar el texto */
+}

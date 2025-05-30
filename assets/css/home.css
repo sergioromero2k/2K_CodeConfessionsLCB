@@ -1,14 +1,59 @@
-.profile-pic {
-    width: 27px; /* Ajusta el tamaño deseado */
-    height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-    border-radius: 50%; /* Hace que la imagen sea circular */
-    object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+body {
+  background-color: #e7ecf0;
 }
-.logo-pic {
-    width: 90px; /* Ajusta el tamaño deseado */
-    height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-    border-radius: 20px; /* Hace que la imagen sea circular */
-    object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
-    background-color: #C33733;
+.profile-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
+.logo-pic {
+  width: 90px;
+  height: 40px;
+  border-radius: 20px;
+  object-fit: cover;
+  background-color: #c33733;
+}
+.profile-pic2 {
+  width: 200px; /* Ajusta el tamaño deseado */
+  height: 200px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+label {
+  font-weight: bold;
+  color: #929292;
+  font-style: italic;
+}
+
+input,
+textarea,
+select {
+  margin: 0.5rem 0;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.timeline-post {
+  background-color: #f4f4f4;
+  border-left: 5px solid #007bff;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.reaction-buttons button {
+  margin: 0 5px;
 }

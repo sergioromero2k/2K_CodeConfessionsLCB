@@ -28,6 +28,7 @@
                     <?php nombre_usuario(); ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="mi_perfil.php">Mi Perfil</a>
                     <a class="dropdown-item" href="editar_perfil.php">Editar perfil</a>
                     <a class="dropdown-item" href="cambiar_password.php">Cambiar Contraseña</a>
                     <a class="dropdown-item" href="eliminar_cuenta.php">Eliminar Cuenta</a>
