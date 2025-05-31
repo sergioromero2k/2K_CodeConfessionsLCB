@@ -126,23 +126,25 @@ function procesamiento_foto_pefil($ruta_dir, $foto_defecto, $name, $error_format
         // Mover el archivo subido a la carpeta de destino
         move_uploaded_file(from: $tmp_archivo, to: $ruta_completa);
         // Actualizar la ruta relativa de la imagen en la base de datos
-        return $ruta_completa; // Retorna la ruta completa de la imagen guardada
+        return $nuevo_nombre_archivo;  // Retorna la ruta relativa de la imagen subida
     } else {
-        return $foto_defecto; // Si no se subió una imagen, usar la imagen por defecto
+        return $foto_defecto; // Si no se subió una imagen, retornar la imagen por defecto
     }
 }
-function mostrar_foto_perfil(int $user_id, $imagen_defecto): string
+function mostrar_foto_perfil(int $user_id, $ruta_imagen, $imagen_defecto): string
 {
     global $conexion_bbdd;
     $consulta = $conexion_bbdd->query(query: "SELECT profile_image FROM usuarios WHERE user_id = $user_id");
     if ($consulta) {
         $resultado = $consulta->fetch_assoc();
-        // Verificar si la imagen existe y no es nula
-        if (!empty($resultado['profile_image']) && file_exists($resultado['profile_image'])) {
-            return $resultado['profile_image']; // Retorna la ruta de la imagen del perfil
+        if ($resultado && !empty($resultado['profile_image'])) {
+            $ruta_imagen_perfil = $ruta_imagen . $resultado['profile_image'];
+            // Verificar si el archivo existe
+            if (file_exists(filename: $ruta_imagen_perfil)) {
+                return $ruta_imagen_perfil; // Retorna la ruta de la imagen del perfil
+            }
         }
     }
     // Si no se encuentra la imagen del perfil o no existe, retornar la imagen por defecto
-    return  $imagen_defecto; // Retorna la imagen por defecto si no se encuentra
+    return  $ruta_imagen . $imagen_defecto; // Retorna la imagen por defecto si no se encuentra
 }
-

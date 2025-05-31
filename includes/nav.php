@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="home.php">Inicio <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="home.php"><i class="fa-solid fa-house"></i>&nbsp; Inicio <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="sobre_nosotros.php">Sobre nosotros</a>
@@ -18,12 +18,12 @@
             </form>
         </ul>
 
-        <a class="nav-link" href="sobre_nosotros.php">Notificaciones</a>
+        <a class="nav-link" href="sobre_nosotros.php"> <i class="fa-solid fa-bell"></i>&nbsp; Notificaciones</a>
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="<?php $ruta_defecto = './public/uploads/profile_pics/profile-default.png';
-                                echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], imagen_defecto: $ruta_defecto) ?>"
+                                echo mostrar_foto_perfil(user_id: $_SESSION['user_id'],ruta_imagen: './public/uploads/profile_pics/', imagen_defecto: 'profile-default.png') ?>"
                         alt="Foto de perfil" class="profile-pic me-2">&nbsp
                     <?php nombre_usuario(); ?>
                 </a>

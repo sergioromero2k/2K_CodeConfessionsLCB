@@ -27,8 +27,9 @@ try {
                 header(header: "Location:register.php?errCrear=4");
                 exit();
             } else {
-                $insertar = $conexion_bbdd->prepare(query: "INSERT INTO usuarios (email, password, nombre, apellido, fecha_nacimiento, token_activacion,genero_id,universidad_id) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
-                $insertar->bind_param("ssssssii", $_POST['email'], $password_hash, $_POST['nombres'], $_POST['apellidos'], $_POST['fecha_nacimiento'], $token_activacion, $_POST['genero'], $_POST['universidad']);
+                $insertar = $conexion_bbdd->prepare(query: "INSERT INTO usuarios (email, password, nombre, apellido, fecha_nacimiento, profile_image,token_activacion,genero_id,universidad_id) VALUES (?, ?, ?, ?, ?,?, ?, ?,?)");
+                $profile_image = 'profile-default.png'; // Imagen de perfil por defecto
+                $insertar->bind_param("sssssssii", $_POST['email'], $password_hash, $_POST['nombres'], $_POST['apellidos'], $_POST['fecha_nacimiento'], $profile_image, $token_activacion, $_POST['genero'], $_POST['universidad']);
                 $insertar->execute();
                 $insertar->close();
                 header(header: "Location: index.php");

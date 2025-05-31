@@ -12,7 +12,6 @@
 - poner en publicaciones scroll con ajax. \*\*
 
 - condicion de tiempo de sesion.
-
 ---
 
 ## LISTO

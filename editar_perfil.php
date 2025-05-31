@@ -2,16 +2,19 @@
 require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
 require_once './includes/config.php'; // Configuración de la base de datos  
 require_once './includes/functions.php'; // Funciones auxiliares
-$ruta_defecto = './public/uploads/profile_pics/profile-default.png';
+$foto_defecto = './public/uploads/profile_pics/profile-default.png';
+$ruta_foto='./public/uploads/profile_pics/';
 if (isset($_POST['actualizar'])) {
     $password_usuario = password_usuario();
     # Prevenir inyecciones SQL
     if (password_verify(password: $_POST['password_usuario'], hash: $password_usuario)) {
-        $ruta_relativa = procesamiento_foto_pefil("./public/uploads/profile_pics/", $ruta_defecto, "profile_pic", "./editar_perfil.php?errFrom=0");
+        $ruta_relativa = procesamiento_foto_pefil("./public/uploads/profile_pics/", $foto_defecto, "profile_pic", "./editar_perfil.php?errFrom=0");
         $consulta = $conexion_bbdd->prepare("UPDATE usuarios SET nombre=?,apellido=?,fecha_nacimiento=?,profile_image=?,universidad_id=? WHERE user_id=?");
         $consulta->bind_param("sssssi", $_POST['nombre'], $_POST['apellido'], $_POST['fecha_nacimiento'], $ruta_relativa, $_POST['universidad'], $_SESSION['user_id']);
         $consulta->execute();
         $consulta->close();
+        // Actualizar la sesión con los nuevos datos
+        
         $_SESSION['nombre'] = $_POST['nombre'];
         $_SESSION['apellido'] = $_POST['apellido'];
         $_SESSION['fecha_nacimiento'] = $_POST['fecha_nacimiento'];
@@ -49,7 +52,7 @@ if (isset($_POST['actualizar'])) {
                         <p>Cambia tu foto de perfil y edita tu información personal.</p>
                     </div>
                     <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-                        <div><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], imagen_defecto: $ruta_defecto) ?>" class="profile-pic2 me-2" alt="Foto de perfil"></div>
+                        <div><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: $ruta_foto, imagen_defecto: 'profile-default.png') ?>" class="profile-pic2 me-2" alt="Foto de perfil"></div>
                         <div>
                             <div class="upload-container">
                                 <label class="upload-button" for="profile_pic">Seleccionar imagen</label>

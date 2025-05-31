@@ -11,9 +11,11 @@ require_once './includes/functions.php'; // Funciones auxiliares
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/mi_perfil.css">
+    <link rel="stylesheet" href="./assets/css/nav.css">
+
+
 </head>
 
 <body>
@@ -37,46 +39,51 @@ require_once './includes/functions.php'; // Funciones auxiliares
                 <div>No Me gustas</div>
             </div>
             <hr>
-            <div>
+            <div class="col-md-8">
                 <?php
-                // Muestra las publicaciones
+
                 $consulta = "SELECT * FROM publicaciones WHERE user_id = " . $_SESSION['user_id'] . " ORDER BY fecha_en DESC";
                 $resultado = $conexion_bbdd->query($consulta);
 
                 while ($fila = $resultado->fetch_assoc()) {
-                    // Obtener el nombre del usuario
-                    $resultado_usuario = mostrar_dato(dato: 'nombre', tabla: 'usuarios', where: 'user_id', user_id: $fila['user_id']);
-                    $resultado_universidad = mostrar_dato(dato: 'universidad', tabla: 'universidades', where: 'universidad_id', user_id: $fila['universidad_id']);
-                    echo "<div class='flex' style='display: flex; background-color: green; padding: 10px; border-radius: 5px;'>";
-                    echo "<div style='background-color: red; width: 15%; text-align: center;'>";
-                    echo "<img src='./assets/images/profile-default.png' alt='Foto de perfil' style='width: 100%; border-radius: 50%;'>";
-                    echo "</div>";
-                    echo "<div style='background-color: blue; width: 85%; padding-left: 10px; color: white;'>";
-                    echo "<h3 style='margin: 0;'>" . $resultado_usuario . "</h3><br>";
-
-                    echo "<p style='margin: 0;'><b>" . $resultado_universidad . "</b></p>";
-                    echo "<p style='background-color: aqua; color: black; padding: 5px; border-radius: 4px;'>" . $fila['contenido'] . "</p>";
-                    echo "<div class='flex flex-around' style='display: flex; justify-content: space-around; margin-top: 10px;'>";
-                    echo "<button><i class='fa-solid fa-thumbs-up'></i> Me gusta</button>";
-                    echo "<button><i class='fa-solid fa-thumbs-down'></i> No me gusta</button>";
-                    echo "<button><i class='fa-solid fa-comment'></i> Comentar</button>";
-                    echo "<button><i class='fa-solid fa-ban'></i> Reportar</button>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</div>";
-                }
+                    $nombre_usuario = mostrar_dato('nombre', 'usuarios', 'user_id', $fila['user_id']);
+                    $nombre_universidad = mostrar_dato('universidad', 'universidades', 'universidad_id', $fila['universidad_id']);
+                    $foto_perfil = './public/uploads/profile_pics/' . mostrar_Dato('profile_image', 'usuarios', 'user_id', $fila['user_id']);
                 ?>
+                    <div class="timeline-post mb-3">
+                        <div class="d-flex align-items-start">
+                            <div><img src="<?php echo $foto_perfil ?>" class="profile-pic-publi me-3" alt="Foto de perfil"></div>
+                            <div>
+                                <h6 class="mb-0"><?php echo $nombre_usuario; ?></h6>
+                                <small class="text-muted"><b><?php echo $nombre_universidad; ?></b></small>
+                                <p class="mt-2"><?php echo $fila['contenido']; ?></p>
+
+                                <form action="home.php" method="post" class="reaction-buttons d-flex">
+                                    <input type="hidden" name="publicacion_id" value="<?php echo $fila['publicacion_id']; ?>">
+                                    <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
+                                        <i class="fa-solid fa-thumbs-up"></i> <?php echo mostrar_reaccion($fila['publicacion_id'], "like"); ?>
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
+                                        <i class="fa-solid fa-thumbs-down"></i> <?php echo mostrar_reaccion($fila['publicacion_id'], "dislike"); ?>
+                                    </button>
+                                    <button class="btn btn-outline-primary btn-sm" name="tipo" value="comentario">💬 Comentar</button>
+                                    <button class="btn btn-outline-warning btn-sm" name="tipo" value="reportar">🚫 Reportar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+
             </div>
 
         </div>
 
-
     </section>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6b5d7e1dcc.js" crossorigin="anonymous"></script>
 </body>
 
