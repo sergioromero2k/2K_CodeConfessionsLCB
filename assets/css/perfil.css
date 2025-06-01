@@ -1,10 +1,8 @@
-*{
-  text-decoration: none;
 
-}
+
 .profile-pic-seg {
-  width: 120px; /* Ajusta el tamaño deseado */
-  height: 120px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  width: 240px;  /* Ajusta el tamaño deseado */
+  height: 240px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
   border-radius: 50%; /* Hace que la imagen sea circular */
   object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
   margin-right: 15px;
@@ -21,9 +19,14 @@ label {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   background-color: white;
-  margin-bottom: 20px;
+  margin: 20px 0 20px 0; /* Ajusta el margen inferior para separar las tarjetas */
+  text-align: center;
 }
 
+.info-perfil{
+text-align: center;
+width: 100%;
+}
 .timeline-post {
   background-color: #f4f4f4;
   border-left: 5px solid #007bff;

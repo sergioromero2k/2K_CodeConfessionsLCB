@@ -1,0 +1,7 @@
+.profile-pic-publi {
+  width: 50px; /* Ajusta el tamaño deseado */
+  height: 50px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  margin-right: 10px;
+}

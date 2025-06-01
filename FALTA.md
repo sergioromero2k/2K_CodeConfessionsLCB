@@ -1,5 +1,6 @@
-- poner bootstrap, css y diseño. (buscador, mi perfil, comentar publicacion)
+- poner bootstrap, css y diseño. (buscador, comentar publicacion)
 - Acabar tfg (PDF).
+- Arreglar fotos
 
 - ACABAS MI PERFIL Y HOME, PUBLICACIONES AJAX, NOTIFICACIONES, BUSCADOR, COMENTAR, REPORTAR.
 
@@ -14,9 +15,3 @@
 - condicion de tiempo de sesion.
 ---
 
-## LISTO
-
-- ver publicaciones, me gustas, no me gustas.
-- si es mi publicacion sube el like.
-- poner foto de perfil. pendiente 1 \*\*
-- condicion para poner contraseña. pendiente 1 \*\*
