@@ -183,50 +183,53 @@ function mostrar_foto_perfil(int $user_id, $ruta_imagen, $imagen_defecto): strin
 function mostrar_publicaciones($user_id = null)
 {
     global $conexion_bbdd;
-    // Si se proporciona un user_id válido, mostrar solo sus publicaciones
-    if ($user_id !== null) {
-        $user_id = intval($user_id);
-        $consulta = "SELECT * FROM publicaciones WHERE user_id = $user_id ORDER BY fecha_en DESC";
-        $consulta_limite = "SELECT * FROM publicaciones WHERE user_id = $user_id ORDER BY fecha_en DESC LIMIT 5";
-        echo "<input type='hidden' name='user_id' id='user_id' value='$user_id'>";  // Agregar un campo oculto para el user_id
-    } else {
-        // Si no se proporciona user_id, mostrar todas las publicaciones 
 
-        $consulta = "SELECT * FROM publicaciones ORDER BY fecha_en DESC";
-        $consulta_limite = "SELECT * FROM publicaciones ORDER BY fecha_en DESC LIMIT 5";
-        echo "<input type='hidden' name='user_id' id='user_id' value=''>";  // Agregar un campo oculto para el user_id
+    $user_id = isset($user_id) ? intval($user_id) : null;
 
-    }
+    // Consulta para el total
+    $consulta_total = $user_id !== null
+        ? "SELECT * FROM publicaciones WHERE user_id = $user_id"
+        : "SELECT * FROM publicaciones";
+
+    $resultado_total = $conexion_bbdd->query($consulta_total);
+    $total_publicaciones = $resultado_total->num_rows;
+
+    // Consulta con límite inicial de 5
+    $consulta_limite = $user_id !== null
+        ? "SELECT * FROM publicaciones WHERE user_id = $user_id ORDER BY fecha_en DESC LIMIT 5"
+        : "SELECT * FROM publicaciones ORDER BY fecha_en DESC LIMIT 5";
+
     $resultado = $conexion_bbdd->query($consulta_limite);
+
     if ($resultado) {
-        // Verificar si hay publicaciones
-        $total_publicaciones = $resultado->num_rows;
-?>
-        <input type="hidden" name="total_publicaciones" id="total_publicaciones" value="<?php echo $total_publicaciones; ?>" />
-        <?php
+        if ($user_id !== null) {
+            echo "<input type='hidden' name='user_id' id='user_id' value='" . htmlspecialchars($user_id) . "'>";
+        }
+        echo "<input type='hidden' name='total_publicaciones' id='total_publicaciones' value='" . htmlspecialchars($total_publicaciones) . "'>";
+
         while ($fila = $resultado->fetch_assoc()) {
             $nombre_usuario = mostrar_dato('nombre', 'usuarios', 'user_id', $fila['user_id']);
             $nombre_universidad = mostrar_dato('universidad', 'universidades', 'universidad_id', $fila['universidad_id']);
             $foto_perfil = './public/uploads/profile_pics/' . mostrar_dato('profile_image', 'usuarios', 'user_id', $fila['user_id']);
-        ?>
+?>
             <div class="timeline-post mb-3 item-publicacion" id="<?php echo htmlspecialchars($fila['publicacion_id']); ?>">
                 <div class="d-flex align-items-start">
                     <div>
-                        <div><a href="mi_perfil.php?id=<?= $fila['user_id'] ?>"><img src="<?php echo $foto_perfil ?>" class="profile-pic-publi me-3" alt="Foto de perfil"></a></div>
+                        <a href="mi_perfil.php?id=<?= $fila['user_id'] ?>">
+                            <img src="<?php echo htmlspecialchars($foto_perfil); ?>" class="profile-pic-publi me-3" alt="Foto de perfil">
+                        </a>
                     </div>
                     <div>
-                        <!-- Enlace al perfil del usuario -->
                         <h6 class="mb-0">
                             <a href="mi_perfil.php?id=<?= $fila['user_id'] ?>">
                                 <?php echo htmlspecialchars($nombre_usuario); ?>
                             </a>
                         </h6>
                         <small class="text-muted"><b><?php echo htmlspecialchars($nombre_universidad); ?></b></small>
-                        <a href="comentar_publicacion.php?publicacion_id=<?php echo $fila['publicacion_id']; ?>">
-                            <p class="mt-2"><?php echo $fila['contenido']; ?></p>
+                        <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>">
+                            <p class="mt-2"><?php echo htmlspecialchars($fila['contenido']); ?></p>
                         </a>
-
-                        <form action="home.php" method="post" class="reaction-buttons d-flex">
+                        <form action="home.php" method="post" class="reaction-buttons d-flex gap-2 flex-wrap">
                             <input type="hidden" name="publicacion_id" value="<?php echo htmlspecialchars($fila['publicacion_id']); ?>">
                             <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
                                 <i class="fa-solid fa-thumbs-up"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "like")); ?>
@@ -234,8 +237,8 @@ function mostrar_publicaciones($user_id = null)
                             <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
                                 <i class="fa-solid fa-thumbs-down"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "dislike")); ?>
                             </button>
-                            <a href="comentar_publicacion.php"><button class="btn btn-outline-primary btn-sm" name="tipo" value="comentario">💬 Comentar</button></a>
-                            <a href="comentar_publicacion.php"><button class="btn btn-outline-warning btn-sm" name="tipo" value="reportar">🚫 Reportar</button></a>
+                            <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-primary btn-sm">💬 Comentar</a>
+                            <a href="reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm">🚫 Reportar</a>
                         </form>
                     </div>
                 </div>
@@ -244,54 +247,56 @@ function mostrar_publicaciones($user_id = null)
         }
         ?>
         <div class="col-md-12 col-sm-12">
-            <div class="ajax-loader text-center">
+            <div class="ajax-loader text-center" style="display: none;">
                 <img src="./assets/images/fonts/loading.gif" alt="Cargando... " class="img-fluid" style="width: 50px; height: 50px;">
-                <br>
-                <strong>Cargando más Registros...</strong>
+                <br><strong>Cargando más Registros...</strong>
             </div>
         </div>
-        <script text="text/javascript">
+
+        <script>
             $(document).ready(function() {
-                pageScroll(); // Llamar a la función para activar el scroll
+                pageScroll();
             });
 
             function pageScroll() {
+                let cargando = false;
 
                 $(window).on("scroll", function() {
-                    var scrollHeight = $(document).height();
-                    var scrollPosition = $(window).height() + $(window).scrollTop(); // Altura del documento + posición de desplazamiento
-                    console.log(scrollHeight + scrollPosition);
-                    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
-                        {
-                            if ($(".item-publicacion").length < $("#total_publicaciones").val()) {
-                                var ultimoId = $(".item-publicacion:last").attr("id");
-                                var userId = $("#user_id").val(); // Obtener el user_id del campo oculto
-                                console.log("ultimoId: " + ultimoId);
-                                $(window).off("scroll"); // Desactivar el evento de scroll para evitar múltiples llamadas
+                    if (!cargando && $(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
+                        if ($(".item-publicacion").length < $("#total_publicaciones").val()) {
+                            cargando = true;
 
-                                $.ajax({
-                                    url: "obteniendo_publicaciones.php?ultimoId=" + ultimoId + "&userId=" + userId,
-                                    type: "GET",
-                                    beforeSend: function() {
-                                        $(".ajax-loader").show(); // Mostrar el loader
-                                    },
-                                    success: function(data) { // Fixed function keyword
-                                        setTimeout(function() {
-                                            $(".ajax-loader").hide();
-                                            $("#lista-publicaciones").append(data); // Agregar los nuevos registros al contenedor
-                                            pageScroll(); // Volver a activar el evento de scroll
-                                        }, 1000); // Esperar 1 segundo antes de ocultar el loader
-                                    }
-                                });
-                            } else {
-                                console.log("No hay más publicaciones para cargar.");
-                            }
+                            var ultimo_id = $(".item-publicacion:last").attr("id");
+                            var user_id = $("#user_id").val() || '';
+
+                            $.ajax({
+                                url: "obteniendo_publicaciones.php",
+                                type: "GET",
+                                data: {
+                                    ultimo_id: encodeURIComponent(ultimo_id),
+                                    user_id: encodeURIComponent(user_id)
+                                },
+                                beforeSend: function() {
+                                    $(".ajax-loader").show();
+                                },
+                                success: function(data) {
+                                    setTimeout(function() {
+                                        $(".ajax-loader").hide();
+                                        $("#lista-publicaciones").append(data);
+                                        cargando = false;
+                                    }, 1000);
+                                },
+                                error: function() {
+                                    $(".ajax-loader").hide();
+                                    cargando = false;
+                                    console.error("Error al cargar más publicaciones.");
+                                }
+                            });
                         }
                     }
                 });
             }
         </script>
-
     <?php
     }
 }

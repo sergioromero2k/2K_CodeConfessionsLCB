@@ -1,0 +1,48 @@
+body{
+  background-color: white;
+}
+.profile-pic {
+  width: 27px; /* Ajusta el tamaño deseado */
+  height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+}
+.logo-pic {
+  width: 90px; /* Ajusta el tamaño deseado */
+  height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 20px; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  background-color: #c33733;
+}
+.profile-pic2 {
+  width: 250px; /* Ajusta el tamaño deseado */
+  height: 250px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+}
+
+.card-form {
+  margin: 5% 5%;
+  background-color: #f8f9fa;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+label {
+  color: #929292;
+  font-style: italic;
+  margin: 0.5rem;
+}
+.bord {
+  border: 2px solid #8c8c8c;   /* Gris medio, neutro */
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(140, 140, 140, 0.3); /* Sombra suave gris */
+  transition: border-color 0.3s ease;
+}
+
+.bord:hover {
+  border-color: #555555; /* Gris más oscuro al hover */
+}

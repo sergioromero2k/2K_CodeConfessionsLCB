@@ -12,10 +12,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="sobre_nosotros.php">Sobre nosotros</a>
             </li>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <form class="form-inline my-2 my-lg-0" action="buscar.php" method="POST">
+                <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
+            <?php
+
+            ?> 
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </form>
+
         </ul>
 
         <a class="nav-link" href="sobre_nosotros.php"> <i class="fa-solid fa-bell"></i>&nbsp; Notificaciones</a>
@@ -23,7 +29,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="<?php $ruta_defecto = './public/uploads/profile_pics/profile-default.png';
-                                echo mostrar_foto_perfil(user_id: $_SESSION['user_id'],ruta_imagen: './public/uploads/profile_pics/', imagen_defecto: 'profile-default.png') ?>"
+                                echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: './public/uploads/profile_pics/', imagen_defecto: 'profile-default.png') ?>"
                         alt="Foto de perfil" class="profile-pic me-2">&nbsp
                     <?php nombre_usuario(); ?>
                 </a>

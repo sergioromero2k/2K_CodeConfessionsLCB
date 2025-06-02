@@ -48,7 +48,7 @@ CREATE TABLE
         `contenido` TEXT,
         `fecha_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
         `actualizado_en` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        CONSTRAINT fk_publicaciones_usuarios FOREIGN KEY (user_id) REFERENCES usuarios (user_id) ON UPDATE CASCADE ON DELETE CASCADE
+        CONSTRAINT fk_publicaciones_usuarios FOREIGN KEY (user_id) REFERENCES usuarios (user_id) ON UPDATE CASCADE ON DELETE CASCADE,
         CONSTRAINT fk_publicaciones_universidades FOREIGN KEY (universidad_id) REFERENCES universidades (universidad_id) ON UPDATE CASCADE ON DELETE RESTRICT
     );
 
@@ -125,8 +125,7 @@ CREATE TABLE `reportes` (
 );
 
 
-----------------------------------------------------------------------------------
-# Insertar datos de catalogo    
+-- Insertar datos de catalogo    
 
 INSERT INTO
     generos (`genero`)
@@ -238,4 +237,3 @@ VALUES
     ('Contenido falso'),
     ('Contenido inapropiado'),
     ('Otro');
-----------------------------------------------------------------------------------
