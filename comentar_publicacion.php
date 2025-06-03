@@ -105,7 +105,7 @@ $result_comentarios = $stmt_comentarios->get_result();
                                 <i class="fa-solid fa-thumbs-down"></i> <?= htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "dislike")) ?>
                             </button>
                             <a href="comentar_publicacion.php" class="btn btn-outline-primary btn-sm ml-2">💬 Comentar</a>
-                            <a href="comentar_publicacion.php" class="btn btn-outline-warning btn-sm ml-2">🚫 Reportar</a>
+                            <a href="reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm">🚫 Reportar</a>
                         </form>
                     </div>
                 </div>

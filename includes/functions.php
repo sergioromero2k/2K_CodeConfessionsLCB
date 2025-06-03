@@ -230,15 +230,21 @@ function mostrar_publicaciones($user_id = null)
                             <p class="mt-2"><?php echo htmlspecialchars($fila['contenido']); ?></p>
                         </a>
                         <form action="home.php" method="post" class="reaction-buttons d-flex gap-2 flex-wrap">
-                            <input type="hidden" name="publicacion_id" value="<?php echo htmlspecialchars($fila['publicacion_id']); ?>">
-                            <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
-                                <i class="fa-solid fa-thumbs-up"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "like")); ?>
-                            </button>
-                            <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
-                                <i class="fa-solid fa-thumbs-down"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "dislike")); ?>
-                            </button>
-                            <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-primary btn-sm">💬 Comentar</a>
-                            <a href="reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm">🚫 Reportar</a>
+                            <div> <input type="hidden" name="publicacion_id" value="<?php echo htmlspecialchars($fila['publicacion_id']); ?>">
+                                <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
+                                    <i class="fa-solid fa-thumbs-up"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "like")); ?>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
+                                    <i class="fa-solid fa-thumbs-down"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "dislike")); ?>
+                                </button>
+                                <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-primary btn-sm">💬 Comentar</a>
+                                <a href="reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm" style="margin-left:2px;">🚫 Reportar</a>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
+
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

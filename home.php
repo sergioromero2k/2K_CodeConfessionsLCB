@@ -40,7 +40,7 @@ require_once './includes/functions.php'; // Funciones auxiliares
     }
     if (isset($_POST['publicacion_id'])) {
         $publicacion_id = $_POST['publicacion_id'];
-        $tipo = $_POST['tipo'];
+        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] :'';
         if ($tipo == 'like' || $tipo == 'dislike') {
             if (isset($_POST['publicacion_id'])) {
                 $publicacion_id = $_POST['publicacion_id'];
