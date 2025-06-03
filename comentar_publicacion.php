@@ -80,34 +80,45 @@ $result_comentarios = $stmt_comentarios->get_result();
     <section class="d-flex justify-content-center" style="min-height: 100vh; margin: 20px;">
         <div class="col-md-8">
 
-            <div class="timeline-post mb-3">
-                <div class="d-flex align-items-start">
-                    <div>
+            <div class="timeline-post mb-3 item-publicacion p-3 border rounded" id="<?php echo htmlspecialchars($fila['publicacion_id']); ?>">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="d-flex">
                         <a href="mi_perfil.php?id=<?= $fila['user_id'] ?>">
-                            <img src="<?= htmlspecialchars($foto_perfil) ?>" class="profile-pic-publi me-3" alt="Foto de perfil" />
+                            <img src="<?php echo htmlspecialchars($foto_perfil); ?>" class="profile-pic-publi me-3" alt="Foto de perfil">
                         </a>
-                    </div>
-                    <div>
-                        <h6 class="mb-0">
-                            <a href="mi_perfil.php?id=<?= $fila['user_id'] ?>">
-                                <?= htmlspecialchars($nombre_usuario) ?>
+                        <div>
+                            <h6 class="mb-0">
+                                <a href="mi_perfil.php?id=<?= $fila['user_id'] ?>">
+                                    <?php echo htmlspecialchars($nombre_usuario); ?>
+                                </a>
+                            </h6>
+                            <small class="text-muted"><b><?php echo htmlspecialchars($nombre_universidad); ?></b></small>
+                            <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>">
+                                <p class="mt-2 mb-1"><?php echo htmlspecialchars($fila['contenido']); ?></p>
                             </a>
-                        </h6>
-                        <small class="text-muted"><b><?= htmlspecialchars($nombre_universidad) ?></b></small>
-                        <p class="mt-2"><?= nl2br(htmlspecialchars($fila['contenido'])) ?></p>
-
-                        <form action="home.php" method="post" class="reaction-buttons d-flex mb-3">
-                            <input type="hidden" name="publicacion_id" value="<?= htmlspecialchars($fila['publicacion_id']) ?>" />
-                            <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
-                                <i class="fa-solid fa-thumbs-up"></i> <?= htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "like")) ?>
-                            </button>
-                            <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
-                                <i class="fa-solid fa-thumbs-down"></i> <?= htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "dislike")) ?>
-                            </button>
-                            <a href="comentar_publicacion.php" class="btn btn-outline-primary btn-sm ml-2">💬 Comentar</a>
-                            <a href="reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm">🚫 Reportar</a>
-                        </form>
+                            <form action="home.php" method="post" class="reaction-buttons d-flex gap-2 flex-wrap mt-2">
+                                <input type="hidden" name="publicacion_id" value="<?php echo htmlspecialchars($fila['publicacion_id']); ?>">
+                                <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
+                                    <i class="fa-solid fa-thumbs-up"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "like")); ?>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
+                                    <i class="fa-solid fa-thumbs-down"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "dislike")); ?>
+                                </button>
+                                <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-primary btn-sm" title="Comentar Publicación"><i class="fa-solid fa-comment"></i> Comentar</a>
+                                <a href="reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm" title="Reporta Publicación" style="margin-left:3px"><i class="fa-regular fa-flag"></i> Reportar</a>
+                            </form>
+                        </div>
                     </div>
+
+                    <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $fila['user_id']): ?>
+                        <form action="eliminar_publicacion.php" method="post">
+                            <input type="hidden" name="publicacion_id" value="<?= $fila['publicacion_id']; ?>">
+                            <input type="hidden" name="tipo" value="eliminar">
+                            <button class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar esta publicación?')" title="Eliminar publicación">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
 

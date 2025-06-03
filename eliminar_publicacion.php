@@ -12,8 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tipo']) && $_POST['ti
         $stmt = $conexion_bbdd->prepare("SELECT user_id FROM publicaciones WHERE publicacion_id = ?");
         $stmt->bind_param("i", $publicacion_id);
         $stmt->execute();
-        $stmt->bind_result($autor_id);
-        $stmt->fetch();
+        $result = $stmt->get_result();
+        $autor_id = $result->fetch_assoc()["user_id"] ?? null;
         $stmt->close();
 
         if ($autor_id == $usuario_id) {
@@ -22,21 +22,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tipo']) && $_POST['ti
             $stmt->bind_param("i", $publicacion_id);
             if ($stmt->execute()) {
                 $_SESSION["publicacion_err"] = 0;
-                header("location=home.php");
-                exit();
             } else {
                 $_SESSION["publicacion_err"] = 1;
-                header("location=home.php");
-                $error = "Error al eliminar la publicación.";
             }
+            $stmt->close();
+            header("Location: home.php");
+            exit();
         } else {
             $_SESSION["publicacion_err"] = 2;
-            header("location=home.php");
-            $error = "No tienes permiso para eliminar esta publicación.";
+            header("Location: home.php");
+            exit();
         }
     } else {
         $_SESSION["publicacion_err"] = 3;
-        header("location=home.php");
-        $error = "Datos inválidos para eliminación.";
+        header("Location: home.php");
+        exit();
     }
 }
+
+header("Location: home.php");
+exit();
