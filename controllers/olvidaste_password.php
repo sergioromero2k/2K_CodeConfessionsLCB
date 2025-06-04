@@ -1,5 +1,4 @@
 <?php
-require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
 require_once '../includes/config.php'; // Configuración de la base de datos
 require_once '../includes/functions.php'; // Funciones auxiliares
 
@@ -60,7 +59,7 @@ try {
                     $mail->Body = '
                                         <h2>Hola!</h2>
                                         <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Confesiones LCB. Si no has solicitado este cambio, puedes ignorar este correo.</p>
-                                        <p>Para restablecer tu contraseña, por favor haz clic en el siguiente enlace: <a href="http://localhost/CodeConfessionsLCB/recuperar_cuenta.php?token=' . $token_activacion . '">Restablecer mi contraseña</a></p>
+                                        <p>Para restablecer tu contraseña, por favor haz clic en el siguiente enlace: <a href="http://localhost/CodeConfessionsLCB/controllers/recuperar_cuenta.php?token=' . $token_activacion . '">Restablecer mi contraseña</a></p>
                                         <p>Este enlace es válido por 24 horas. Si no lo usas dentro de ese tiempo, tendrás que solicitar un nuevo restablecimiento.</p>
                                         <p>Gracias<br>El equipo de LCB</p>';
                     $mail->send();
@@ -110,7 +109,7 @@ try {
                     <input type="email" class="form-control" name="email_recuperacion" id="email_recuperacion" aria-describedby="emailHelp" placeholder="Correo Electrónico" required>
                 </div>
                 <hr>
-                <input type="button" value="Cancelar" class="btn btn-secondary" onclick="location.href='index.php'">
+                <input type="button" value="Cancelar" class="btn btn-secondary" onclick="location.href='../index.php'">
                 <input type="submit" value="Continuar" class="btn btn-primary" name="continuar">
                 <?php
                 if (isset($_SESSION['olvidar'])) {

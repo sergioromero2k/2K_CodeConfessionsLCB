@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['user_id'])) {
-    header(header: "Location:./views/home.php"); 
+    header(header: "Location:./views/home.php");
     exit();
 }
 ?>
@@ -26,13 +26,13 @@ if (isset($_SESSION['user_id'])) {
         <div class="card-form">
             <form action="./auth/validar.php" method="post" enctype="application/x-www-form-urlencoded">
                 <h1>Iniciar sesión</h1>
-                <p>¿Es tú primera vez?<a href="register.php"> Registrarse</a></p>
+                <p>¿Es tú primera vez?<a href="./views/register.php"> Registrarse</a></p>
                 <div class="form-group">
                     <input type="email" class="form-control" name="email_usuario" id="email_usuario" aria-describedby="emailHelp" placeholder="Correo Electrónico" required><br>
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" name="password_usuario" id="password_usuario" placeholder="Contreseña" required><br>
-                    <a href="olvidaste_password.php">¿Olvidó la contraseña?</a>
+                    <a href="./controllers/olvidaste_password.php">¿Olvidó la contraseña?</a>
                     <hr>
                 </div>
 
@@ -86,6 +86,20 @@ if (isset($_SESSION['user_id'])) {
                             break;
                         case 3:
                             echo "<br> <div class='alert alert-danger'>Token no proporcionado o está vacío.</div>";
+                            break;
+                    }
+                    unset($_SESSION['mensaje_recup_cuenta']); // Limpiar la variable de sesión después de mostrar el mensaje
+                }
+                if (isset($_SESSION['nuevaPass'])) {
+                    switch ($_SESSION['nuevaPass']) {
+                        case 0:
+                            echo "<br> <div class='alert alert-danger'>La contraseña ya fue cambiada.</div>";
+                            break;
+                        case 1:
+                            echo "<br> <div class='alert alert-danger'>Token inválido, vuelve a intentarlo luego.</div>";
+                            break;
+                        case 2:
+                            echo "<br> <div class='alert alert-success'>Se cambio la contraseña correctamente, ya puedes iniciar sesión.</div>";
                             break;
                     }
                     unset($_SESSION['mensaje_recup_cuenta']); // Limpiar la variable de sesión después de mostrar el mensaje

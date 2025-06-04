@@ -1,5 +1,4 @@
 <?php
-require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
 require_once '../includes/config.php'; // Configuración de la base de datos
 require_once '../includes/functions.php'; // Funciones auxiliares
 
@@ -8,9 +7,9 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 # Como no usa composer necesitamos importar las clases de PHPMailer manualmente
-require './PHPMailer/Exception.php';
-require './PHPMailer//PHPMailer.php';
-require './PHPMailer/SMTP.php';
+require '../PHPMailer/Exception.php';
+require '../PHPMailer//PHPMailer.php';
+require '../PHPMailer/SMTP.php';
 
 try {
     # Prevenir inyecciones SQL
@@ -34,7 +33,7 @@ try {
                 $insertar->bind_param("sssssssii", $_POST['email'], $password_hash, $_POST['nombres'], $_POST['apellidos'], $_POST['fecha_nacimiento'], $profile_image, $token_activacion, $_POST['genero'], $_POST['universidad']);
                 $insertar->execute();
                 $insertar->close();
-                header(header: "Location: index.php");
+                header(header: "Location: ../index.php");
                 $conexion_bbdd->close();
                 $email_enviar = $_POST['email'];
                 $nombre_usuario = $_POST['nombres'];
@@ -62,7 +61,7 @@ try {
                     $mail->Body = '
                                     <h2>¡Bienvenido ' . $nombre_usuario . '!</h2>
                                     <p>Gracias por registrarte. Estas a un paso de ser parte de nosotros!!</p>
-                                    <p>Para activar tu cuenta, por favor haz clic en el siguiente enlace: <a href="http://localhost/CodeConfessionsLCB/activar_cuenta.php?token=' . $token_activacion . '">Activar cuenta</a></p>
+                                    <p>Para activar tu cuenta, por favor haz clic en el siguiente enlace: <a href="http://localhost/CodeConfessionsLCB/controllers/activar_cuenta.php?token=' . $token_activacion . '">Activar cuenta</a></p>
                                     <p>Si no fuiste tú quien creó esta cuenta, puedes ignorar este mensaje.</p>
                                     <p>Salu2<br>El equipo de LCB</p>';
                     $mail->send();
@@ -102,13 +101,13 @@ try {
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/register.css">
+    <link rel="stylesheet" href="../assets/css/register.css">
 </head>
 
 <body>
     <article class="h-100 d-flex justify-content-center align-items-center article-caja">
         <div>
-            <img src="./assets/images/fonts/logo_LCB.png" alt="logo_LCB" class="img-fluid">
+            <img src="../assets/images/fonts/logo_LCB.png" alt="logo_LCB" class="img-fluid">
         </div>
         <div class="card-form">
             <form action="register.php" method="post" enctype="application/x-www-form-urlencoded">
@@ -156,7 +155,7 @@ try {
                 <input type="submit" value="Registrarse" name="registrarse" class="btn btn-success" name="Enviar">
                 <input type="reset" value="Limpiar" class="btn btn-secondary">
                 <hr>
-                <a href="./index.php">¿Ya tienes una cuenta?</a> <br>
+                <a href="../index.php">¿Ya tienes una cuenta?</a> <br>
                 <?php
                 if (isset($_SESSION['errCrear'])) {
                     switch ($_SESSION['errCrear']) {

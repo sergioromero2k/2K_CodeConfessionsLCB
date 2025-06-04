@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             if (isset($mensaje)) {
                 echo "<p class='text-success text-center font-weight-bold'>$mensaje</p>";
-                echo '<p class="text-center"><a href="home.php" class="btn btn-primary mt-3">Volver al inicio</a></p>';
+                echo '<p class="text-center"><a href="../views/home.php" class="btn btn-primary mt-3">Volver al inicio</a></p>';
                 exit;
             }
             if (isset($error)) {
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" class="btn btn-warning btn-block">Enviar reporte</button>
             </form>
 
-            <p class="mt-3 text-center"><a href="home.php">Cancelar y volver</a></p>
+            <p class="mt-3 text-center"><a href="../views/home.php">Cancelar y volver</a></p>
         </div>
     </div>
 

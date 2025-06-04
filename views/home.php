@@ -68,7 +68,7 @@ if (isset($_POST['publicacion_id'])) {
 
 <body>
     <?php require_once '../includes/nav.php';
-    nav(ruta_home: "home.php", ruta_sobreNoso: "sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_buscar: "../controllers/buscar.php",ruta_perfil: "./mi_perfil.php", editar_perfil: "../controllers/editar_perfil.php", cambiar_password: "../controllers/cambiar_password.php", eliminar_cuenta: "../controllers/eliminar_cuenta.php");
+    nav(ruta_home: "home.php", ruta_sobreNoso: "sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_buscar: "../controllers/buscar.php", ruta_perfil: "./mi_perfil.php", editar_perfil: "../controllers/editar_perfil.php", cambiar_password: "../controllers/cambiar_password.php", eliminar_cuenta: "../controllers/eliminar_cuenta.php");
 
     ?>
 
@@ -80,7 +80,7 @@ if (isset($_POST['publicacion_id'])) {
                 <div class="card">
                     <div class="d-flex align-items-center hola">
                         <div>
-                            <img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: '../public/uploads/profile_pics/', imagen_defecto: 'profile-default.png'); ?>" class="profile-pic-seg me-3" alt="Foto de perfil" />
+                            <a href="mi_perfil.php?id=<?php echo $_SESSION['user_id'] ?>"><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: '../public/uploads/profile_pics/', imagen_defecto: 'profile-default.png'); ?>" class="profile-pic-seg me-3" alt="Foto de perfil" /></a>
                         </div>
                         <div>
                             <h2 class="mb-0"><?php nombre_usuario(); ?></h2>

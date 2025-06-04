@@ -31,13 +31,13 @@ if ($filtro === 'tabla1') {
             <div class="timeline-post mb-3 bord" id="user-<?php echo htmlspecialchars($fila['user_id']); ?>">
                 <div class="d-flex align-items-start">
                     <div>
-                        <a href="mi_perfil.php?id=<?php echo htmlspecialchars($fila['user_id']); ?>">
+                        <a href="../views/mi_perfil.php?id=<?php echo htmlspecialchars($fila['user_id']); ?>">
                             <img src="<?php echo htmlspecialchars($foto_perfil); ?>" class="profile-pic-publi me-3" alt="Foto de perfil">
                         </a>
                     </div>
                     <div>
                         <h6 class="mb-0">
-                            <a href="mi_perfil.php?id=<?php echo htmlspecialchars($fila['user_id']); ?>">
+                            <a href="../views/mi_perfil.php?id=<?php echo htmlspecialchars($fila['user_id']); ?>">
                                 <?php echo htmlspecialchars($nombre_usuario); ?>
                             </a>
                         </h6>
@@ -78,10 +78,12 @@ if ($filtro === 'tabla1') {
                     $autor_nombre = mostrar_dato('nombre', 'usuarios', 'user_id', $publi['user_id']) . ' ' . mostrar_dato('apellido', 'usuarios', 'user_id', $publi['user_id']);
                     $fecha = date('d/m/Y H:i', strtotime($publi['fecha_en']));
             ?>
-                    <div class="publicacion border p-3 mb-2">
-                        <p><?php echo nl2br(htmlspecialchars($publi['contenido'])); ?></p>
-                        <small class="text-muted">Publicado por <strong><?php echo htmlspecialchars($autor_nombre); ?></strong> el <?php echo $fecha; ?></small>
-                    </div>
+                    <a href="comentar_publicacion.php?publicacion_id=<?php echo htmlspecialchars($publi['publicacion_id']); ?>">
+                        <div class="publicacion border p-3 mb-2">
+                            <p><?php echo nl2br(htmlspecialchars($publi['contenido'])); ?></p>
+                            <small class="text-muted">Publicado por <strong><?php echo htmlspecialchars($autor_nombre); ?></strong> el <?php echo $fecha; ?></small>
+                        </div>
+                    </a>
 <?php
                 }
             }

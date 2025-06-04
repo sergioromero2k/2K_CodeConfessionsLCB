@@ -1,5 +1,4 @@
 <?php
-require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
 require_once '../includes/config.php'; // Configuración de la base de datos
 require_once '../includes/functions.php'; // Funciones auxiliares
 

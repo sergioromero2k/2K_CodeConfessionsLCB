@@ -4,9 +4,20 @@
 # DETALLES (ULTIMOS PASOS)
 ---------
 - Arreglar fotos (INSERT)               *******
-- OLVIDASTE PASSWORD                    *******
-- MEJORAR RESPONSIVE A CELULARES.       *******
-- ENLACES A TODOS SITIOS.               *******
 
-- ACABAR WORD.                          *******
+- MEJORAR RESPONSIVE A CELULARES.       *******
+- editar perfil
+- nav
+- notificaciones
+- comentarios
+- home
+- index
+- olvidaste passowrd.
+
 - SUBIRLO A DOMINIO                     *******
+
+
+# ULTIMOS PASOS
+---------
+- ACABAR WORD  - MIERCOLES, JUEVES 11, 12
+- PRESENTACION - MIERCOLES, JUEVES 11, 12
