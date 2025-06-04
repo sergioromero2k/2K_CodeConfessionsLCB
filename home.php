@@ -1,63 +1,74 @@
 <?php
+// home.php
+
 require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
 require_once './includes/config.php'; // Configuración de la base de datos
 require_once './includes/functions.php'; // Funciones auxiliares
+
+// Procesar el POST antes de enviar cualquier salida
+if (isset($_POST['publicar_publicacion']) && !empty($_POST['contenido'])) {
+    $insertar = $conexion_bbdd->prepare("INSERT INTO publicaciones (user_id, universidad_id, contenido) VALUES (?, ?, ?)");
+    $insertar->bind_param("iis", $_SESSION['user_id'], $_POST['universidad_a_publicar'], $_POST['contenido']);
+    $insertar->execute();
+    $insertar->close();
+
+    header("Location: home.php");
+    exit();
+}
+
+if (isset($_POST['publicacion_id'])) {
+    $publicacion_id = $_POST['publicacion_id'];
+    $tipo = $_POST['tipo'] ?? '';
+
+    if ($tipo === 'like' || $tipo === 'dislike') {
+        $reaccion = $conexion_bbdd->prepare("INSERT INTO reacciones (user_id, publicacion_id, tipo) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE tipo = VALUES(tipo), fecha_en = NOW()");
+        $reaccion->bind_param("iis", $_SESSION['user_id'], $publicacion_id, $tipo);
+        $reaccion->execute();
+        $reaccion->close();
+
+        $stmt_public = $conexion_bbdd->prepare("SELECT user_id FROM publicaciones WHERE publicacion_id = ?");
+        $stmt_public->bind_param("i",  $publicacion_id);
+        $stmt_public->execute();
+        $resultado = $stmt_public->get_result();
+        $dueño_id = $resultado->fetch_assoc()["user_id"];
+
+        if ($dueño_id != $_SESSION['user_id']) {
+            // Obtener nombre usuario actual
+            $nombre_usuario = mostrar_dato('nombre', 'usuarios', 'user_id', $_SESSION['user_id']);
+            $mensaje = "$nombre_usuario ha dado $tipo a tu publicación.";
+            $tipo_notificacion_id = ($tipo === 'like') ? 1 : 2;
+
+            $stmt_notif = $conexion_bbdd->prepare("INSERT INTO notificaciones (nombre, contenido, publicacion_id, tipo_notificacion_id) VALUES (?, ?, ?, ?)");
+            $stmt_notif->bind_param("ssii", $nombre_usuario, $mensaje, $publicacion_id, $tipo_notificacion_id);
+            $stmt_notif->execute();
+            $stmt_notif->close();
+
+            header("Location: home.php");
+            exit();
+        }
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina incial LCB</title>
-    <meta name="author" content="Sergio Alejandro Romero López">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Página inicial LCB</title>
+    <meta name="author" content="Sergio Alejandro Romero López" />
     <!-- Estilos -->
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/inicio.css">
-    <link rel="stylesheet" href="./assets/css/nav.css">
-    <link rel="stylesheet" href="./assets/css/publicacion.css">
-
-
-    <!-- jQuery COMPLETO para AJAX -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-</head>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./assets/css/inicio.css" />
+    <link rel="stylesheet" href="./assets/css/nav.css" />
+    <link rel="stylesheet" href="./assets/css/publicacion.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <?php
-    require_once './includes/nav.php'; // Incluye el encabezado
-    $ruta_defecto = './public/uploads/profile_pics/profile-default.png';
-    $ruta_foto = './public/uploads/profile_pics/';
-    if (isset($_POST['publicar_publicacion']) and !empty($_POST['contenido'])) {
-        $insertar = $conexion_bbdd->prepare(query: "INSERT INTO publicaciones ( user_id,universidad_id, contenido) VALUES (?, ?, ?)");
-        $insertar->bind_param("iis", $_SESSION['user_id'], $_POST['universidad_a_publicar'], $_POST['contenido']);
-        $insertar->execute();
-        $insertar->close();
-        header(header: "Location: home.php");
-        exit();
-    }
-    if (isset($_POST['publicacion_id'])) {
-        $publicacion_id = $_POST['publicacion_id'];
-        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : '';
-        if ($tipo == 'like' || $tipo == 'dislike') {
-            if (isset($_POST['publicacion_id'])) {
-                $publicacion_id = $_POST['publicacion_id'];
-                $tipo = $_POST['tipo'];
+    <?php require_once './includes/nav.php'; ?>
 
-                if ($tipo == 'like' || $tipo == 'dislike') {
-                    $reaccion = $conexion_bbdd->prepare(query: "INSERT INTO reacciones (user_id, publicacion_id, tipo) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE tipo = VALUES(tipo), fecha_en = NOW()");
-                    $reaccion->bind_param("iis", $_SESSION['user_id'], $publicacion_id, $tipo);
-                    $reaccion->execute();
-                    header("Location: home.php");
-                    exit();
-                }
-            }
-        }
-        exit();
-    }
-    ?>
     <section class="container-fluid mt-4" style="margin: 20px;">
         <div class="row">
             <!-- Sidebar -->
@@ -65,13 +76,15 @@ require_once './includes/functions.php'; // Funciones auxiliares
                 <!-- Perfil -->
                 <div class="card">
                     <div class="d-flex align-items-center hola">
-                        <div><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: $ruta_foto, imagen_defecto: 'profile-default.png') ?>" class="profile-pic-seg me-3" alt="Foto de perfil"></div>
+                        <div>
+                            <img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: './public/uploads/profile_pics/', imagen_defecto: 'profile-default.png'); ?>" class="profile-pic-seg me-3" alt="Foto de perfil" />
+                        </div>
                         <div>
                             <h2 class="mb-0"><?php nombre_usuario(); ?></h2>
-                            <h5> <?php universidad_usuario(); ?></h5>
+                            <h5><?php universidad_usuario(); ?></h5>
                         </div>
                     </div>
-                    <hr>
+                    <hr />
                     <div class="d-flex justify-content-around text-center">
                         <div>
                             <div>Publicaciones</div>
@@ -93,7 +106,7 @@ require_once './includes/functions.php'; // Funciones auxiliares
                     <h5>Crear Publicación</h5>
                     <form action="home.php" method="post">
                         <div class="mb-2">
-                            <label for="mensaje">Universidad o Instituto</label><br>
+                            <label for="mensaje">Universidad o Instituto</label><br />
                             <select name="universidad_a_publicar" id="mensaje" class="form-select" required>
                                 <?php universidades(); ?>
                             </select>
@@ -114,23 +127,18 @@ require_once './includes/functions.php'; // Funciones auxiliares
             <div class="col-md-8">
                 <div class="card">
                     <h4>Línea de tiempo</h4>
-                    <hr>
+                    <hr />
                     <div id="lista-publicaciones">
                         <?php mostrar_publicaciones(); ?>
                     </div>
                 </div>
-                <?php
-                ?>
             </div>
         </div>
     </section>
+
     <!-- Scripts Bootstrap y otros -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6b5d7e1dcc.js" crossorigin="anonymous"></script>
 </body>
 

@@ -222,10 +222,9 @@ VALUES
 INSERT INTO
     tipos_notificaciones (`nombre_tipo`, `descripcion`)
 VALUES
-    ('Like', 'El usuario ha dado like a tu publicación'),
-    ('Dislike', 'El usuario no le ha gustado tu publicación'),
-    ('Comentario', 'El usuario ha comentado en tu publicación'),
-    ('Reporte', 'El usuario ha reportado tu publicación');
+    ('Like', 'Al usuario le ha gustado a tu publicación'),
+    ('Dislike', 'Al usuario no le ha gustado a tu publicación'),
+    ('Comentario', 'El usuario ha comentado en tu publicación');
 
 INSERT INTO
     motivos (`motivo`)

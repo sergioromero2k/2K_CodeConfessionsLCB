@@ -1,16 +1,54 @@
+/* Fondo general */
 body {
   background-color: #e7ecf0;
 }
-.profile-pic {
-  width: 27px; /* Ajusta el tamaño deseado */
-  height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
-}
+
+/* Logo navbar */
 .logo-pic {
-  width: 90px; /* Ajusta el tamaño deseado */
-  height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 20px; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 90px;
+  height: 40px;
+  border-radius: 20px;
+  object-fit: cover;
   background-color: #c33733;
+}
+
+/* Foto de perfil */
+.profile-pic {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Badge de notificaciones */
+.badge {
+  font-size: 12px;
+  padding: 3px 6px;
+  color: white;
+  background-color: red;
+}
+
+/* Lista de notificaciones */
+#lista-notificaciones {
+  max-height: 230px;
+  overflow-y: auto;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+/* Item individual de notificación */
+#lista-notificaciones li {
+  padding: 6px 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+#lista-notificaciones li:hover {
+  background-color: #f7f7f7;
+}
+
+/* Botón refrescar dentro del dropdown */
+.dropdown-menu button {
+  cursor: pointer;
 }
