@@ -1,8 +1,9 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #EBEBEB;
+  margin: 0;
+  padding: 0;
+  background-color: #EBEBEB;
 }
+
 .card-form {
   width: 50%;
   max-width: 400px;
@@ -13,10 +14,30 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+
 .article-caja {
   margin: 10% 0% 10% 0%;
 }
-a{
-    text-decoration: none;
-    color: #000000;
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+  .card-form {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .article-caja {
+    margin: 5% 0;
+  }
 }

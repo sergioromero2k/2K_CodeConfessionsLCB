@@ -1,7 +1,7 @@
 <?php
-require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once './includes/config.php'; // Configuración de la base de datos  
-require_once './includes/functions.php'; // Funciones auxiliares
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
 if (isset($_POST['actualizar'])) {
     $password_usuario = password_usuario();
     # Prevenir inyecciones SQL
@@ -19,7 +19,7 @@ if (isset($_POST['actualizar'])) {
                 $consulta->bind_param("si", $password_nueva, $_SESSION['user_id']);
                 $consulta->execute();
                 $consulta->close();
-                header(header: "Location:./home.php");
+                header(header: "Location:../views/home.php");
                 exit();
             } else {
                 header(header: "Location:./cambiar_password.php?errPassw=0");
@@ -41,17 +41,18 @@ if (isset($_POST['actualizar'])) {
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/cambiar_pass.css">
+    <link rel="stylesheet" href="../assets/css/cambiar_pass.css">
 </head>
 
 <body>
     <?php
-    require_once './includes/nav.php'; // Incluye el encabezado
+    require_once '../includes/nav.php'; // Incluye el encabezado
+    nav(ruta_home: "../views/home.php", ruta_sobreNoso: "../views/sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_perfil: "../views/mi_perfil.php", editar_perfil: "./editar_perfil.php", cambiar_password: "cambiar_password.php", eliminar_cuenta: "./eliminar_cuenta.php");
     ?>
     <section class="h-100 d-flex justify-content-center align-items-center">
         <form action="cambiar_password.php" method="POST">
             <div style="text-align: center;">
-                <div tex><img src="./assets/images/fonts/logo_LCB_sinU.png" class="profile-pic2 me-2" alt="Foto de perfil"></div>
+                <div tex><img src="../assets/images/fonts/logo_LCB_sinU.png" class="profile-pic2 me-2" alt="Foto de perfil"></div>
                 <p>Ingresa tu nueva contraseña despues</p>
             </div>
 

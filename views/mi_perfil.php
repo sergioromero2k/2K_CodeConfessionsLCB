@@ -1,9 +1,10 @@
 <?php
-require_once './auth/checkAuth.php';
-require_once './includes/config.php';
-require_once './includes/functions.php';
-$ruta_defecto = './public/uploads/profile_pics/profile-default.png';
-$ruta_foto = './public/uploads/profile_pics/';
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
+
+$ruta_defecto = '../public/uploads/profile_pics/profile-default.png';
+$ruta_foto = '../public/uploads/profile_pics/';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -11,21 +12,24 @@ $ruta_foto = './public/uploads/profile_pics/';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial LCB</title>
+    <title>Perfil de Usuario LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
 
     <!-- Estilos -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/perfil.css">
-    <link rel="stylesheet" href="assets/css/nav.css">
-    <link rel="stylesheet" href="assets/css/publicacion.css">
+    <link rel="stylesheet" href="../assets/css/perfil.css">
+    <link rel="stylesheet" href="../assets/css/nav.css">
+    <link rel="stylesheet" href="../assets/css/publicacion.css">
 
     <!-- jQuery COMPLETO para AJAX -->
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script></head>
 
 <body>
-    <?php require_once './includes/nav.php'; ?>
+    <?php require_once '../includes/nav.php'; 
+        nav(ruta_home: "home.php", ruta_sobreNoso: "sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_perfil: "./mi_perfil.php", editar_perfil: "../controllers/editar_perfil.php", cambiar_password: "../controllers/cambiar_password.php", eliminar_cuenta: "../controllers/eliminar_cuenta.php");
+
+    ?>
 
     <section class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
         <div class="col-md-8" id="lista-publicaciones">

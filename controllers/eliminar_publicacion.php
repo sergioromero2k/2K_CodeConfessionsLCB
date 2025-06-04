@@ -1,7 +1,7 @@
 <?php
-require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once './includes/config.php'; // Configuración de la base de datos
-require_once './includes/functions.php'; // Funciones auxiliares
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tipo']) && $_POST['tipo'] === 'eliminar') {
     $publicacion_id = intval($_POST['publicacion_id'] ?? 0);
@@ -26,19 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tipo']) && $_POST['ti
                 $_SESSION["publicacion_err"] = 1;
             }
             $stmt->close();
-            header("Location: home.php");
+            header("Location: ../views/home.php");
             exit();
         } else {
             $_SESSION["publicacion_err"] = 2;
-            header("Location: home.php");
+            header("Location: ../views/home.php");
             exit();
         }
     } else {
         $_SESSION["publicacion_err"] = 3;
-        header("Location: home.php");
+        header("Location: ../views/home.php");
         exit();
     }
 }
 
-header("Location: home.php");
+header("Location: ../views/home.php");
 exit();

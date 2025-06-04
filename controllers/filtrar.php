@@ -1,7 +1,7 @@
 <?php
-require_once './auth/checkAuth.php';
-require_once './includes/config.php';
-require_once './includes/functions.php';
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
 
 $q = isset($_POST['q']) ? trim($_POST['q']) : '';
 $filtro = isset($_POST['filtro']) ? $_POST['filtro'] : 'tabla1'; // tabla1 = usuarios, tabla2 = universidades
@@ -26,7 +26,7 @@ if ($filtro === 'tabla1') {
         while ($fila = $resultado->fetch_assoc()) {
             $nombre_usuario = mostrar_dato('nombre', 'usuarios', 'user_id', $fila['user_id']) . ' ' . mostrar_dato('apellido', 'usuarios', 'user_id', $fila['user_id']);
             $nombre_universidad = mostrar_dato('universidad', 'universidades', 'universidad_id', $fila['universidad_id']);
-            $foto_perfil = './public/uploads/profile_pics/' . mostrar_dato('profile_image', 'usuarios', 'user_id', $fila['user_id']);
+            $foto_perfil = '../public/uploads/profile_pics/' . mostrar_dato('profile_image', 'usuarios', 'user_id', $fila['user_id']);
 ?>
             <div class="timeline-post mb-3 bord" id="user-<?php echo htmlspecialchars($fila['user_id']); ?>">
                 <div class="d-flex align-items-start">

@@ -1,7 +1,7 @@
 <?php
-require_once './includes/config.php';
-require_once './auth/checkAuth.php';
-require_once './includes/functions.php';
+require_once '../includes/config.php';
+require_once '../auth/checkAuth.php';
+require_once '../includes/functions.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
         $marcar->close();
 
         // Redirigir a la publicación con la notificación
-        header("Location: comentar_publicacion.php?publicacion_id=$pub_id&notificacion_id=$notif_id");
+        header("Location: ../controllers/comentar_publicacion.php?publicacion_id=$pub_id&notificacion_id=$notif_id");
         exit();
     }
 }
@@ -58,9 +58,9 @@ $stmt->close();
     <title>Mis Notificaciones</title>
     <!-- Estilos -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="./assets/css/inicio.css" />
-    <link rel="stylesheet" href="./assets/css/nav.css" />
-    <link rel="stylesheet" href="./assets/css/publicacion.css" />
+    <link rel="stylesheet" href="../assets/css/inicio.css" />
+    <link rel="stylesheet" href="../assets/css/nav.css" />
+    <link rel="stylesheet" href="../assets/css/publicacion.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
     <style>
         .no-leida {
@@ -81,7 +81,9 @@ $stmt->close();
 </head>
 
 <body>
-    <?php include './includes/nav.php'; ?>
+    <?php include '../includes/nav.php';
+    nav(ruta_home: "../views/home.php", ruta_sobreNoso: "../views/sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php",  ruta_buscar: "../controllers/buscar.php", ruta_perfil: "../views/mi_perfil.php", editar_perfil: "../controllers/editar_perfil.php", cambiar_password: "../controllers/cambiar_password.php", eliminar_cuenta: "../controllers/eliminar_cuenta.php");
+    ?>
 
     <div class="container mt-4">
         <h3>Notificaciones</h3>

@@ -1,7 +1,7 @@
 <?php
-require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once './includes/config.php'; // Configuración de la base de datos
-require_once './includes/functions.php'; // Funciones auxiliares
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,17 +12,18 @@ require_once './includes/functions.php'; // Funciones auxiliares
     <title>Pagina inicial LCB - Buscar</title>
     <meta name="author" content="Sergio Alejandro Romero López" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="./assets/css/buscar_publicacion.css" />
-    <link rel="stylesheet" href="./assets/css/nav.css" />
-    <link rel="stylesheet" href="./assets/css/buscar.css" />
-    <link rel="stylesheet" href="./assets/css/publicacion.css">
+    <link rel="stylesheet" href="../assets/css/buscar_publicacion.css" />
+    <link rel="stylesheet" href="../assets/css/nav.css" />
+    <link rel="stylesheet" href="../assets/css/buscar.css" />
+    <link rel="stylesheet" href="../assets/css/publicacion.css">
 
     <!-- jQuery COMPLETO para AJAX -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <?php require_once './includes/nav.php';
+    <?php require_once '../includes/nav.php';
+    nav(ruta_home: "../views/home.php", ruta_sobreNoso: "../views/sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_perfil: "../views/mi_perfil.php", editar_perfil: "./editar_perfil.php", cambiar_password: "cambiar_password.php", eliminar_cuenta: "./eliminar_cuenta.php");
     $q = '';
     if (isset($_POST['q'])) {
         $q = trim($_POST['q']);
@@ -41,8 +42,8 @@ require_once './includes/functions.php'; // Funciones auxiliares
                 name="q"
                 id="inputBuscar"
                 placeholder="Buscar..."
-                aria-label="Buscar" 
-                value="<?php echo htmlspecialchars($q); ?>"/>
+                aria-label="Buscar"
+                value="<?php echo htmlspecialchars($q); ?>" />
             <select class="custom-select mr-2" id="filtro" name="filtro">
                 <option value="tabla1" selected>Usuarios</option>
                 <option value="tabla2">Unersidades</option>

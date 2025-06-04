@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['user_id'])) {
-    header(header: "Location:./home.php");
+    header(header: "Location:./views/home.php"); 
     exit();
 }
 ?>

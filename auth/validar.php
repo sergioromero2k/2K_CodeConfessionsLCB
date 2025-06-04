@@ -19,7 +19,7 @@ try {
                         $_SESSION['nombre'] = $fila['nombre'];
                         $_SESSION['apellido'] = $fila['apellido'];
                         $_SESSION['email'] = $fila['email'];
-                        header(header: "Location:../home.php"); # Redirigir a la página de inicio   
+                        header(header: "Location:../views/home.php"); # Redirigir a la página de inicio   
                     } else {
                         $_SESSION['errAuth'] = 0; # Contraseña incorrecta
                         header(header: "Location:../index.php");

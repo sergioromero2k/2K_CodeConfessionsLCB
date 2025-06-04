@@ -1,7 +1,7 @@
 <?php
-require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once './includes/config.php'; // Configuración de la base de datos
-require_once './includes/functions.php'; // Funciones auxiliares
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
 
 if (!isset($_GET['ultimo_id'])) {
     exit('Falta el parámetro requerido.');
@@ -26,7 +26,7 @@ if ($resultado && $resultado->num_rows > 0) {
     while ($fila = $resultado->fetch_assoc()) {
         $nombre_usuario = mostrar_dato('nombre', 'usuarios', 'user_id', $fila['user_id']);
         $nombre_universidad = mostrar_dato('universidad', 'universidades', 'universidad_id', $fila['universidad_id']);
-        $foto_perfil = './public/uploads/profile_pics/' . mostrar_dato('profile_image', 'usuarios', 'user_id', $fila['user_id']);
+        $foto_perfil = '../public/uploads/profile_pics/' . mostrar_dato('profile_image', 'usuarios', 'user_id', $fila['user_id']);
 ?>
         <div class="timeline-post mb-3 item-publicacion p-3 border rounded" id="<?php echo htmlspecialchars($fila['publicacion_id']); ?>">
             <div class="d-flex justify-content-between align-items-start">
@@ -52,14 +52,14 @@ if ($resultado && $resultado->num_rows > 0) {
                             <button class="btn btn-outline-danger btn-sm" name="tipo" value="dislike">
                                 <i class="fa-solid fa-thumbs-down"></i> <?php echo htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "dislike")); ?>
                             </button>
-                            <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-primary btn-sm" title="Comentar Publicación"><i class="fa-solid fa-comment"></i> Comentar</a>
-                            <a href="reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm" title="Reporta Publicación" style="margin-left:3px"><i class="fa-regular fa-flag"></i> Reportar</a>
+                            <a href="../controllers/comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-primary btn-sm" title="Comentar Publicación"><i class="fa-solid fa-comment"></i> Comentar</a>
+                            <a href="../controllers/reportar_publicacion.php?publicacion_id=<?= $fila['publicacion_id']; ?>" class="btn btn-outline-warning btn-sm" title="Reporta Publicación" style="margin-left:3px"><i class="fa-regular fa-flag"></i> Reportar</a>
                         </form>
                     </div>
                 </div>
 
                 <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $fila['user_id']): ?>
-                    <form action="eliminar_publicacion.php" method="post">
+                    <form action="../controllers/eliminar_publicacion.php" method="post">
                         <input type="hidden" name="publicacion_id" value="<?= $fila['publicacion_id']; ?>">
                         <input type="hidden" name="tipo" value="eliminar">
                         <button class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar esta publicación?')" title="Eliminar publicación">
@@ -74,7 +74,7 @@ if ($resultado && $resultado->num_rows > 0) {
     ?>
     <div class="col-md-12 col-sm-12">
         <div class="ajax-loader text-center" style="display: none;">
-            <img src="./assets/images/fonts/loading.gif" alt="Cargando... " class="img-fluid" style="width: 50px; height: 50px;">
+            <img src="../assets/images/fonts/loading.gif" alt="Cargando... " class="img-fluid" style="width: 50px; height: 50px;">
             <br><strong>Cargando más Registros...</strong>
         </div>
     </div>

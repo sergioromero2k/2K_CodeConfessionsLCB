@@ -1,7 +1,7 @@
 <?php
-require_once './auth/checkAuth.php';
-require_once './includes/config.php';
-require_once './includes/functions.php';
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
 
 
 if (isset($_GET['notificacion_id'])) {
@@ -13,8 +13,8 @@ if (isset($_GET['notificacion_id'])) {
     $stmt->close();
 }
 
-$ruta_defecto = './public/uploads/profile_pics/profile-default.png';
-$ruta_foto = './public/uploads/profile_pics/';
+$ruta_defecto = '../public/uploads/profile_pics/profile-default.png';
+$ruta_foto = '../public/uploads/profile_pics/';
 
 if (!isset($_GET['publicacion_id']) || empty($_GET['publicacion_id'])) {
     echo "<p>Publicación no especificada.</p>";
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comentario']))
                 }
                 $stmt_notif->close();
             }
-            header("Location: comentar_publicacion.php?publicacion_id=$publicacion_id");
+            header("Location: ../controllers/comentar_publicacion.php?publicacion_id=$publicacion_id");
             exit();
         } else {
             $error_comentario = "Error al guardar el comentario: " . $stmt->error;
@@ -120,26 +120,28 @@ $result_comentarios = $stmt_comentarios->get_result();
     <title>Comentar publicación</title>
     <meta name="author" content="Sergio Alejandro Romero López" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./assets/css/comentarios.css" />
-    <link rel="stylesheet" href="./assets/css/nav.css" />
-    <link rel="stylesheet" href="assets/css/publicacion.css" />
+    <link rel="stylesheet" href="../assets/css/comentarios.css" />
+    <link rel="stylesheet" href="../assets/css/nav.css" />
+    <link rel="stylesheet" href="../assets/css/publicacion.css" />
     <script src="https://kit.fontawesome.com/6b5d7e1dcc.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <?php require_once './includes/nav.php'; ?>
+    <?php require_once '../includes/nav.php';
+    nav(ruta_home: "../views/home.php", ruta_sobreNoso: "../views/sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_perfil: "../views/mi_perfil.php", editar_perfil: "./editar_perfil.php", cambiar_password: "cambiar_password.php", eliminar_cuenta: "./eliminar_cuenta.php");
+    ?>
 
     <section class="d-flex justify-content-center" style="min-height: 100vh; margin: 20px;">
         <div class="col-md-8">
             <div class="timeline-post mb-3 item-publicacion p-3 border rounded" id="<?= htmlspecialchars($fila['publicacion_id']) ?>">
                 <div class="d-flex justify-content-between align-items-start">
                     <div class="d-flex">
-                        <a href="mi_perfil.php?id=<?= $fila['user_id'] ?>">
+                        <a href="../views/mi_perfil.php?id=<?= $fila['user_id'] ?>">
                             <img src="<?= htmlspecialchars($foto_perfil) ?>" class="profile-pic-publi mr-3" alt="Foto de perfil">
                         </a>
                         <div>
                             <h6 class="mb-0">
-                                <a href="mi_perfil.php?id=<?= $fila['user_id'] ?>">
+                                <a href="../views/mi_perfil.php?id=<?= $fila['user_id'] ?>">
                                     <?= htmlspecialchars($nombre_usuario) ?>
                                 </a>
                             </h6>
@@ -147,7 +149,7 @@ $result_comentarios = $stmt_comentarios->get_result();
                             <a href="comentar_publicacion.php?publicacion_id=<?= $fila['publicacion_id'] ?>">
                                 <p class="mt-2 mb-1"><?= htmlspecialchars($fila['contenido']) ?></p>
                             </a>
-                            <form action="home.php" method="post" class="reaction-buttons d-flex gap-2 flex-wrap mt-2">
+                            <form action="../views/home.php" method="post" class="reaction-buttons d-flex gap-2 flex-wrap mt-2">
                                 <input type="hidden" name="publicacion_id" value="<?= htmlspecialchars($fila['publicacion_id']) ?>">
                                 <button class="btn btn-outline-success btn-sm" name="tipo" value="like">
                                     <i class="fa-solid fa-thumbs-up"></i> <?= htmlspecialchars(mostrar_reaccion($fila['publicacion_id'], "like")) ?>
@@ -193,7 +195,7 @@ $result_comentarios = $stmt_comentarios->get_result();
                 <?php if ($result_comentarios->num_rows > 0): ?>
                     <?php while ($comentario = $result_comentarios->fetch_assoc()): ?>
                         <div class="comentario d-flex align-items-start mb-3">
-                            <a href="mi_perfil.php?id=<?= $comentario['user_id'] ?>">
+                            <a href="../views/mi_perfil.phpid=<?= $comentario['user_id'] ?>">
                                 <img src="<?= htmlspecialchars(mostrar_foto_perfil($comentario['user_id'], $ruta_foto, 'profile-default.png')) ?>"
                                     class="rounded-circle mr-3"
                                     alt="Foto de perfil"

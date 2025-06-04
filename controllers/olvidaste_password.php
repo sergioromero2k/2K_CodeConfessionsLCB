@@ -1,14 +1,16 @@
 <?php
-require_once './includes/config.php';
-require_once './includes/functions.php'; // Funciones auxiliares
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 # Como no usa composer necesitamos importar las clases de PHPMailer manualmente
-require './PHPMailer/Exception.php';
-require './PHPMailer//PHPMailer.php';
-require './PHPMailer/SMTP.php';
+require '../PHPMailer/Exception.php';
+require '../PHPMailer//PHPMailer.php';
+require '../PHPMailer/SMTP.php';
 //     $token_activacion = bin2hex(random_bytes(length: 32));
 
 try {
@@ -94,7 +96,7 @@ try {
     <meta name="author" content="Sergio Alejandro Romero López">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/olvidaste_pass.css">
+    <link rel="stylesheet" href="../assets/css/olvidaste_pass.css">
 </head>
 
 <body>

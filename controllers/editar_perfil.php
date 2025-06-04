@@ -1,25 +1,26 @@
 <?php
-require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once './includes/config.php'; // Configuración de la base de datos  
-require_once './includes/functions.php'; // Funciones auxiliares
-$foto_defecto = './public/uploads/profile_pics/profile-default.png';
-$ruta_foto='./public/uploads/profile_pics/';
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
+
+$foto_defecto = 'profile-default.png';
+$ruta_foto = '../public/uploads/profile_pics/';
 if (isset($_POST['actualizar'])) {
     $password_usuario = password_usuario();
     # Prevenir inyecciones SQL
     if (password_verify(password: $_POST['password_usuario'], hash: $password_usuario)) {
-        $ruta_relativa = procesamiento_foto_pefil("./public/uploads/profile_pics/", $foto_defecto, "profile_pic", "./editar_perfil.php?errFrom=0");
+        $ruta_relativa = procesamiento_foto_pefil("../public/uploads/profile_pics/", $foto_defecto, "profile_pic", "../editar_perfil.php?errFrom=0");
         $consulta = $conexion_bbdd->prepare("UPDATE usuarios SET nombre=?,apellido=?,fecha_nacimiento=?,profile_image=?,universidad_id=? WHERE user_id=?");
         $consulta->bind_param("sssssi", $_POST['nombre'], $_POST['apellido'], $_POST['fecha_nacimiento'], $ruta_relativa, $_POST['universidad'], $_SESSION['user_id']);
         $consulta->execute();
         $consulta->close();
         // Actualizar la sesión con los nuevos datos
-        
+
         $_SESSION['nombre'] = $_POST['nombre'];
         $_SESSION['apellido'] = $_POST['apellido'];
         $_SESSION['fecha_nacimiento'] = $_POST['fecha_nacimiento'];
         $_SESSION['universidad_id'] = $_POST['universidad'];
-        header(header: "Location:./home.php");
+        header(header: "Location:../views/home.php");
         exit();
     } else {
         header(header: "Location:./editar_perfil.php?errPassw=0");
@@ -36,12 +37,13 @@ if (isset($_POST['actualizar'])) {
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/editar_perfil.css">
+    <link rel="stylesheet" href="../assets/css/editar_perfil.css">
 </head>
 
 <body>
     <?php
-    require_once './includes/nav.php'; // Incluye el encabezado
+    require_once '../includes/nav.php'; // Incluye el encabezado
+    nav(ruta_home: "../views/home.php", ruta_sobreNoso: "../views/sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_perfil: "../views/mi_perfil.php", editar_perfil: "./editar_perfil.php", cambiar_password: "cambiar_password.php", eliminar_cuenta: "./eliminar_cuenta.php");
     ?>
     <section class="h-100 d-flex justify-content-center align-items-center">
         <form action="editar_perfil.php" method="POST" enctype="multipart/form-data">

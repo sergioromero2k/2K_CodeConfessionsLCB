@@ -1,7 +1,8 @@
 <?php
-require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once './includes/config.php'; // Configuración de la base de datos  
-require_once './includes/functions.php'; // Funciones auxiliares
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,14 +13,16 @@ require_once './includes/functions.php'; // Funciones auxiliares
     <title>Pagina incial LCB</title>
     <meta name="author" content="Sergio Alejandro Romero López">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/sobre_nosotros.css">
+    <link rel="stylesheet" href="../assets/css/sobre_nosotros.css">
+    <link rel="stylesheet" href="../assets/css/nav.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 
 <body>
     <?php
-    require_once './includes/nav.php'; // Incluye el encabezado
+    require_once '../includes/nav.php'; // Incluye el encabezado
+    nav(ruta_home: "home.php", ruta_sobreNoso: "sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_buscar: "../controllers/buscar.php", ruta_perfil: "./mi_perfil.php", editar_perfil: "../controllers/editar_perfil.php", cambiar_password: "../controllers/cambiar_password.php", eliminar_cuenta: "../controllers/eliminar_cuenta.php");
     ?>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -29,13 +32,13 @@ require_once './includes/functions.php'; // Funciones auxiliares
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="./assets/images/fonts/estudiantesSombrero.png" alt="First slide">
+                <img class="d-block w-100" src="../assets/images/fonts/estudiantesSombrero.png" alt="First slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="./assets/images/fonts/logo_LCB_fondo.png" alt="Second slide">
+                <img class="d-block w-100" src="../assets/images/fonts/logo_LCB_fondo.png" alt="Second slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="./assets/images/fonts/lcb_frase.png" alt="Third slide">
+                <img class="d-block w-100" src="../assets/images/fonts/lcb_frase.png" alt="Third slide">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -73,7 +76,7 @@ require_once './includes/functions.php'; // Funciones auxiliares
             <div class="row">
                 <div class="col-md-4 texto-plus">
                     <div class="cuadro">
-                        
+
                         <p class="texto-empresa1">Publicaciones de Interés</p>
                         <p class="texto-empresa2">
                             Compartir noticias, eventos y temas relevantes que impacten a la comunidad universitaria.

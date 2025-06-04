@@ -1,9 +1,9 @@
 <?php
 // home.php
 
-require_once './auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once './includes/config.php'; // Configuración de la base de datos
-require_once './includes/functions.php'; // Funciones auxiliares
+require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
+require_once '../includes/config.php'; // Configuración de la base de datos
+require_once '../includes/functions.php'; // Funciones auxiliares
 
 // Procesar el POST antes de enviar cualquier salida
 if (isset($_POST['publicar_publicacion']) && !empty($_POST['contenido'])) {
@@ -60,14 +60,17 @@ if (isset($_POST['publicacion_id'])) {
     <meta name="author" content="Sergio Alejandro Romero López" />
     <!-- Estilos -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="./assets/css/inicio.css" />
-    <link rel="stylesheet" href="./assets/css/nav.css" />
-    <link rel="stylesheet" href="./assets/css/publicacion.css" />
+    <link rel="stylesheet" href="../assets/css/inicio.css" />
+    <link rel="stylesheet" href="../assets/css/nav.css" />
+    <link rel="stylesheet" href="../assets/css/publicacion.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <?php require_once './includes/nav.php'; ?>
+    <?php require_once '../includes/nav.php';
+    nav(ruta_home: "home.php", ruta_sobreNoso: "sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_buscar: "../controllers/buscar.php",ruta_perfil: "./mi_perfil.php", editar_perfil: "../controllers/editar_perfil.php", cambiar_password: "../controllers/cambiar_password.php", eliminar_cuenta: "../controllers/eliminar_cuenta.php");
+
+    ?>
 
     <section class="container-fluid mt-4" style="margin: 20px;">
         <div class="row">
@@ -77,7 +80,7 @@ if (isset($_POST['publicacion_id'])) {
                 <div class="card">
                     <div class="d-flex align-items-center hola">
                         <div>
-                            <img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: './public/uploads/profile_pics/', imagen_defecto: 'profile-default.png'); ?>" class="profile-pic-seg me-3" alt="Foto de perfil" />
+                            <img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: '../public/uploads/profile_pics/', imagen_defecto: 'profile-default.png'); ?>" class="profile-pic-seg me-3" alt="Foto de perfil" />
                         </div>
                         <div>
                             <h2 class="mb-0"><?php nombre_usuario(); ?></h2>
