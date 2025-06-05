@@ -4,7 +4,7 @@
 function nombre_usuario(): void
 {
     global $conexion_bbdd;
-    echo $_SESSION['nombre'] . " " . $_SESSION['apellido'];
+    echo $_SESSION['nombre'];
 }
 
 function nombres_usuario_get(int $user_id): string

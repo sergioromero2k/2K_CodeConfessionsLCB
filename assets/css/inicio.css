@@ -1,12 +1,12 @@
-*{
+* {
   text-decoration: none;
-
 }
+
 .profile-pic-seg {
-  width: 120px; /* Ajusta el tamaño deseado */
-  height: 120px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
   margin-right: 15px;
 }
 
@@ -33,4 +33,33 @@ label {
 
 .reaction-buttons button {
   margin: 0 5px;
+}
+
+@media (max-width: 768px) {
+  .profile-pic-seg {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 0.9rem;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .reaction-buttons button {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .container {
+    padding: 10px;
+  }
 }

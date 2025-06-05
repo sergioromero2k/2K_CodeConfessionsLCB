@@ -1,4 +1,4 @@
-/* Fondo general */
+/* Ajustes generales para body */
 body {
   background-color: #e7ecf0;
 }
@@ -10,6 +10,7 @@ body {
   border-radius: 20px;
   object-fit: cover;
   background-color: #c33733;
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
 /* Foto de perfil */
@@ -18,6 +19,7 @@ body {
   height: 27px;
   border-radius: 50%;
   object-fit: cover;
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
 /* Badge de notificaciones */
@@ -51,4 +53,60 @@ body {
 /* Botón refrescar dentro del dropdown */
 .dropdown-menu button {
   cursor: pointer;
+}
+
+/* Ajustes responsive */
+
+/* En pantallas pequeñas: */
+@media (max-width: 767.98px) {
+
+  /* Logo más pequeño */
+  .logo-pic {
+    width: 70px;
+    height: 30px;
+  }
+
+  /* Perfil más pequeño */
+  .profile-pic {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Ajustar el formulario de búsqueda para que ocupe todo el ancho */
+  form.form-inline {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  form.form-inline input[type="search"] {
+    flex: 1 1 60%;
+    margin-bottom: 8px;
+  }
+
+  form.form-inline button {
+    flex: 0 0 auto;
+    margin-left: 5px;
+  }
+
+  /* Ajustar links de notificaciones y usuario para que no se amontonen */
+  ul.navbar-nav.align-items-center {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  ul.navbar-nav.align-items-center>li,
+  ul.navbar-nav.align-items-center>a.nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
+  }
+
+  /* Para evitar que el dropdown sea muy ancho en móviles */
+  .dropdown-menu {
+    min-width: 100%;
+  }
 }

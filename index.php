@@ -20,9 +20,10 @@ if (isset($_SESSION['user_id'])) {
 
 <body>
     <article class="h-100 d-flex justify-content-center align-items-center article-caja">
-        <div>
-            <img src="./assets/images/fonts/logo_LCB.png" alt="logo_LCB" class="img-fluid">
+        <div class="d-none d-sm-block">
+            <img src="./assets/images/fonts/logo_LCB.png" alt="logo_LCB" class="img-fluid logo-lcb">
         </div>
+
         <div class="card-form">
             <form action="./auth/validar.php" method="post" enctype="application/x-www-form-urlencoded">
                 <h1>Iniciar sesión</h1>
@@ -103,6 +104,14 @@ if (isset($_SESSION['user_id'])) {
                             break;
                     }
                     unset($_SESSION['mensaje_recup_cuenta']); // Limpiar la variable de sesión después de mostrar el mensaje
+                }
+                if (isset($_SESSION['session_expired'])) {
+                    switch ($_SESSION['session_expired']) {
+                        case 1:
+                            echo "<br> <div class='alert alert-danger'> Tu sesión se cerró automáticamente debido a la inactividad.</div>";
+                            break;
+                    }
+                    unset($_SESSION["session_expired"]);
                 }
                 ?>
             </form>

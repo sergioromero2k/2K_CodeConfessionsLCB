@@ -1,31 +1,48 @@
-
 .profile-pic {
-  width: 27px; /* Ajusta el tamaño deseado */
-  height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  object-fit: cover;
 }
+
 .logo-pic {
-  width: 90px; /* Ajusta el tamaño deseado */
-  height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 20px; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 90px;
+  height: 40px;
+  border-radius: 20px;
+  object-fit: cover;
   background-color: #c33733;
 }
+
 .profile-pic2 {
-  width: 250px; /* Ajusta el tamaño deseado */
-  height: 250px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .card-form {
-  margin: 5% 5%;
+  margin: 5% auto;
   background-color: #f8f9fa;
   padding: 40px;
   border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: left;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 label {
@@ -34,4 +51,38 @@ label {
   margin: 0.5rem;
 }
 
+@media (max-width: 768px) {
+  .profile-pic2 {
+    width: 150px;
+    height: 150px;
+  }
 
+  .card-form {
+    padding: 20px;
+  }
+
+  .upload-button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-pic2 {
+    width: 120px;
+    height: 120px;
+  }
+
+  .card-form {
+    margin: 5% 2%;
+    padding: 15px;
+  }
+}

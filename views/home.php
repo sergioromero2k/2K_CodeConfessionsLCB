@@ -1,17 +1,13 @@
 <?php
-// home.php
+require_once '../auth/checkAuth.php';
+require_once '../includes/config.php';
+require_once '../includes/functions.php';
 
-require_once '../auth/checkAuth.php'; // Verifica si el usuario está autenticado
-require_once '../includes/config.php'; // Configuración de la base de datos
-require_once '../includes/functions.php'; // Funciones auxiliares
-
-// Procesar el POST antes de enviar cualquier salida
 if (isset($_POST['publicar_publicacion']) && !empty($_POST['contenido'])) {
     $insertar = $conexion_bbdd->prepare("INSERT INTO publicaciones (user_id, universidad_id, contenido) VALUES (?, ?, ?)");
     $insertar->bind_param("iis", $_SESSION['user_id'], $_POST['universidad_a_publicar'], $_POST['contenido']);
     $insertar->execute();
     $insertar->close();
-
     header("Location: home.php");
     exit();
 }
@@ -27,13 +23,12 @@ if (isset($_POST['publicacion_id'])) {
         $reaccion->close();
 
         $stmt_public = $conexion_bbdd->prepare("SELECT user_id FROM publicaciones WHERE publicacion_id = ?");
-        $stmt_public->bind_param("i",  $publicacion_id);
+        $stmt_public->bind_param("i", $publicacion_id);
         $stmt_public->execute();
         $resultado = $stmt_public->get_result();
         $dueño_id = $resultado->fetch_assoc()["user_id"];
 
         if ($dueño_id != $_SESSION['user_id']) {
-            // Obtener nombre usuario actual
             $nombre_usuario = mostrar_dato('nombre', 'usuarios', 'user_id', $_SESSION['user_id']);
             $mensaje = "$nombre_usuario ha dado $tipo a tu publicación.";
             $tipo_notificacion_id = ($tipo === 'like') ? 1 : 2;
@@ -42,22 +37,21 @@ if (isset($_POST['publicacion_id'])) {
             $stmt_notif->bind_param("ssii", $nombre_usuario, $mensaje, $publicacion_id, $tipo_notificacion_id);
             $stmt_notif->execute();
             $stmt_notif->close();
-
-            header("Location: home.php");
-            exit();
         }
+
+        header("Location: home.php");
+        exit();
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Página inicial LCB</title>
-    <meta name="author" content="Sergio Alejandro Romero López" />
     <!-- Estilos -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="../assets/css/inicio.css" />
@@ -68,23 +62,33 @@ if (isset($_POST['publicacion_id'])) {
 
 <body>
     <?php require_once '../includes/nav.php';
-    nav(ruta_home: "home.php", ruta_sobreNoso: "sobre_nosotros.php", ruta_notificaciones: "../notificaciones/notificaciones.php", ruta_buscar: "../controllers/buscar.php", ruta_perfil: "./mi_perfil.php", editar_perfil: "../controllers/editar_perfil.php", cambiar_password: "../controllers/cambiar_password.php", eliminar_cuenta: "../controllers/eliminar_cuenta.php");
-
+    nav(
+        ruta_home: "home.php",
+        ruta_sobreNoso: "sobre_nosotros.php",
+        ruta_notificaciones: "../notificaciones/notificaciones.php",
+        ruta_buscar: "../controllers/buscar.php",
+        ruta_perfil: "./mi_perfil.php",
+        editar_perfil: "../controllers/editar_perfil.php",
+        cambiar_password: "../controllers/cambiar_password.php",
+        eliminar_cuenta: "../controllers/eliminar_cuenta.php"
+    );
     ?>
 
-    <section class="container-fluid mt-4" style="margin: 20px;">
+    <section class="container mt-4">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4¡">
                 <!-- Perfil -->
                 <div class="card">
-                    <div class="d-flex align-items-center hola">
+                    <div class="d-flex align-items-center">
                         <div>
-                            <a href="mi_perfil.php?id=<?php echo $_SESSION['user_id'] ?>"><img src="<?php echo mostrar_foto_perfil(user_id: $_SESSION['user_id'], ruta_imagen: '../public/uploads/profile_pics/', imagen_defecto: 'profile-default.png'); ?>" class="profile-pic-seg me-3" alt="Foto de perfil" /></a>
+                            <a href="mi_perfil.php?id=<?php echo $_SESSION['user_id'] ?>">
+                                <img src="<?php echo mostrar_foto_perfil($_SESSION['user_id'], '../public/uploads/profile_pics/', 'profile-default.png'); ?>" class="profile-pic-seg" alt="Foto de perfil" />
+                            </a>
                         </div>
                         <div>
-                            <h2 class="mb-0"><?php nombre_usuario(); ?></h2>
-                            <h5><?php universidad_usuario(); ?></h5>
+                            <h4 class="mb-0"><?php nombre_usuario(); ?></h4>
+                            <p><strong><?php universidad_usuario(); ?></strong></p>
                         </div>
                     </div>
                     <hr />
@@ -110,7 +114,7 @@ if (isset($_POST['publicacion_id'])) {
                     <form action="home.php" method="post">
                         <div class="mb-2">
                             <label for="mensaje">Universidad o Instituto</label><br />
-                            <select name="universidad_a_publicar" id="mensaje" class="form-select" required>
+                            <select name="universidad_a_publicar" id="mensaje" class="form-control" required>
                                 <?php universidades(); ?>
                             </select>
                         </div>
@@ -139,7 +143,7 @@ if (isset($_POST['publicacion_id'])) {
         </div>
     </section>
 
-    <!-- Scripts Bootstrap y otros -->
+    <!-- Scripts Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/6b5d7e1dcc.js" crossorigin="anonymous"></script>

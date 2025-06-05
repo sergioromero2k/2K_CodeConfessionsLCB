@@ -1,37 +1,75 @@
-
 .profile-pic {
-  width: 27px; /* Ajusta el tamaño deseado */
-  height: 27px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  object-fit: cover;
 }
+
 .logo-pic {
-  width: 90px; /* Ajusta el tamaño deseado */
-  height: 40px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 20px; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 90px;
+  height: 40px;
+  border-radius: 20px;
+  object-fit: cover;
   background-color: #c33733;
 }
+
 .profile-pic2 {
-  width: 200px; /* Ajusta el tamaño deseado */
-  height: 200px; /* Asegúrate de que la altura sea igual a la anchura para un aspecto cuadrado */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente sin distorsionarse */
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 20px auto;
+  display: block;
 }
 
 .card-form {
-  margin: 5% 5%;
+  margin: 5% auto;
   background-color: #f8f9fa;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: left;
-  width: 400px;
-  max-width: 500px;
+  max-width: 400px;
+  width: 90%;
 }
 
 label {
   color: #929292;
   font-style: italic;
-  margin: 0.2rem;
+  margin: 0.2rem 0;
+  display: block;
+}
+
+form p {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .profile-pic2 {
+    width: 150px;
+    height: 150px;
+  }
+
+  .card-form {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-pic2 {
+    width: 120px;
+    height: 120px;
+  }
+
+  .card-form {
+    margin: 5% 2%;
+    padding: 20px 15px;
+  }
+
+  form p {
+    font-size: 0.9rem;
+  }
 }
